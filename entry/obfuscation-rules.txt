@@ -1,0 +1,32 @@
+# Obfuscation rules for CubeTime
+-keep-global-name
+-keep-property-name
+-keep-file-name
+
+# Keep ability related classes
+-keep-name
+    ability
+-keep-name
+    UIAbility
+
+# Keep component names
+-keep-global-name
+    Component
+
+# Keep service classes
+-keep-global-name
+    *Service
+
+# Keep page components
+-keep-global-name
+    *Page
+
+# Keep ability related methods
+-keep-global-name
+    onCreate
+-keep-global-name
+    onWindowStageCreate
+-keep-global-name
+    onForeground
+-keep-global-name
+    onBackground

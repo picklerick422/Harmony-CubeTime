@@ -1,0 +1,10 @@
+{
+  "modelVersion": "5.1.0",
+  "dependencies": {},
+  "properties": {
+    "sdkPath": "E:\\DevEco Studio\\sdk",
+    "harmonyosSdkPath": "E:\\DevEco Studio\\sdk\\HarmonyOS\\5.0.0.36",
+    "nodejsPath": "E:\\DevEco Studio\\tools\\node",
+    "ohpmPath": "E:\\DevEco Studio\\tools\\ohpm"
+  }
+}

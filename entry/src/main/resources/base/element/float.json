@@ -1,0 +1,16 @@
+{
+  "float": [
+    {
+      "name": "card_elevation",
+      "value": "2.0"
+    },
+    {
+      "name": "button_corner_radius",
+      "value": "8.0"
+    },
+    {
+      "name": "card_corner_radius",
+      "value": "12.0"
+    }
+  ]
+}

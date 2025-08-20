@@ -1,0 +1,52 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "CubeTime智能时间管理"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "CubeTime智能时间管理"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "CubeTime"
+    },
+    {
+      "name": "bluetooth_reason",
+      "value": "需要蓝牙权限连接智能魔方"
+    },
+    {
+      "name": "location_reason",
+      "value": "需要位置权限用于蓝牙扫描"
+    },
+    {
+      "name": "vibrate_reason",
+      "value": "需要震动权限用于提醒"
+    },
+    {
+      "name": "notification_reason",
+      "value": "需要发布通知权限用于显示实况窗提醒"
+    },
+    {
+      "name": "home_title",
+      "value": "智能时间管理"
+    },
+    {
+      "name": "pomodoro_title",
+      "value": "番茄时钟"
+    },
+    {
+      "name": "tasks_title",
+      "value": "待办清单"
+    },
+    {
+      "name": "calendar_title",
+      "value": "日历视图"
+    },
+    {
+      "name": "settings_title",
+      "value": "设置"
+    }
+  ]
+}

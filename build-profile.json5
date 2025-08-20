@@ -1,0 +1,49 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\RIck\\.ohos\\config\\default_test_FSSenT3JKsyYvyIlKtL5EaYCuT9BTXUbdg-nTfAGFro=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001ACA50DE66D447C9593BA9ECC4D467F810782B02C4DA07D0DA7E00AFF936D3F9DDEE5A1480A5CE",
+          "profile": "C:\\Users\\RIck\\.ohos\\config\\default_test_FSSenT3JKsyYvyIlKtL5EaYCuT9BTXUbdg-nTfAGFro=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\RIck\\.ohos\\config\\default_test_FSSenT3JKsyYvyIlKtL5EaYCuT9BTXUbdg-nTfAGFro=.p12",
+          "storePassword": "0000001A1749E55902B6A8FCF7A2C1E5E6F85DDB9354640C7407974A6386C30CE41EC3E01F0415523AF7"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS",
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

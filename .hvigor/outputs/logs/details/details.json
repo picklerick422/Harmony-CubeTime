@@ -1,0 +1,57 @@
+{
+  "HVIGOR_OHOS_PLUGIN": {
+    "MODULES": [
+      {
+        "MODULE_NAME": "1043bfc77febe75fafec0c4309faccf1",
+        "API_TYPE": "stageMode",
+        "INCREMENTAL_TASKS": {
+          "COMPILE_ARKTS": true
+        }
+      }
+    ],
+    "BUILD_MODE": "debug"
+  },
+  "HVIGOR": {
+    "IS_INCREMENTAL": true,
+    "IS_DAEMON": true,
+    "IS_PARALLEL": true,
+    "IS_HVIGORFILE_TYPE_CHECK": false,
+    "TASK_TIME": {
+      "1043bfc77febe75fafec0c4309faccf1": {
+        "CreateModuleInfo": 1325300,
+        "ConfigureCmake": 244200,
+        "MergeProfile": 4107200,
+        "CreateBuildProfile": 2968800,
+        "PreCheckSyscap": 196800,
+        "GeneratePkgContextInfo": 2302600,
+        "ProcessIntegratedHsp": 1687000,
+        "BuildNativeWithCmake": 253300,
+        "SyscapTransform": 2527500,
+        "ProcessProfile": 697324000,
+        "ProcessRouterMap": 3903100,
+        "ProcessStartupConfig": 2414000,
+        "BuildNativeWithNinja": 1244900,
+        "GenerateLoaderJson": 15638700,
+        "CompileResource": 501772800,
+        "BuildJS": 2110800,
+        "CompileArkTS": 6944005000,
+        "GeneratePkgModuleJson": 2492200,
+        "PackageHap": 540014300,
+        "SignHap": 1009090300,
+        "CollectDebugSymbol": 3585100,
+        "assembleHap": 189100
+      }
+    },
+    "CONFIG_PROPERTIES": {
+      "enableSignTask": true,
+      "skipNativeIncremental": false,
+      "hvigor_keepDependency": true,
+      "sdkPath": "E:\\DevEco Studio\\sdk",
+      "harmonyosSdkPath": "E:\\DevEco Studio\\sdk\\HarmonyOS\\5.0.0.36",
+      "nodejsPath": "E:\\DevEco Studio\\tools\\node",
+      "ohpmPath": "E:\\DevEco Studio\\tools\\ohpm"
+    },
+    "TOTAL_TIME": 9964405100,
+    "BUILD_ID": "202508202304370940"
+  }
+}

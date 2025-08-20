@@ -1,0 +1,22 @@
+{
+  "layered-image": {
+    "background": {
+      "color": "#007AFF"
+    },
+    "foreground": {
+      "elements": [
+        {
+          "shape": "cube",
+          "color": "#FFFFFF",
+          "size": 0.6
+        },
+        {
+          "shape": "text",
+          "content": "CT",
+          "color": "#007AFF",
+          "size": 0.3
+        }
+      ]
+    }
+  }
+}

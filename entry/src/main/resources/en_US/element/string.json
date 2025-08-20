@@ -1,0 +1,48 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "Smart Cube Time Management"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "Smart Cube Time Management"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "CubeTime"
+    },
+    {
+      "name": "bluetooth_reason",
+      "value": "Bluetooth permission required to connect smart cube"
+    },
+    {
+      "name": "location_reason",
+      "value": "Location permission required for Bluetooth scanning"
+    },
+    {
+      "name": "vibrate_reason",
+      "value": "Vibration permission required for notifications"
+    },
+    {
+      "name": "home_title",
+      "value": "Smart Time Management"
+    },
+    {
+      "name": "pomodoro_title",
+      "value": "Pomodoro Timer"
+    },
+    {
+      "name": "tasks_title",
+      "value": "Task List"
+    },
+    {
+      "name": "calendar_title",
+      "value": "Calendar View"
+    },
+    {
+      "name": "settings_title",
+      "value": "Settings"
+    }
+  ]
+}

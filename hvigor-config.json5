@@ -1,0 +1,16 @@
+{
+  "modelVersion": "5.0.0",
+  "dependencies": {
+    "@ohos/hvigor-ohos-plugin": "5.0.0"
+  },
+  "execution": {
+    "daemon": true,
+    "incremental": true,
+    "parallel": true,
+    "analyze": "advanced"
+  },
+  "sdk": {
+    "deveco_sdk_home": "E:\\DevEco Studio\\sdk",
+    "harmonyos_sdk_path": "E:\\DevEco Studio\\sdk\\default"
+  }
+}

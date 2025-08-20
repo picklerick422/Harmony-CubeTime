@@ -1,0 +1,12 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "CubeTime"
+    },
+    {
+      "name": "app_description",
+      "value": "智能魔方时间管理应用"
+    }
+  ]
+}

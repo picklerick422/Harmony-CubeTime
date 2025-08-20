@@ -1,0 +1,12 @@
+{
+  "boolean": [
+    {
+      "name": "dark_mode_support",
+      "value": true
+    },
+    {
+      "name": "tablet_support",
+      "value": true
+    }
+  ]
+}

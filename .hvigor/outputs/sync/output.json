@@ -1,0 +1,165 @@
+{
+  "ohos-module-entry": {
+    "SELECT_TARGET": "default",
+    "MODULE_BUILD_DIR": "E:\\Deveco_Project\\test\\entry\\build",
+    "TARGETS": {
+      "default": {
+        "SOURCE_ROOT": "E:\\Deveco_Project\\test\\entry\\src\\main",
+        "RESOURCES_PATH": [
+          "E:\\Deveco_Project\\test\\entry\\src\\main\\resources"
+        ],
+        "BUILD_PATH": {
+          "OUTPUT_PATH": "E:\\Deveco_Project\\test\\entry\\build\\default\\outputs\\default",
+          "INTERMEDIA_PATH": "E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates",
+          "JS_ASSETS_PATH": "E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\loader_out\\default",
+          "JS_LITE_ASSETS_PATH": "E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\loader_out_lite\\default",
+          "RES_PATH": "E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default",
+          "RES_PROFILE_PATH": "E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\resources\\base\\profile",
+          "ETS_SUPER_VISUAL_PATH": "E:\\Deveco_Project\\test\\entry\\build\\default\\cache\\default\\default@CompileArkTS\\esmodule",
+          "JS_SUPER_VISUAL_PATH": "E:\\Deveco_Project\\test\\entry\\build\\default\\cache\\default\\default@CompileJS\\jsbundle",
+          "WORKER_LOADER": "E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\loader\\default\\loader.json",
+          "MANIFEST_JSON": "E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\manifest\\default",
+          "OUTPUT_METADATA_JSON": "E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\hap_metadata\\default\\output_metadata.json",
+          "SOURCE_MAP_DIR": "E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\source_map\\default"
+        },
+        "BUILD_OPTION": {
+          "debuggable": true
+        }
+      }
+    },
+    "BUILD_OPTION": {
+      "default-default": {
+        "debuggable": true,
+        "copyFrom": "default",
+        "arkOptions": {
+          "runtimeOnly": {
+            "sources": []
+          }
+        },
+        "name": "debug"
+      }
+    },
+    "BUILD_PROFILE_OPT": {
+      "apiType": "stageMode",
+      "buildOption": {
+        "arkOptions": {
+          "runtimeOnly": {
+            "sources": []
+          }
+        }
+      },
+      "buildOptionSet": [
+        {
+          "name": "release",
+          "arkOptions": {
+            "obfuscation": {
+              "ruleOptions": {
+                "enable": true,
+                "files": "./obfuscation-rules.txt"
+              },
+              "consumerFiles": "./consumer-rules.txt"
+            }
+          }
+        },
+        {
+          "name": "default"
+        },
+        {
+          "name": "debug"
+        }
+      ],
+      "targets": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    "BUILD_CACHE_DIR": ""
+  },
+  "ohos-project": {
+    "SELECT_PRODUCT_NAME": "default",
+    "MODULE_BUILD_DIR": "E:\\Deveco_Project\\test\\build",
+    "BUNDLE_NAME": "com.example.cubetime",
+    "BUILD_PATH": {
+      "OUTPUT_PATH": "E:\\Deveco_Project\\test\\build\\outputs\\default"
+    },
+    "MODULES": [
+      {
+        "name": "entry",
+        "srcPath": "E:\\Deveco_Project\\test\\entry",
+        "targets": [
+          {
+            "name": "default",
+            "applyToProducts": [
+              "default"
+            ]
+          }
+        ],
+        "belongProjectPath": "E:\\Deveco_Project\\test"
+      }
+    ],
+    "PROFILE_OPT": {
+      "app": {
+        "signingConfigs": [
+          {
+            "name": "default",
+            "type": "HarmonyOS",
+            "material": {
+              "certpath": "C:\\Users\\RIck\\.ohos\\config\\default_test_FSSenT3JKsyYvyIlKtL5EaYCuT9BTXUbdg-nTfAGFro=.cer",
+              "keyAlias": "debugKey",
+              "keyPassword": "0000001ACA50DE66D447C9593BA9ECC4D467F810782B02C4DA07D0DA7E00AFF936D3F9DDEE5A1480A5CE",
+              "profile": "C:\\Users\\RIck\\.ohos\\config\\default_test_FSSenT3JKsyYvyIlKtL5EaYCuT9BTXUbdg-nTfAGFro=.p7b",
+              "signAlg": "SHA256withECDSA",
+              "storeFile": "C:\\Users\\RIck\\.ohos\\config\\default_test_FSSenT3JKsyYvyIlKtL5EaYCuT9BTXUbdg-nTfAGFro=.p12",
+              "storePassword": "0000001A1749E55902B6A8FCF7A2C1E5E6F85DDB9354640C7407974A6386C30CE41EC3E01F0415523AF7"
+            }
+          }
+        ],
+        "products": [
+          {
+            "name": "default",
+            "signingConfig": "default",
+            "compatibleSdkVersion": "5.0.0(12)",
+            "runtimeOS": "HarmonyOS"
+          }
+        ],
+        "buildModeSet": [
+          {
+            "name": "debug"
+          },
+          {
+            "name": "release"
+          }
+        ]
+      },
+      "modules": [
+        {
+          "name": "entry",
+          "srcPath": "./entry",
+          "targets": [
+            {
+              "name": "default",
+              "applyToProducts": [
+                "default"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "CONFIG_PROPERTIES": {
+      "enableSignTask": true,
+      "skipNativeIncremental": false,
+      "hvigor.keepDependency": true,
+      "sdkPath": "E:\\DevEco Studio\\sdk",
+      "harmonyosSdkPath": "E:\\DevEco Studio\\sdk\\HarmonyOS\\5.0.0.36",
+      "nodejsPath": "E:\\DevEco Studio\\tools\\node",
+      "ohpmPath": "E:\\DevEco Studio\\tools\\ohpm"
+    },
+    "OVERALL_PROJECT_PATHS": [
+      "E:\\Deveco_Project\\test"
+    ],
+    "BUILD_CACHE_DIR": ""
+  },
+  "version": 1
+}

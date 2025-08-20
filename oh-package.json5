@@ -1,0 +1,11 @@
+{
+  "modelVersion": "5.1.0",
+  "name": "cubetime",
+  "version": "1.0.0",
+  "description": "A smart cube time management app for HarmonyOS",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {},
+  "devDependencies": {}
+}

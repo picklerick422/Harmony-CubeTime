@@ -1,0 +1,4 @@
+# Consumer rules for CubeTime
+-keep-global-name
+-keep-property-name
+-keep-file-name
