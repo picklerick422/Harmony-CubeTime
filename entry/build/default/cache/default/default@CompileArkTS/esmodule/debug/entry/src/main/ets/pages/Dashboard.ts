@@ -2,6 +2,10 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
 interface Dashboard_Params {
+    timerOpacity?: number;
+    timerScale?: number;
+    navOpacity?: number;
+    navScale?: number;
     timeLeft?: number;
     isRunning?: boolean;
     currentMode?: string;
@@ -23,13 +27,17 @@ interface Dashboard_Params {
 import TimeManagementService from "@bundle:com.example.cubetime/entry/ets/services/TimeManagementService";
 import type { StatisticsData } from "@bundle:com.example.cubetime/entry/ets/services/TimeManagementService";
 import { TimerDisplay } from "@bundle:com.example.cubetime/entry/ets/components/TimerDisplay";
-import router from "@ohos:router";
+import { navigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 class Dashboard extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
         if (typeof paramsLambda === "function") {
             this.paramsGenerator_ = paramsLambda;
         }
+        this.timerOpacity = 1;
+        this.timerScale = 1;
+        this.navOpacity = 1;
+        this.navScale = 1;
         this.__timeLeft = new ObservedPropertySimplePU(0, this, "timeLeft");
         this.__isRunning = new ObservedPropertySimplePU(false, this, "isRunning");
         this.__currentMode = new ObservedPropertySimplePU('Work', this, "currentMode");
@@ -65,6 +73,18 @@ class Dashboard extends ViewPU {
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params: Dashboard_Params) {
+        if (params.timerOpacity !== undefined) {
+            this.timerOpacity = params.timerOpacity;
+        }
+        if (params.timerScale !== undefined) {
+            this.timerScale = params.timerScale;
+        }
+        if (params.navOpacity !== undefined) {
+            this.navOpacity = params.navOpacity;
+        }
+        if (params.navScale !== undefined) {
+            this.navScale = params.navScale;
+        }
         if (params.timeLeft !== undefined) {
             this.timeLeft = params.timeLeft;
         }
@@ -157,6 +177,10 @@ class Dashboard extends ViewPU {
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
+    private timerOpacity: number;
+    private timerScale: number;
+    private navOpacity: number;
+    private navScale: number;
     private __timeLeft: ObservedPropertySimplePU<number>;
     get timeLeft() {
         return this.__timeLeft.get();
@@ -290,24 +314,16 @@ class Dashboard extends ViewPU {
         });
     }
     async aboutToAppear() {
-        await this.timeService.init();
-        this.loadStatistics();
-        this.startTimerUpdate();
+        this.generateScramble();
+        this.loadBestTime();
+        // 确保页面返回时重置为可见状态
+        this.resetVisibility();
         this.animateIn();
     }
-    loadStatistics(): void {
-        const stats: StatisticsData = this.timeService.getStatistics();
-        this.totalFocusTime = stats.totalFocusTime;
-        this.todayFocusTime = stats.todayFocusTime;
-        this.sessionsCount = stats.sessionsCount;
-        this.currentStreak = stats.currentStreak;
-    }
-    startTimerUpdate() {
-        setInterval(() => {
-            this.timeLeft = this.timeService.getTimeLeft();
-            this.isRunning = this.timeService.isRunning();
-            this.currentMode = this.timeService.getCurrentMode();
-        }, 1000);
+    onPageShow() {
+        // 页面重新显示时重置可见性和动画
+        this.resetVisibility();
+        this.animateIn();
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -340,7 +356,9 @@ class Dashboard extends ViewPU {
             Image.height(24);
             Image.fillColor(Color.White);
             Image.onClick(() => {
-                router.back();
+                this.animateTransition(() => {
+                    navigationManager.navigateBack();
+                });
             });
         }, Image);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -393,7 +411,7 @@ class Dashboard extends ViewPU {
                         timeLeft: this.timeLeft,
                         isRunning: this.isRunning,
                         currentMode: this.currentMode
-                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/Dashboard.ets", line: 123, col: 13 });
+                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/Dashboard.ets", line: 121, col: 13 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {
@@ -568,7 +586,9 @@ class Dashboard extends ViewPU {
             Button.createWithLabel('Tasks');
             Button.layoutWeight(1);
             Button.onClick(() => {
-                router.pushUrl({ url: 'pages/Tasks' });
+                this.animateTransition(() => {
+                    navigationManager.navigateTo('pages/Tasks');
+                });
             });
             Button.scale({ x: this.buttonScale, y: this.buttonScale });
             Button.opacity(this.buttonOpacity);
@@ -578,7 +598,9 @@ class Dashboard extends ViewPU {
             Button.createWithLabel('Calendar');
             Button.layoutWeight(1);
             Button.onClick(() => {
-                router.pushUrl({ url: 'pages/Calendar' });
+                this.animateTransition(() => {
+                    navigationManager.navigateTo('pages/Calendar');
+                });
             });
             Button.scale({ x: this.buttonScale, y: this.buttonScale });
             Button.opacity(this.buttonOpacity);
@@ -588,7 +610,9 @@ class Dashboard extends ViewPU {
             Button.createWithLabel('Settings');
             Button.layoutWeight(1);
             Button.onClick(() => {
-                router.pushUrl({ url: 'pages/Settings' });
+                this.animateTransition(() => {
+                    navigationManager.navigateTo('pages/Settings');
+                });
             });
             Button.scale({ x: this.buttonScale, y: this.buttonScale });
             Button.opacity(this.buttonOpacity);
@@ -599,6 +623,57 @@ class Dashboard extends ViewPU {
         Column.pop();
         Scroll.pop();
         Column.pop();
+    }
+    // 生成打乱步骤
+    private generateScramble(): string {
+        const moves = ["R", "U", "F", "L", "D", "B"];
+        const modifiers = ["", "'", "2"];
+        let scramble = "";
+        for (let i = 0; i < 20; i++) {
+            scramble += moves[Math.floor(Math.random() * moves.length)] +
+                modifiers[Math.floor(Math.random() * modifiers.length)] + " ";
+        }
+        return scramble.trim();
+    }
+    // 加载最佳时间
+    private loadBestTime(): number {
+        return 0;
+    }
+    // 重置可见性
+    private resetVisibility(): void {
+        this.titleOpacity = 1;
+        this.titleScale = 1;
+        this.buttonOpacity = 1;
+        this.buttonScale = 1;
+        this.cardOpacity = 1;
+        this.cardScale = 1;
+        this.itemOpacity = 1;
+        this.itemScale = 1;
+        this.timerOpacity = 1;
+        this.timerScale = 1;
+        this.navOpacity = 1;
+        this.navScale = 1;
+    }
+    // 页面切换动画
+    private animateTransition(callback: () => void): void {
+        Context.animateTo({
+            duration: 200,
+            curve: Curve.EaseIn,
+            onFinish: callback
+        }, () => {
+            this.titleOpacity = 0;
+            this.titleScale = 0.8;
+            this.buttonOpacity = 0;
+            this.buttonScale = 0.8;
+            this.cardOpacity = 0;
+            this.cardScale = 0.8;
+            this.itemOpacity = 0;
+            this.itemScale = 0.8;
+            this.timerOpacity = 0;
+            this.timerScale = 0.8;
+            this.navOpacity = 0;
+            this.navScale = 0.8;
+        });
     }
     rerender() {
         this.updateDirtyElements();

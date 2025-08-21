@@ -1,4 +1,4 @@
-import router from '@ohos.router';
+import { navigationManager, TransitionType } from '../utils/NavigationManager';
 
 interface CalendarTask {
   id: string;
@@ -25,6 +25,17 @@ interface CalendarDay {
 @Entry
 @Component
 struct CalendarPage {
+  buttonOpacity: number = 1
+  buttonScale: number = 1
+  cardOpacity: number = 1
+  cardScale: number = 1
+  itemOpacity: number = 1
+  itemScale: number = 1
+  timerOpacity: number = 1
+  timerScale: number = 1
+  navOpacity: number = 1
+  navScale: number = 1
+
   @State currentDate: Date = new Date();
   @State selectedDate: Date = new Date();
   @State tasks: CalendarTask[] = [
@@ -132,6 +143,19 @@ struct CalendarPage {
     return ['日', '一', '二', '三', '四', '五', '六'];
   }
 
+  // 页面切换动画
+  private animateTransition(callback: () => void) {
+    animateTo({ 
+      duration: 200, 
+      curve: Curve.EaseIn,
+      onFinish: callback
+    }, () => {
+      this.titleOpacity = 0
+      this.calendarOpacity = 0
+      this.taskOpacity = 0
+    })
+  }
+
   changeMonth(delta: number): void {
     const newDate = new Date(this.currentDate);
     newDate.setMonth(newDate.getMonth() + delta);
@@ -163,6 +187,36 @@ struct CalendarPage {
     }
   }
 
+  aboutToAppear() {
+    this.generateScramble()
+    this.loadBestTime()
+    // 确保页面返回时重置为可见状态
+    this.resetVisibility()
+    this.animateIn()
+  }
+
+  onPageShow() {
+    // 页面重新显示时重置可见性和动画
+    this.resetVisibility()
+    this.animateIn()
+  }
+
+  private resetVisibility(): void {
+    // 强制重置所有动画状态为可见
+    this.titleScale = 1
+    this.titleOpacity = 1
+    this.cardScale = 1
+    this.cardOpacity = 1
+    this.itemScale = 1
+    this.itemOpacity = 1
+    this.buttonScale = 1
+    this.buttonOpacity = 1
+    this.timerScale = 1
+    this.timerOpacity = 1
+    this.navScale = 1
+    this.navOpacity = 1
+  }
+
   build() {
     Column() {
       // 顶部标题栏
@@ -178,7 +232,7 @@ struct CalendarPage {
           .width(24)
           .height(24)
           .fillColor('#6B7280')
-          .onClick(() => router.back())
+          .onClick(() => this.animateTransition(() => navigationManager.navigateBack()))
       }
       .width('100%')
       .padding(16)
@@ -401,4 +455,22 @@ struct CalendarPage {
     .height('100%')
     .backgroundColor('#F9FAFB')
   }
+
+  // 生成打乱步骤
+  private generateScramble(): string {
+    const moves = ["R", "U", "F", "L", "D", "B"];
+    const modifiers = ["", "'", "2"];
+    let scramble = "";
+    for (let i = 0; i < 20; i++) {
+      scramble += moves[Math.floor(Math.random() * moves.length)] + 
+                  modifiers[Math.floor(Math.random() * modifiers.length)] + " ";
+    }
+    return scramble.trim();
+  }
+
+  // 加载最佳时间
+  private loadBestTime(): number {
+    return 0;
+  }
+
 }

@@ -1,4 +1,4 @@
-import router from '@ohos.router';
+import { navigationManager, TransitionType } from '../utils/NavigationManager';
 
 class OptionItem {
   value: string;
@@ -62,7 +62,16 @@ struct PomodoroPage {
   private timer: number = 0;
 
   aboutToAppear() {
+    // 确保页面返回时重置为可见状态
+    this.resetVisibility();
+    this.animateIn();
     this.startTimer();
+  }
+
+  onPageShow() {
+    // 页面重新显示时重置可见性和动画
+    this.resetVisibility()
+    this.animateIn()
   }
 
   aboutToDisappear() {
@@ -178,6 +187,52 @@ struct PomodoroPage {
         this.currentTask = null;
       }
     }
+  }
+
+  private animateTransition(callback: () => void) {
+    animateTo({
+      duration: 200,
+      curve: Curve.EaseIn,
+      onFinish: () => {
+        callback();
+      }
+    }, () => {
+      this.titleScale = 0.8
+      this.titleOpacity = 0
+      this.cardScale = 0.8
+      this.cardOpacity = 0
+      this.timerScale = 0.8
+      this.timerOpacity = 0
+      this.taskScale = 0.8
+      this.taskOpacity = 0
+    });
+  }
+
+  private animateIn() {
+    animateTo({
+      duration: 600,
+      curve: Curve.EaseOut
+    }, () => {
+      this.titleScale = 1
+      this.titleOpacity = 1
+      this.cardScale = 1
+      this.cardOpacity = 1
+      this.timerScale = 1
+      this.timerOpacity = 1
+      this.taskScale = 1
+      this.taskOpacity = 1
+    });
+  }
+
+  private resetVisibility() {
+    this.titleScale = 1
+    this.titleOpacity = 1
+    this.cardScale = 1
+    this.cardOpacity = 1
+    this.timerScale = 1
+    this.timerOpacity = 1
+    this.taskScale = 1
+    this.taskOpacity = 1
   }
 
   build() {
@@ -483,7 +538,7 @@ struct PomodoroPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          router.pushUrl({ url: 'pages/Tasks' });
+          navigationManager.navigateTo('Tasks', TransitionType.SLIDE_LEFT);
         })
 
         Column() {
@@ -499,7 +554,7 @@ struct PomodoroPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          router.pushUrl({ url: 'pages/Calendar' });
+          navigationManager.navigateTo('Calendar', TransitionType.SLIDE_LEFT);
         })
 
         Column() {
@@ -515,7 +570,7 @@ struct PomodoroPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          router.pushUrl({ url: 'pages/Settings' });
+          navigationManager.navigateTo('Settings', TransitionType.SLIDE_LEFT);
         })
 
         Column() {
@@ -532,7 +587,7 @@ struct PomodoroPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          router.back();
+          this.animateTransition(() => navigationManager.navigateBack());
         })
       }
       .width('100%')

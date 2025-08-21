@@ -2,6 +2,12 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
 interface SettingsPage_Params {
+    buttonOpacity?: number;
+    buttonScale?: number;
+    timerOpacity?: number;
+    timerScale?: number;
+    navOpacity?: number;
+    navScale?: number;
     titleScale?: number;
     titleOpacity?: number;
     cardScale?: number;
@@ -10,7 +16,7 @@ interface SettingsPage_Params {
     itemOpacity?: number;
     settingsItems?: SettingsItem[];
 }
-import router from "@ohos:router";
+import { navigationManager, TransitionType } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 class OptionItem {
     value: string;
     label: string;
@@ -41,6 +47,12 @@ class SettingsPage extends ViewPU {
         if (typeof paramsLambda === "function") {
             this.paramsGenerator_ = paramsLambda;
         }
+        this.buttonOpacity = 1;
+        this.buttonScale = 1;
+        this.timerOpacity = 1;
+        this.timerScale = 1;
+        this.navOpacity = 1;
+        this.navScale = 1;
         this.__titleScale = new ObservedPropertySimplePU(0.8, this, "titleScale");
         this.__titleOpacity = new ObservedPropertySimplePU(0, this, "titleOpacity");
         this.__cardScale = new ObservedPropertySimplePU(0.9, this, "cardScale");
@@ -76,6 +88,24 @@ class SettingsPage extends ViewPU {
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params: SettingsPage_Params) {
+        if (params.buttonOpacity !== undefined) {
+            this.buttonOpacity = params.buttonOpacity;
+        }
+        if (params.buttonScale !== undefined) {
+            this.buttonScale = params.buttonScale;
+        }
+        if (params.timerOpacity !== undefined) {
+            this.timerOpacity = params.timerOpacity;
+        }
+        if (params.timerScale !== undefined) {
+            this.timerScale = params.timerScale;
+        }
+        if (params.navOpacity !== undefined) {
+            this.navOpacity = params.navOpacity;
+        }
+        if (params.navScale !== undefined) {
+            this.navScale = params.navScale;
+        }
         if (params.titleScale !== undefined) {
             this.titleScale = params.titleScale;
         }
@@ -120,6 +150,12 @@ class SettingsPage extends ViewPU {
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
+    private buttonOpacity: number;
+    private buttonScale: number;
+    private timerOpacity: number;
+    private timerScale: number;
+    private navOpacity: number;
+    private navScale: number;
     private __titleScale: ObservedPropertySimplePU<number>;
     get titleScale() {
         return this.__titleScale.get();
@@ -169,14 +205,29 @@ class SettingsPage extends ViewPU {
     set settingsItems(newValue: SettingsItem[]) {
         this.__settingsItems.set(newValue);
     }
-    private updateSetting(key: string, value: string) {
+    private updateSetting(key: string, value: string): void {
         const itemIndex = this.settingsItems.findIndex(item => item.key === key);
         if (itemIndex !== -1) {
             this.settingsItems[itemIndex].value = value;
         }
     }
+    // 页面切换动画
+    private animateTransition(callback: () => void): void {
+        Context.animateTo({
+            duration: 200,
+            curve: Curve.EaseIn,
+            onFinish: callback
+        }, () => {
+            this.titleScale = 0;
+            this.titleOpacity = 0;
+            this.itemScale = 0;
+            this.itemOpacity = 0;
+            this.cardScale = 0;
+            this.cardOpacity = 0;
+        });
+    }
     // 页面入场动画 - 只在页面加载时触发
-    private animateIn() {
+    private animateIn(): void {
         Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
             this.titleScale = 1;
             this.titleOpacity = 1;
@@ -189,6 +240,46 @@ class SettingsPage extends ViewPU {
             this.itemScale = 1;
             this.itemOpacity = 1;
         });
+    }
+    aboutToAppear(): void {
+        // 确保页面返回时重置为可见状态
+        this.resetVisibility();
+        this.animateIn();
+    }
+    onPageShow(): void {
+        // 页面重新显示时重置可见性和动画
+        this.resetVisibility();
+        this.animateIn();
+    }
+    private resetVisibility(): void {
+        // 强制重置所有动画状态为可见
+        this.titleScale = 1;
+        this.titleOpacity = 1;
+        this.cardScale = 1;
+        this.cardOpacity = 1;
+        this.itemScale = 1;
+        this.itemOpacity = 1;
+        this.buttonScale = 1;
+        this.buttonOpacity = 1;
+        this.timerScale = 1;
+        this.timerOpacity = 1;
+        this.navScale = 1;
+        this.navOpacity = 1;
+    }
+    // 生成打乱步骤
+    private generateScramble(): string {
+        const moves = ["R", "U", "F", "L", "D", "B"];
+        const modifiers = ["", "'", "2"];
+        let scramble = "";
+        for (let i = 0; i < 20; i++) {
+            scramble += moves[Math.floor(Math.random() * moves.length)] +
+                modifiers[Math.floor(Math.random() * modifiers.length)] + " ";
+        }
+        return scramble.trim();
+    }
+    // 加载最佳时间
+    private loadBestTime(): number {
+        return 0;
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -221,7 +312,7 @@ class SettingsPage extends ViewPU {
             Image.height(24);
             Image.fillColor('#6B7280');
             Image.onClick(() => {
-                router.back();
+                this.animateTransition(() => navigationManager.navigateBack());
             });
         }, Image);
         // 顶部标题
@@ -449,7 +540,7 @@ class SettingsPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                router.pushUrl({ url: 'pages/Pomodoro' });
+                this.animateTransition(() => navigationManager.navigateTo('Pomodoro', TransitionType.SLIDE_LEFT));
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -471,7 +562,7 @@ class SettingsPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                router.pushUrl({ url: 'pages/Tasks' });
+                this.animateTransition(() => navigationManager.navigateTo('Tasks', TransitionType.SLIDE_LEFT));
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -493,7 +584,7 @@ class SettingsPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                router.pushUrl({ url: 'pages/Calendar' });
+                this.animateTransition(() => navigationManager.navigateTo('Calendar', TransitionType.SLIDE_LEFT));
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -515,7 +606,7 @@ class SettingsPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                router.back();
+                this.animateTransition(() => navigationManager.navigateBack());
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {

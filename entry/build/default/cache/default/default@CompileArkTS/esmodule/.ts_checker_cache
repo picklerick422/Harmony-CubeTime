@@ -845,7 +845,8 @@
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Calendar.ets",
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\CubeDetail.ets",
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\components\\Cube3DView.ets",
-        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Splash.ets"
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Splash.ets",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets"
       ],
       "error": false
     },
@@ -1688,11 +1689,11 @@
       "error": false
     },
     "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Index.ets": {
-      "mtimeMs": 1755741903691.7854,
+      "mtimeMs": 1755747776183.994,
       "children": [
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\services\\CubeStateManager.ts",
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\services\\TimeManagementService.ts",
-        "E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets",
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\components\\TimerDisplay.ets"
       ],
       "parent": [],
@@ -1723,12 +1724,12 @@
       "error": false
     },
     "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Dashboard.ets": {
-      "mtimeMs": 1755741935178.839,
+      "mtimeMs": 1755747800008.6287,
       "children": [
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\services\\TimeManagementService.ts",
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\DataStorage.ts",
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\components\\TimerDisplay.ets",
-        "E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts"
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets"
       ],
       "parent": [],
       "error": true,
@@ -1758,9 +1759,9 @@
       "error": false
     },
     "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Pomodoro.ets": {
-      "mtimeMs": 1755740435976.7866,
+      "mtimeMs": 1755747847744.5293,
       "children": [
-        "E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts"
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets"
       ],
       "parent": [],
       "error": true,
@@ -1769,9 +1770,9 @@
       ]
     },
     "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Calendar.ets": {
-      "mtimeMs": 1755741658296.4873,
+      "mtimeMs": 1755747811872.3862,
       "children": [
-        "E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts"
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets"
       ],
       "parent": [],
       "error": true,
@@ -1780,9 +1781,9 @@
       ]
     },
     "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Settings.ets": {
-      "mtimeMs": 1755741691168.0588,
+      "mtimeMs": 1755747867977.0176,
       "children": [
-        "E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts"
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets"
       ],
       "parent": [],
       "error": true,
@@ -2213,25 +2214,18 @@
       "error": false
     },
     "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Tasks.ets": {
-      "mtimeMs": 1755677725812.5981,
+      "mtimeMs": 1755747847743.5298,
       "children": [
-        "E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts"
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets"
       ],
       "parent": [],
       "error": true,
       "errorCodes": [
-        43,
-        38,
-        2322,
-        28007,
-        2551,
-        2769,
-        2345,
-        2304
+        28007
       ]
     },
     "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\components\\Cube3DView.ets": {
-      "mtimeMs": 1755657594957.878,
+      "mtimeMs": 1755745515801.8494,
       "children": [
         "E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts"
       ],
@@ -2241,12 +2235,20 @@
       "error": false
     },
     "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\CubeDetail.ets": {
-      "mtimeMs": 1755671590941.0825,
+      "mtimeMs": 1755748192022.3684,
       "children": [
-        "E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets",
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\services\\CubeStateManager.ts",
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\services\\NotificationService.ts",
         "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\components\\Cube3DView.ets"
+      ],
+      "parent": [],
+      "error": false
+    },
+    "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Splash.ets": {
+      "mtimeMs": 1755745460632.655,
+      "children": [
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets"
       ],
       "parent": [],
       "error": true,
@@ -2254,12 +2256,21 @@
         28007
       ]
     },
-    "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Splash.ets": {
-      "mtimeMs": 1755666444970.2383,
+    "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\utils\\NavigationManager.ets": {
+      "mtimeMs": 1755746126295.2805,
       "children": [
         "E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\api\\@ohos.router.d.ts"
       ],
-      "parent": [],
+      "parent": [
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Index.ets",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Dashboard.ets",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Pomodoro.ets",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Tasks.ets",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Calendar.ets",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Settings.ets",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\Splash.ets",
+        "E:\\Deveco_Project\\test\\entry\\src\\main\\ets\\pages\\CubeDetail.ets"
+      ],
       "error": true,
       "errorCodes": [
         28007

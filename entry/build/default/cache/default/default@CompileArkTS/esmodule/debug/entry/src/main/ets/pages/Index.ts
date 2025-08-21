@@ -19,10 +19,12 @@ interface Index_Params {
     buttonOpacity?: number;
     navScale?: number;
     navOpacity?: number;
+    itemScale?: number;
+    itemOpacity?: number;
     selectedTab?: number;
     timer?: number;
 }
-import router from "@ohos:router";
+import { navigationManager, TransitionType } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 interface CubeState {
     isSolved: boolean;
     currentTime: string;
@@ -56,6 +58,8 @@ class Index extends ViewPU {
         this.__buttonOpacity = new ObservedPropertySimplePU(0, this, "buttonOpacity");
         this.__navScale = new ObservedPropertySimplePU(0.9, this, "navScale");
         this.__navOpacity = new ObservedPropertySimplePU(0, this, "navOpacity");
+        this.__itemScale = new ObservedPropertySimplePU(1, this, "itemScale");
+        this.__itemOpacity = new ObservedPropertySimplePU(1, this, "itemOpacity");
         this.__selectedTab = new ObservedPropertySimplePU(0, this, "selectedTab");
         this.timer = 0;
         this.setInitiallyProvidedValue(params);
@@ -113,6 +117,12 @@ class Index extends ViewPU {
         if (params.navOpacity !== undefined) {
             this.navOpacity = params.navOpacity;
         }
+        if (params.itemScale !== undefined) {
+            this.itemScale = params.itemScale;
+        }
+        if (params.itemOpacity !== undefined) {
+            this.itemOpacity = params.itemOpacity;
+        }
         if (params.selectedTab !== undefined) {
             this.selectedTab = params.selectedTab;
         }
@@ -140,6 +150,8 @@ class Index extends ViewPU {
         this.__buttonOpacity.purgeDependencyOnElmtId(rmElmtId);
         this.__navScale.purgeDependencyOnElmtId(rmElmtId);
         this.__navOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__itemScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__itemOpacity.purgeDependencyOnElmtId(rmElmtId);
         this.__selectedTab.purgeDependencyOnElmtId(rmElmtId);
     }
     aboutToBeDeleted() {
@@ -160,6 +172,8 @@ class Index extends ViewPU {
         this.__buttonOpacity.aboutToBeDeleted();
         this.__navScale.aboutToBeDeleted();
         this.__navOpacity.aboutToBeDeleted();
+        this.__itemScale.aboutToBeDeleted();
+        this.__itemOpacity.aboutToBeDeleted();
         this.__selectedTab.aboutToBeDeleted();
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
@@ -284,6 +298,20 @@ class Index extends ViewPU {
     set navOpacity(newValue: number) {
         this.__navOpacity.set(newValue);
     }
+    private __itemScale: ObservedPropertySimplePU<number>;
+    get itemScale() {
+        return this.__itemScale.get();
+    }
+    set itemScale(newValue: number) {
+        this.__itemScale.set(newValue);
+    }
+    private __itemOpacity: ObservedPropertySimplePU<number>;
+    get itemOpacity() {
+        return this.__itemOpacity.get();
+    }
+    set itemOpacity(newValue: number) {
+        this.__itemOpacity.set(newValue);
+    }
     private __selectedTab: ObservedPropertySimplePU<number>;
     get selectedTab() {
         return this.__selectedTab.get();
@@ -295,34 +323,30 @@ class Index extends ViewPU {
     aboutToAppear() {
         this.generateScramble();
         this.loadBestTime();
+        // 确保页面返回时重置为可见状态
+        this.resetVisibility();
         this.animateIn();
     }
-    // 页面入场动画 - 只在页面加载时触发
+    onPageShow() {
+        // 页面重新显示时重置可见性和动画
+        this.resetVisibility();
+        this.animateIn();
+    }
+    // 入场动画
     private animateIn() {
-        // 标题动画
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
-            this.titleScale = 1;
+        Context.animateTo({ duration: 600, curve: Curve.EaseOut }, () => {
             this.titleOpacity = 1;
-        });
-        // 卡片动画
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
-            this.cardScale = 1;
+            this.titleScale = 1;
             this.cardOpacity = 1;
-        });
-        // 计时器动画
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
-            this.timerScale = 1;
-            this.timerOpacity = 1;
-        });
-        // 按钮动画
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 400 }, () => {
-            this.buttonScale = 1;
+            this.cardScale = 1;
             this.buttonOpacity = 1;
-        });
-        // 导航动画
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 500 }, () => {
-            this.navScale = 1;
+            this.buttonScale = 1;
+            this.timerOpacity = 1;
+            this.timerScale = 1;
             this.navOpacity = 1;
+            this.navScale = 1;
+            this.itemOpacity = 1;
+            this.itemScale = 1;
         });
     }
     private generateScramble() {
@@ -381,7 +405,42 @@ class Index extends ViewPU {
         }
     }
     private navigateTo(page: string) {
-        router.pushUrl({ url: `pages/${page}` });
+        // 使用带动画的页面切换
+        this.animateTransition(() => {
+            navigationManager.navigateTo(page, TransitionType.SLIDE_LEFT);
+        });
+    }
+    // 页面切换动画
+    private animateTransition(callback: () => void) {
+        // 创建退出动画效果
+        Context.animateTo({
+            duration: 200,
+            curve: Curve.EaseIn,
+            onFinish: callback
+        }, () => {
+            // 页面淡出效果
+            this.titleOpacity = 0;
+            this.cardOpacity = 0;
+            this.timerOpacity = 0;
+            this.buttonOpacity = 0;
+            this.navOpacity = 0;
+        });
+    }
+    // 重置页面可见性（解决返回空白问题）
+    private resetVisibility(): void {
+        // 强制重置所有动画状态为可见
+        this.titleScale = 1;
+        this.titleOpacity = 1;
+        this.cardScale = 1;
+        this.cardOpacity = 1;
+        this.itemScale = 1;
+        this.itemOpacity = 1;
+        this.buttonScale = 1;
+        this.buttonOpacity = 1;
+        this.timerScale = 1;
+        this.timerOpacity = 1;
+        this.navScale = 1;
+        this.navOpacity = 1;
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {

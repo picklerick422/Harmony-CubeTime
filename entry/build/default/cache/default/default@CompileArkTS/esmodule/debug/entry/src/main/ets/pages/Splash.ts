@@ -4,7 +4,7 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
 interface SplashPage_Params {
     timer?: number;
 }
-import router from "@ohos:router";
+import { navigationManager, TransitionType } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 class SplashPage extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
@@ -30,9 +30,17 @@ class SplashPage extends ViewPU {
     }
     private timer: number;
     aboutToAppear() {
-        // 3秒后跳转到首页
+        // 3秒后跳转到首页，使用淡入淡出效果
         this.timer = setTimeout(() => {
-            router.replaceUrl({ url: 'pages/Index' });
+            Context.animateTo({
+                duration: 500,
+                curve: Curve.EaseInOut,
+                onFinish: () => {
+                    navigationManager.replaceTo('Index', TransitionType.FADE);
+                }
+            }, () => {
+                // 淡出动画
+            });
         }, 3000);
     }
     aboutToDisappear() {

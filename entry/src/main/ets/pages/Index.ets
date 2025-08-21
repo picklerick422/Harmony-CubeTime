@@ -1,6 +1,6 @@
 import CubeStateManager from '../services/CubeStateManager';
 import TimeManagementService from '../services/TimeManagementService';
-import router from '@ohos.router';
+import { navigationManager, TransitionType } from '../utils/NavigationManager';
 import { TimerDisplay } from '../components/TimerDisplay'
 
 interface CubeState {
@@ -35,47 +35,42 @@ struct Index {
   @State private navScale: number = 0.9
   @State private navOpacity: number = 0
   
+  @State private itemScale: number = 1
+  @State private itemOpacity: number = 1
   @State private selectedTab: number = 0
   private timer: number = 0
 
   aboutToAppear() {
     this.generateScramble()
     this.loadBestTime()
+    // 确保页面返回时重置为可见状态
+    this.resetVisibility()
     this.animateIn()
   }
 
-  // 页面入场动画 - 只在页面加载时触发
-  private animateIn() {
-    // 标题动画
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
-      this.titleScale = 1
-      this.titleOpacity = 1
-    })
-    
-    // 卡片动画
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
-      this.cardScale = 1
-      this.cardOpacity = 1
-    })
-    
-    // 计时器动画
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
-      this.timerScale = 1
-      this.timerOpacity = 1
-    })
-    
-    // 按钮动画
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 400 }, () => {
-      this.buttonScale = 1
-      this.buttonOpacity = 1
-    })
-    
-    // 导航动画
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 500 }, () => {
-      this.navScale = 1
-      this.navOpacity = 1
-    })
+  onPageShow() {
+    // 页面重新显示时重置可见性和动画
+    this.resetVisibility()
+    this.animateIn()
   }
+  // 入场动画
+  private animateIn() {
+    animateTo({ duration: 600, curve: Curve.EaseOut }, () => {
+      this.titleOpacity = 1;
+      this.titleScale = 1;
+      this.cardOpacity = 1;
+      this.cardScale = 1;
+      this.buttonOpacity = 1;
+      this.buttonScale = 1;
+      this.timerOpacity = 1;
+      this.timerScale = 1;
+      this.navOpacity = 1;
+      this.navScale = 1;
+      this.itemOpacity = 1;
+      this.itemScale = 1;
+    });
+  }
+
 
   private generateScramble() {
     const moves = ["R", "U", "F", "L", "D", "B"]
@@ -140,7 +135,44 @@ struct Index {
   }
 
   private navigateTo(page: string) {
-    router.pushUrl({ url: `pages/${page}` })
+    // 使用带动画的页面切换
+    this.animateTransition(() => {
+      navigationManager.navigateTo(page, TransitionType.SLIDE_LEFT);
+    })
+  }
+
+  // 页面切换动画
+  private animateTransition(callback: () => void) {
+    // 创建退出动画效果
+    animateTo({ 
+      duration: 200, 
+      curve: Curve.EaseIn,
+      onFinish: callback
+    }, () => {
+      // 页面淡出效果
+      this.titleOpacity = 0
+      this.cardOpacity = 0
+      this.timerOpacity = 0
+      this.buttonOpacity = 0
+      this.navOpacity = 0
+    })
+  }
+
+  // 重置页面可见性（解决返回空白问题）
+  private resetVisibility(): void {
+    // 强制重置所有动画状态为可见
+    this.titleScale = 1
+    this.titleOpacity = 1
+    this.cardScale = 1
+    this.cardOpacity = 1
+    this.itemScale = 1
+    this.itemOpacity = 1
+    this.buttonScale = 1
+    this.buttonOpacity = 1
+    this.timerScale = 1
+    this.timerOpacity = 1
+    this.navScale = 1
+    this.navOpacity = 1
   }
 
   build() {

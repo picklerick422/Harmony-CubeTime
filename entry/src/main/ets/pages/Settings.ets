@@ -1,4 +1,4 @@
-import router from '@ohos.router';
+import { navigationManager, TransitionType } from '../utils/NavigationManager';
 
 class OptionItem {
   value: string;
@@ -38,6 +38,13 @@ class SettingsItem {
 @Entry
 @Component
 struct SettingsPage {
+  buttonOpacity: number = 1
+  buttonScale: number = 1
+  timerOpacity: number = 1
+  timerScale: number = 1
+  navOpacity: number = 1
+  navScale: number = 1
+
   @State titleScale: number = 0.8
   @State titleOpacity: number = 0
   @State cardScale: number = 0.9
@@ -113,15 +120,31 @@ struct SettingsPage {
     )
   ];
 
-  private updateSetting(key: string, value: string) {
+  private updateSetting(key: string, value: string): void {
     const itemIndex = this.settingsItems.findIndex(item => item.key === key);
     if (itemIndex !== -1) {
       this.settingsItems[itemIndex].value = value;
     }
   }
 
+  // 页面切换动画
+  private animateTransition(callback: () => void): void {
+    animateTo({ 
+      duration: 200, 
+      curve: Curve.EaseIn,
+      onFinish: callback
+    }, () => {
+      this.titleScale = 0
+      this.titleOpacity = 0
+      this.itemScale = 0
+      this.itemOpacity = 0
+      this.cardScale = 0
+      this.cardOpacity = 0
+    })
+  }
+
   // 页面入场动画 - 只在页面加载时触发
-  private animateIn() {
+  private animateIn(): void {
     animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
       this.titleScale = 1
       this.titleOpacity = 1
@@ -136,6 +159,51 @@ struct SettingsPage {
       this.itemScale = 1
       this.itemOpacity = 1
     })
+  }
+
+  aboutToAppear(): void {
+    // 确保页面返回时重置为可见状态
+    this.resetVisibility();
+    this.animateIn();
+  }
+
+  onPageShow(): void {
+    // 页面重新显示时重置可见性和动画
+    this.resetVisibility();
+    this.animateIn();
+  }
+
+  private resetVisibility(): void {
+    // 强制重置所有动画状态为可见
+    this.titleScale = 1
+    this.titleOpacity = 1
+    this.cardScale = 1
+    this.cardOpacity = 1
+    this.itemScale = 1
+    this.itemOpacity = 1
+    this.buttonScale = 1
+    this.buttonOpacity = 1
+    this.timerScale = 1
+    this.timerOpacity = 1
+    this.navScale = 1
+    this.navOpacity = 1
+  }
+
+  // 生成打乱步骤
+  private generateScramble(): string {
+    const moves = ["R", "U", "F", "L", "D", "B"]
+    const modifiers = ["", "'", "2"]
+    let scramble = ""
+    for (let i = 0; i < 20; i++) {
+      scramble += moves[Math.floor(Math.random() * moves.length)] + 
+                  modifiers[Math.floor(Math.random() * modifiers.length)] + " "
+    }
+    return scramble.trim()
+  }
+
+  // 加载最佳时间
+  private loadBestTime(): number {
+    return 0
   }
 
   build() {
@@ -155,7 +223,7 @@ struct SettingsPage {
           .height(24)
           .fillColor('#6B7280')
           .onClick(() => {
-            router.back();
+            this.animateTransition(() => navigationManager.navigateBack());
           })
       }
       .width('100%')
@@ -289,7 +357,7 @@ struct SettingsPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          router.pushUrl({ url: 'pages/Pomodoro' });
+          this.animateTransition(() => navigationManager.navigateTo('Pomodoro', TransitionType.SLIDE_LEFT));
         })
 
         Column() {
@@ -305,7 +373,7 @@ struct SettingsPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          router.pushUrl({ url: 'pages/Tasks' });
+          this.animateTransition(() => navigationManager.navigateTo('Tasks', TransitionType.SLIDE_LEFT));
         })
 
         Column() {
@@ -321,7 +389,7 @@ struct SettingsPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          router.pushUrl({ url: 'pages/Calendar' });
+          this.animateTransition(() => navigationManager.navigateTo('Calendar', TransitionType.SLIDE_LEFT));
         })
 
         Column() {
@@ -338,7 +406,7 @@ struct SettingsPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          router.back();
+          this.animateTransition(() => navigationManager.navigateBack());
         })
       }
       .width('100%')

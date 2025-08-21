@@ -1,11 +1,16 @@
 import TimeManagementService, { StatisticsData } from '../services/TimeManagementService'
 import DataStorage from '../utils/DataStorage'
 import { TimerDisplay } from '../components/TimerDisplay'
-import router from '@ohos.router'
+import { navigationManager, TransitionType } from '../utils/NavigationManager'
 
 @Entry
 @Component
 struct Dashboard {
+  timerOpacity: number = 1
+  timerScale: number = 1
+  navOpacity: number = 1
+  navScale: number = 1
+
   @State timeLeft: number = 0
   @State isRunning: boolean = false
   @State currentMode: string = 'Work'
@@ -63,26 +68,17 @@ struct Dashboard {
   }
 
   async aboutToAppear() {
-    await this.timeService.init();
-    this.loadStatistics();
-    this.startTimerUpdate();
-    this.animateIn();
+    this.generateScramble()
+    this.loadBestTime()
+    // 确保页面返回时重置为可见状态
+    this.resetVisibility()
+    this.animateIn()
   }
 
-  loadStatistics(): void {
-    const stats: StatisticsData = this.timeService.getStatistics();
-    this.totalFocusTime = stats.totalFocusTime;
-    this.todayFocusTime = stats.todayFocusTime;
-    this.sessionsCount = stats.sessionsCount;
-    this.currentStreak = stats.currentStreak;
-  }
-
-  startTimerUpdate() {
-    setInterval(() => {
-      this.timeLeft = this.timeService.getTimeLeft();
-      this.isRunning = this.timeService.isRunning();
-      this.currentMode = this.timeService.getCurrentMode();
-    }, 1000);
+  onPageShow() {
+    // 页面重新显示时重置可见性和动画
+    this.resetVisibility()
+    this.animateIn()
   }
 
   build() {
@@ -95,7 +91,9 @@ struct Dashboard {
                 .height(24)
                 .fillColor(Color.White)
                 .onClick(() => {
-                  router.back();
+                  this.animateTransition(() => {
+                    navigationManager.navigateBack();
+                  });
                 })
               
               Text('仪表盘')
@@ -224,21 +222,27 @@ struct Dashboard {
             Button('Tasks')
               .layoutWeight(1)
               .onClick(() => {
-                  router.pushUrl({ url: 'pages/Tasks' });
+                  this.animateTransition(() => {
+                    navigationManager.navigateTo('pages/Tasks');
+                  });
                 })
               .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
 
             Button('Calendar')
               .layoutWeight(1)
               .onClick(() => {
-                  router.pushUrl({ url: 'pages/Calendar' });
+                  this.animateTransition(() => {
+                    navigationManager.navigateTo('pages/Calendar');
+                  });
                 })
               .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
 
             Button('Settings')
               .layoutWeight(1)
               .onClick(() => {
-                  router.pushUrl({ url: 'pages/Settings' });
+                  this.animateTransition(() => {
+                    navigationManager.navigateTo('pages/Settings');
+                  });
                 })
               .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
           }
@@ -255,4 +259,60 @@ struct Dashboard {
     .height('100%')
     .backgroundColor('#F2F2F7')
   }
+
+  // 生成打乱步骤
+  private generateScramble(): string {
+    const moves = ["R", "U", "F", "L", "D", "B"];
+    const modifiers = ["", "'", "2"];
+    let scramble = "";
+    for (let i = 0; i < 20; i++) {
+      scramble += moves[Math.floor(Math.random() * moves.length)] + 
+                  modifiers[Math.floor(Math.random() * modifiers.length)] + " ";
+    }
+    return scramble.trim();
+  }
+
+  // 加载最佳时间
+  private loadBestTime(): number {
+    return 0;
+  }
+
+  // 重置可见性
+  private resetVisibility(): void {
+    this.titleOpacity = 1;
+    this.titleScale = 1;
+    this.buttonOpacity = 1;
+    this.buttonScale = 1;
+    this.cardOpacity = 1;
+    this.cardScale = 1;
+    this.itemOpacity = 1;
+    this.itemScale = 1;
+    this.timerOpacity = 1;
+    this.timerScale = 1;
+    this.navOpacity = 1;
+    this.navScale = 1;
+  }
+
+  // 页面切换动画
+  private animateTransition(callback: () => void): void {
+    animateTo({ 
+      duration: 200, 
+      curve: Curve.EaseIn,
+      onFinish: callback
+    }, () => {
+      this.titleOpacity = 0;
+      this.titleScale = 0.8;
+      this.buttonOpacity = 0;
+      this.buttonScale = 0.8;
+      this.cardOpacity = 0;
+      this.cardScale = 0.8;
+      this.itemOpacity = 0;
+      this.itemScale = 0.8;
+      this.timerOpacity = 0;
+      this.timerScale = 0.8;
+      this.navOpacity = 0;
+      this.navScale = 0.8;
+    });
+  }
+
 }

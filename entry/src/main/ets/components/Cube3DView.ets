@@ -1,5 +1,3 @@
-import router from '@ohos.router';
-
 interface ColorMap {
   white: string;
   yellow: string;

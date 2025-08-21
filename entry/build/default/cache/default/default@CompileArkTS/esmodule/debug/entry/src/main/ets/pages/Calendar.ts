@@ -2,6 +2,16 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
 interface CalendarPage_Params {
+    buttonOpacity?: number;
+    buttonScale?: number;
+    cardOpacity?: number;
+    cardScale?: number;
+    itemOpacity?: number;
+    itemScale?: number;
+    timerOpacity?: number;
+    timerScale?: number;
+    navOpacity?: number;
+    navScale?: number;
     currentDate?: Date;
     selectedDate?: Date;
     tasks?: CalendarTask[];
@@ -18,7 +28,7 @@ interface CalendarPage_Params {
     taskScale?: number;
     taskOpacity?: number;
 }
-import router from "@ohos:router";
+import { navigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 interface CalendarTask {
     id: string;
     title: string;
@@ -44,6 +54,16 @@ class CalendarPage extends ViewPU {
         if (typeof paramsLambda === "function") {
             this.paramsGenerator_ = paramsLambda;
         }
+        this.buttonOpacity = 1;
+        this.buttonScale = 1;
+        this.cardOpacity = 1;
+        this.cardScale = 1;
+        this.itemOpacity = 1;
+        this.itemScale = 1;
+        this.timerOpacity = 1;
+        this.timerScale = 1;
+        this.navOpacity = 1;
+        this.navScale = 1;
         this.__currentDate = new ObservedPropertyObjectPU(new Date(), this, "currentDate");
         this.__selectedDate = new ObservedPropertyObjectPU(new Date(), this, "selectedDate");
         this.__tasks = new ObservedPropertyObjectPU([
@@ -72,6 +92,36 @@ class CalendarPage extends ViewPU {
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params: CalendarPage_Params) {
+        if (params.buttonOpacity !== undefined) {
+            this.buttonOpacity = params.buttonOpacity;
+        }
+        if (params.buttonScale !== undefined) {
+            this.buttonScale = params.buttonScale;
+        }
+        if (params.cardOpacity !== undefined) {
+            this.cardOpacity = params.cardOpacity;
+        }
+        if (params.cardScale !== undefined) {
+            this.cardScale = params.cardScale;
+        }
+        if (params.itemOpacity !== undefined) {
+            this.itemOpacity = params.itemOpacity;
+        }
+        if (params.itemScale !== undefined) {
+            this.itemScale = params.itemScale;
+        }
+        if (params.timerOpacity !== undefined) {
+            this.timerOpacity = params.timerOpacity;
+        }
+        if (params.timerScale !== undefined) {
+            this.timerScale = params.timerScale;
+        }
+        if (params.navOpacity !== undefined) {
+            this.navOpacity = params.navOpacity;
+        }
+        if (params.navScale !== undefined) {
+            this.navScale = params.navScale;
+        }
         if (params.currentDate !== undefined) {
             this.currentDate = params.currentDate;
         }
@@ -156,6 +206,16 @@ class CalendarPage extends ViewPU {
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
+    private buttonOpacity: number;
+    private buttonScale: number;
+    private cardOpacity: number;
+    private cardScale: number;
+    private itemOpacity: number;
+    private itemScale: number;
+    private timerOpacity: number;
+    private timerScale: number;
+    private navOpacity: number;
+    private navScale: number;
     private __currentDate: ObservedPropertyObjectPU<Date>;
     get currentDate() {
         return this.__currentDate.get();
@@ -329,6 +389,18 @@ class CalendarPage extends ViewPU {
     getWeekDays(): string[] {
         return ['日', '一', '二', '三', '四', '五', '六'];
     }
+    // 页面切换动画
+    private animateTransition(callback: () => void) {
+        Context.animateTo({
+            duration: 200,
+            curve: Curve.EaseIn,
+            onFinish: callback
+        }, () => {
+            this.titleOpacity = 0;
+            this.calendarOpacity = 0;
+            this.taskOpacity = 0;
+        });
+    }
     changeMonth(delta: number): void {
         const newDate = new Date(this.currentDate);
         newDate.setMonth(newDate.getMonth() + delta);
@@ -354,6 +426,33 @@ class CalendarPage extends ViewPU {
         if (index !== -1) {
             this.events.splice(index, 1);
         }
+    }
+    aboutToAppear() {
+        this.generateScramble();
+        this.loadBestTime();
+        // 确保页面返回时重置为可见状态
+        this.resetVisibility();
+        this.animateIn();
+    }
+    onPageShow() {
+        // 页面重新显示时重置可见性和动画
+        this.resetVisibility();
+        this.animateIn();
+    }
+    private resetVisibility(): void {
+        // 强制重置所有动画状态为可见
+        this.titleScale = 1;
+        this.titleOpacity = 1;
+        this.cardScale = 1;
+        this.cardOpacity = 1;
+        this.itemScale = 1;
+        this.itemOpacity = 1;
+        this.buttonScale = 1;
+        this.buttonOpacity = 1;
+        this.timerScale = 1;
+        this.timerOpacity = 1;
+        this.navScale = 1;
+        this.navOpacity = 1;
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -388,7 +487,7 @@ class CalendarPage extends ViewPU {
             Image.width(24);
             Image.height(24);
             Image.fillColor('#6B7280');
-            Image.onClick(() => router.back());
+            Image.onClick(() => this.animateTransition(() => navigationManager.navigateBack()));
         }, Image);
         // 顶部标题栏
         Row.pop();
@@ -785,6 +884,21 @@ class CalendarPage extends ViewPU {
         // 选中日期详情
         Column.pop();
         Column.pop();
+    }
+    // 生成打乱步骤
+    private generateScramble(): string {
+        const moves = ["R", "U", "F", "L", "D", "B"];
+        const modifiers = ["", "'", "2"];
+        let scramble = "";
+        for (let i = 0; i < 20; i++) {
+            scramble += moves[Math.floor(Math.random() * moves.length)] +
+                modifiers[Math.floor(Math.random() * modifiers.length)] + " ";
+        }
+        return scramble.trim();
+    }
+    // 加载最佳时间
+    private loadBestTime(): number {
+        return 0;
     }
     rerender() {
         this.updateDirtyElements();

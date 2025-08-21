@@ -1,4 +1,4 @@
-import router from '@ohos.router';
+import { navigationManager, TransitionType } from '../utils/NavigationManager';
 import CubeStateManager from '../services/CubeStateManager';
 import NotificationService from '../services/NotificationService';
 import { Cube3DView } from '../components/Cube3DView';
@@ -46,9 +46,25 @@ struct CubeDetail {
     this.startSensorUpdates();
   }
 
+  onPageShow() {
+    // 页面重新显示时重置可见性和动画
+    this.resetVisibility()
+    this.animateIn()
+  }
+
   aboutToDisappear() {
     this.stopAutoRotation();
     this.stopSensorUpdates();
+  }
+
+  private resetVisibility() {
+    // 重置页面可见性状态
+    // 这里可以添加重置动画状态或可见性相关的逻辑
+  }
+
+  private animateIn() {
+    // 页面进入动画
+    // 这里可以添加页面进入时的动画效果
   }
 
   private loadCubeData() {
@@ -142,7 +158,7 @@ struct CubeDetail {
             .height(24)
             .fillColor(Color.White)
             .onClick(() => {
-              router.back();
+              navigationManager.navigateBack();
             })
           
           Text('魔方详情')

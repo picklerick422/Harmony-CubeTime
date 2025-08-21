@@ -21,7 +21,7 @@ interface CubeDetail_Params {
     accelerometerData?: Array<number>;
     gyroscopeData?: Array<number>;
 }
-import router from "@ohos:router";
+import { navigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 import CubeStateManager from "@bundle:com.example.cubetime/entry/ets/services/CubeStateManager";
 import NotificationService from "@bundle:com.example.cubetime/entry/ets/services/NotificationService";
 import { Cube3DView } from "@bundle:com.example.cubetime/entry/ets/components/Cube3DView";
@@ -277,9 +277,22 @@ class CubeDetail extends ViewPU {
         this.startAutoRotation();
         this.startSensorUpdates();
     }
+    onPageShow() {
+        // 页面重新显示时重置可见性和动画
+        this.resetVisibility();
+        this.animateIn();
+    }
     aboutToDisappear() {
         this.stopAutoRotation();
         this.stopSensorUpdates();
+    }
+    private resetVisibility() {
+        // 重置页面可见性状态
+        // 这里可以添加重置动画状态或可见性相关的逻辑
+    }
+    private animateIn() {
+        // 页面进入动画
+        // 这里可以添加页面进入时的动画效果
     }
     private loadCubeData() {
         // 加载魔方状态数据
@@ -383,7 +396,7 @@ class CubeDetail extends ViewPU {
             Image.height(24);
             Image.fillColor(Color.White);
             Image.onClick(() => {
-                router.back();
+                navigationManager.navigateBack();
             });
         }, Image);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -440,7 +453,7 @@ class CubeDetail extends ViewPU {
                         autoRotate: this.autoRotate,
                         cubeSize: 120,
                         showLabels: true
-                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/CubeDetail.ets", line: 178, col: 13 });
+                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/CubeDetail.ets", line: 194, col: 13 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {
