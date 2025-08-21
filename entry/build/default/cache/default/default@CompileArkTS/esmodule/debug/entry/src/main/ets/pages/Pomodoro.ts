@@ -479,6 +479,8 @@ class PomodoroPage extends ViewPU {
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#1F2937');
             Text.layoutWeight(1);
+            Text.opacity(this.titleOpacity);
+            Text.scale({ x: this.titleScale, y: this.titleScale });
         }, Text);
         Text.pop();
         // 顶部标题
@@ -506,6 +508,8 @@ class PomodoroPage extends ViewPU {
             Stack.width(200);
             Stack.height(200);
             Stack.margin({ bottom: 32 });
+            Stack.opacity(this.timerOpacity);
+            Stack.scale({ x: this.timerScale, y: this.timerScale });
         }, Stack);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Circle.create();
@@ -598,6 +602,8 @@ class PomodoroPage extends ViewPU {
                         Column.create();
                         Column.width('100%');
                         Column.padding({ left: 16, right: 16, bottom: 16 });
+                        Column.opacity(this.taskOpacity);
+                        Column.scale({ x: this.taskScale, y: this.taskScale });
                     }, Column);
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Text.create('当前任务');
@@ -644,6 +650,10 @@ class PomodoroPage extends ViewPU {
             Row.width('100%');
             // 添加任务
             Row.padding({ left: 16, right: 16, top: 8 });
+            // 添加任务
+            Row.opacity(this.taskOpacity);
+            // 添加任务
+            Row.scale({ x: this.taskScale, y: this.taskScale });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             TextInput.create({ placeholder: '添加新任务...', text: this.newTaskTitle });
@@ -679,6 +689,10 @@ class PomodoroPage extends ViewPU {
             List.height(200);
             // 任务列表
             List.padding({ left: 16, right: 16, top: 8 });
+            // 任务列表
+            List.opacity(this.taskOpacity);
+            // 任务列表
+            List.scale({ x: this.taskScale, y: this.taskScale });
         }, List);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             ForEach.create();
@@ -785,6 +799,10 @@ class PomodoroPage extends ViewPU {
             Column.borderRadius(12);
             // 设置区域
             Column.margin({ left: 16, right: 16, top: 16 });
+            // 设置区域
+            Column.opacity(this.cardOpacity);
+            // 设置区域
+            Column.scale({ x: this.cardScale, y: this.cardScale });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('计时器设置');

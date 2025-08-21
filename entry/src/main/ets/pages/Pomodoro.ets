@@ -244,6 +244,8 @@ struct PomodoroPage {
           .fontWeight(FontWeight.Bold)
           .fontColor('#1F2937')
           .layoutWeight(1)
+          .opacity(this.titleOpacity)
+          .scale({ x: this.titleScale, y: this.titleScale })
       }
       .width('100%')
       .padding(16)
@@ -287,6 +289,8 @@ struct PomodoroPage {
         .width(200)
         .height(200)
         .margin({ bottom: 32 })
+        .opacity(this.timerOpacity)
+        .scale({ x: this.timerScale, y: this.timerScale })
 
         Row({ space: 16 }) {
           Button(this.isRunning ? '暂停' : '开始')
@@ -343,6 +347,8 @@ struct PomodoroPage {
         }
         .width('100%')
         .padding({ left: 16, right: 16, bottom: 16 })
+        .opacity(this.taskOpacity)
+        .scale({ x: this.taskScale, y: this.taskScale })
       }
 
       // 添加任务
@@ -371,6 +377,8 @@ struct PomodoroPage {
       }
       .width('100%')
       .padding({ left: 16, right: 16, top: 8 })
+      .opacity(this.taskOpacity)
+      .scale({ x: this.taskScale, y: this.taskScale })
 
       // 任务列表
       List({ space: 4 }) {
@@ -431,6 +439,8 @@ struct PomodoroPage {
       }
       .height(200)
       .padding({ left: 16, right: 16, top: 8 })
+      .opacity(this.taskOpacity)
+      .scale({ x: this.taskScale, y: this.taskScale })
 
       // 设置区域
       Column() {
@@ -509,6 +519,8 @@ struct PomodoroPage {
       .backgroundColor('#FFFFFF')
       .borderRadius(12)
       .margin({ left: 16, right: 16, top: 16 })
+      .opacity(this.cardOpacity)
+      .scale({ x: this.cardScale, y: this.cardScale })
 
       // 底部导航
       Row() {

@@ -1,0 +1,1431 @@
+[2025-08-21T14:39:57.175] [DEBUG] debug-file - Ark compile task finished.finished time is 52984127371100
+[2025-08-21T14:53:26.741] [DEBUG] debug-file - session manager: set active socket. socketId=PCoxinipF8SG2mTMAACt
+[2025-08-21T14:53:26.765] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2025-08-21T14:53:26.783] [DEBUG] debug-file - Hvigor init with startParameters:{
+  hvigorfileTypeCheck: false,
+  parallelExecution: true,
+  incrementalExecution: true,
+  printStackTrace: false,
+  daemon: true,
+  analyze: 1,
+  logLevel: Level { level: 20000, levelStr: 'INFO', colour: 'green' }
+}
+[2025-08-21T14:53:26.787] [DEBUG] debug-file - Cache service initialization finished in 5 ms 
+[2025-08-21T14:53:26.802] [DEBUG] debug-file - hvigorfile, resolving E:\Deveco_Project\test\hvigorfile.ts
+[2025-08-21T14:53:26.805] [DEBUG] debug-file - hvigorfile, require result:  { default: { plugins: [] } }
+[2025-08-21T14:53:26.805] [DEBUG] debug-file - hvigorfile, binding system plugins null
+[2025-08-21T14:53:26.814] [DEBUG] debug-file - Start initialize project's product build option map with build mode debug.
+[2025-08-21T14:53:26.815] [DEBUG] debug-file - Picking option from product 'default' with build mode 'debug'.
+[2025-08-21T14:53:26.815] [DEBUG] debug-file - Product 'default' build option initialized
+[2025-08-21T14:53:26.815] [DEBUG] debug-file - End initialize project's product build option map with build mode 'debug'.
+[2025-08-21T14:53:26.817] [DEBUG] debug-file - Obtain build option for product 'default'in this build.
+[2025-08-21T14:53:26.833] [DEBUG] debug-file - Start recording SDK configuration permission data.
+[2025-08-21T14:53:26.863] [DEBUG] debug-file - Sdk init in 41 ms 
+[2025-08-21T14:53:26.888] [DEBUG] debug-file - Project task initialization takes 24 ms 
+[2025-08-21T14:53:26.888] [DEBUG] debug-file - hvigorfile, binding custom plugins []
+[2025-08-21T14:53:26.888] [DEBUG] debug-file - hvigorfile, no custom plugins were found in E:\Deveco_Project\test\hvigorfile.ts
+[2025-08-21T14:53:26.888] [DEBUG] debug-file - hvigorfile, resolve finished E:\Deveco_Project\test\hvigorfile.ts
+[2025-08-21T14:53:26.894] [DEBUG] debug-file - hvigorfile, resolving E:\Deveco_Project\test\entry\hvigorfile.ts
+[2025-08-21T14:53:26.897] [DEBUG] debug-file - hvigorfile, require result:  { default: { plugins: [] } }
+[2025-08-21T14:53:26.897] [DEBUG] debug-file - hvigorfile, binding system plugins null
+[2025-08-21T14:53:26.902] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=debug
+[2025-08-21T14:53:26.902] [DEBUG] debug-file - Target 'default' config initialized
+[2025-08-21T14:53:26.903] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2025-08-21T14:53:26.903] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2025-08-21T14:53:26.903] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=release
+[2025-08-21T14:53:26.903] [DEBUG] debug-file - Target 'default' config initialized
+[2025-08-21T14:53:26.903] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2025-08-21T14:53:26.903] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2025-08-21T14:53:26.903] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=debug
+[2025-08-21T14:53:26.903] [DEBUG] debug-file - Target 'default' config initialized
+[2025-08-21T14:53:26.904] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2025-08-21T14:53:26.904] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2025-08-21T14:53:26.904] [DEBUG] debug-file - Obtain build option for module 'entry' target 'default'in this build.
+[2025-08-21T14:53:26.907] [DEBUG] debug-file - Module entry task initialization takes 1 ms 
+[2025-08-21T14:53:26.907] [DEBUG] debug-file - hvigorfile, binding custom plugins []
+[2025-08-21T14:53:26.907] [DEBUG] debug-file - hvigorfile, no custom plugins were found in E:\Deveco_Project\test\entry\hvigorfile.ts
+[2025-08-21T14:53:26.907] [DEBUG] debug-file - hvigorfile, resolve finished E:\Deveco_Project\test\entry\hvigorfile.ts
+[2025-08-21T14:53:26.933] [DEBUG] debug-file - hvigorfile, resolve hvigorfile dependencies in 26 ms 
+[2025-08-21T14:53:26.934] [DEBUG] debug-file - project has submodules:entry
+[2025-08-21T14:53:26.935] [DEBUG] debug-file - start to load updatedOhPackageInfo to the disk
+[2025-08-21T14:53:26.940] [DEBUG] debug-file - load to the disk finished
+[2025-08-21T14:53:26.942] [DEBUG] debug-file - Start to initialize dependency information.
+[2025-08-21T14:53:26.943] [DEBUG] debug-file - Module test Collected Dependency: 
+[2025-08-21T14:53:26.943] [DEBUG] debug-file - Module test's total dependency: 0
+[2025-08-21T14:53:26.943] [DEBUG] debug-file - Start to initialize dependency information.
+[2025-08-21T14:53:26.945] [DEBUG] debug-file - Module entry Collected Dependency: 
+[2025-08-21T14:53:26.945] [DEBUG] debug-file - Module entry's total dependency: 0
+[2025-08-21T14:53:26.947] [DEBUG] debug-file - Configuration phase cost:154 ms 
+[2025-08-21T14:53:26.949] [DEBUG] debug-file - Configuration task cost before running: 180 ms 
+[2025-08-21T14:53:26.952] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.952] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.952] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:26.955] [DEBUG] debug-file - Executing task :entry:default@PreBuild
+[2025-08-21T14:53:26.962] [DEBUG] debug-file - Incremental task entry:default@PreBuild pre-execution cost: 5 ms .
+[2025-08-21T14:53:26.962] [DEBUG] debug-file - entry : default@PreBuild cost memory 0.24173736572265625
+[2025-08-21T14:53:26.965] [INFO] debug-file - UP-TO-DATE :entry:default@PreBuild...  
+[2025-08-21T14:53:26.969] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.969] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.969] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:26.970] [DEBUG] debug-file - Executing task :entry:default@CreateModuleInfo
+[2025-08-21T14:53:26.970] [DEBUG] debug-file - Task 'entry:default@CreateModuleInfo' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T14:53:26.971] [DEBUG] debug-file - entry : default@CreateModuleInfo cost memory 0.05992889404296875
+[2025-08-21T14:53:26.971] [DEBUG] debug-file - runTaskFromQueue task cost before running: 203 ms 
+[2025-08-21T14:53:26.972] [INFO] debug-file - Finished :entry:default@CreateModuleInfo... after 2 ms 
+[2025-08-21T14:53:26.974] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.975] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.975] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:26.977] [DEBUG] debug-file - Executing task :entry:default@GenerateMetadata
+[2025-08-21T14:53:26.978] [DEBUG] debug-file - Task 'entry:default@GenerateMetadata' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T14:53:26.979] [DEBUG] debug-file - Incremental task entry:default@GenerateMetadata pre-execution cost: 1 ms .
+[2025-08-21T14:53:26.979] [DEBUG] debug-file - entry : default@GenerateMetadata cost memory 0.09009552001953125
+[2025-08-21T14:53:26.979] [INFO] debug-file - UP-TO-DATE :entry:default@GenerateMetadata...  
+[2025-08-21T14:53:26.981] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.981] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.981] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:26.982] [DEBUG] debug-file - Executing task :entry:default@ConfigureCmake
+[2025-08-21T14:53:26.982] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.982] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.982] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:26.982] [DEBUG] debug-file - entry : default@ConfigureCmake cost memory 0.0546112060546875
+[2025-08-21T14:53:26.982] [DEBUG] debug-file - runTaskFromQueue task cost before running: 213 ms 
+[2025-08-21T14:53:26.982] [INFO] debug-file - Finished :entry:default@ConfigureCmake... after 1 ms 
+[2025-08-21T14:53:26.984] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.984] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.984] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:26.985] [DEBUG] debug-file - Executing task :entry:default@MergeProfile
+[2025-08-21T14:53:26.987] [DEBUG] debug-file - Incremental task entry:default@MergeProfile pre-execution cost: 2 ms .
+[2025-08-21T14:53:26.987] [DEBUG] debug-file - entry : default@MergeProfile cost memory 0.108154296875
+[2025-08-21T14:53:26.987] [INFO] debug-file - UP-TO-DATE :entry:default@MergeProfile...  
+[2025-08-21T14:53:26.990] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.990] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.990] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:26.990] [DEBUG] debug-file - Executing task :entry:default@CreateBuildProfile
+[2025-08-21T14:53:26.991] [DEBUG] debug-file - Task 'entry:default@CreateBuildProfile' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T14:53:26.992] [DEBUG] debug-file - Incremental task entry:default@CreateBuildProfile pre-execution cost: 1 ms .
+[2025-08-21T14:53:26.992] [DEBUG] debug-file - entry : default@CreateBuildProfile cost memory 0.09304046630859375
+[2025-08-21T14:53:26.993] [INFO] debug-file - UP-TO-DATE :entry:default@CreateBuildProfile...  
+[2025-08-21T14:53:26.995] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.996] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.996] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:26.996] [DEBUG] debug-file - Executing task :entry:default@PreCheckSyscap
+[2025-08-21T14:53:26.996] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.996] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.997] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:26.997] [DEBUG] debug-file - entry : default@PreCheckSyscap cost memory 0.04668426513671875
+[2025-08-21T14:53:26.997] [DEBUG] debug-file - runTaskFromQueue task cost before running: 228 ms 
+[2025-08-21T14:53:26.997] [INFO] debug-file - Finished :entry:default@PreCheckSyscap... after 1 ms 
+[2025-08-21T14:53:26.999] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.999] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:26.999] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.000] [DEBUG] debug-file - Executing task :entry:default@GeneratePkgContextInfo
+[2025-08-21T14:53:27.003] [DEBUG] debug-file - Task 'entry:default@GeneratePkgContextInfo' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T14:53:27.003] [DEBUG] debug-file - entry : default@GeneratePkgContextInfo cost memory 0.1556396484375
+[2025-08-21T14:53:27.003] [DEBUG] debug-file - runTaskFromQueue task cost before running: 235 ms 
+[2025-08-21T14:53:27.003] [INFO] debug-file - Finished :entry:default@GeneratePkgContextInfo... after 4 ms 
+[2025-08-21T14:53:27.006] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.006] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.006] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.010] [DEBUG] debug-file - Executing task :entry:default@ProcessIntegratedHsp
+[2025-08-21T14:53:27.013] [DEBUG] debug-file - entry:default@ProcessIntegratedHsp is not up-to-date, since the output file 'E:\Deveco_Project\test\build\cache\default\integrated_hsp\integratedHspCache.json' does not exist.
+[2025-08-21T14:53:27.013] [DEBUG] debug-file - Incremental task entry:default@ProcessIntegratedHsp pre-execution cost: 2 ms .
+[2025-08-21T14:53:27.013] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.013] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.013] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.013] [DEBUG] debug-file - entry : default@ProcessIntegratedHsp cost memory 0.14241790771484375
+[2025-08-21T14:53:27.013] [DEBUG] debug-file - runTaskFromQueue task cost before running: 244 ms 
+[2025-08-21T14:53:27.014] [INFO] debug-file - Finished :entry:default@ProcessIntegratedHsp... after 3 ms 
+[2025-08-21T14:53:27.017] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.017] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.017] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.017] [DEBUG] debug-file - Executing task :entry:default@BuildNativeWithCmake
+[2025-08-21T14:53:27.018] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.018] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.018] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.018] [DEBUG] debug-file - entry : default@BuildNativeWithCmake cost memory 0.04750823974609375
+[2025-08-21T14:53:27.018] [DEBUG] debug-file - runTaskFromQueue task cost before running: 249 ms 
+[2025-08-21T14:53:27.018] [INFO] debug-file - Finished :entry:default@BuildNativeWithCmake... after 1 ms 
+[2025-08-21T14:53:27.021] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.021] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.021] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.021] [DEBUG] debug-file - Executing task :entry:default@MakePackInfo
+[2025-08-21T14:53:27.024] [DEBUG] debug-file - Incremental task entry:default@MakePackInfo pre-execution cost: 3 ms .
+[2025-08-21T14:53:27.024] [DEBUG] debug-file - entry : default@MakePackInfo cost memory 0.13423919677734375
+[2025-08-21T14:53:27.025] [INFO] debug-file - UP-TO-DATE :entry:default@MakePackInfo...  
+[2025-08-21T14:53:27.028] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.028] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.028] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.029] [DEBUG] debug-file - Executing task :entry:default@SyscapTransform
+[2025-08-21T14:53:27.029] [DEBUG] debug-file - File: 'E:\Deveco_Project\test\entry\src\main\syscap.json' from 'sysCapJsonPath' is not exists, just ignore.
+[2025-08-21T14:53:27.030] [DEBUG] debug-file - Task 'entry:default@SyscapTransform' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T14:53:27.032] [DEBUG] debug-file - entry:default@SyscapTransform is not up-to-date, since the output file 'E:\Deveco_Project\test\entry\build\default\intermediates\syscap\default\rpcid.sc' does not exist.
+[2025-08-21T14:53:27.032] [DEBUG] debug-file - Incremental task entry:default@SyscapTransform pre-execution cost: 3 ms .
+[2025-08-21T14:53:27.032] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.032] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.032] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.032] [DEBUG] debug-file - entry : default@SyscapTransform cost memory 0.1655731201171875
+[2025-08-21T14:53:27.032] [DEBUG] debug-file - runTaskFromQueue task cost before running: 264 ms 
+[2025-08-21T14:53:27.032] [INFO] debug-file - Finished :entry:default@SyscapTransform... after 4 ms 
+[2025-08-21T14:53:27.035] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.035] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.035] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.036] [DEBUG] debug-file - Executing task :entry:default@ProcessProfile
+[2025-08-21T14:53:27.038] [DEBUG] debug-file - Incremental task entry:default@ProcessProfile pre-execution cost: 1 ms .
+[2025-08-21T14:53:27.038] [DEBUG] debug-file - entry : default@ProcessProfile cost memory 0.11156463623046875
+[2025-08-21T14:53:27.038] [INFO] debug-file - UP-TO-DATE :entry:default@ProcessProfile...  
+[2025-08-21T14:53:27.041] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.041] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.041] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.042] [DEBUG] debug-file - Executing task :entry:default@ProcessRouterMap
+[2025-08-21T14:53:27.046] [DEBUG] debug-file - Incremental task entry:default@ProcessRouterMap pre-execution cost: 4 ms .
+[2025-08-21T14:53:27.046] [DEBUG] debug-file - entry : default@ProcessRouterMap cost memory 0.1441802978515625
+[2025-08-21T14:53:27.047] [INFO] debug-file - UP-TO-DATE :entry:default@ProcessRouterMap...  
+[2025-08-21T14:53:27.050] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.050] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.050] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.050] [DEBUG] debug-file - Executing task :entry:default@ProcessStartupConfig
+[2025-08-21T14:53:27.050] [DEBUG] debug-file - Task 'entry:default@ProcessStartupConfig' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T14:53:27.052] [DEBUG] debug-file - entry:default@ProcessStartupConfig is not up-to-date, since the output file 'E:\Deveco_Project\test\entry\build\default\intermediates\startup\default\startup_config.json' does not exist.
+[2025-08-21T14:53:27.052] [DEBUG] debug-file - Incremental task entry:default@ProcessStartupConfig pre-execution cost: 2 ms .
+[2025-08-21T14:53:27.052] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.052] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.052] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.053] [DEBUG] debug-file - entry : default@ProcessStartupConfig cost memory 0.175018310546875
+[2025-08-21T14:53:27.053] [DEBUG] debug-file - runTaskFromQueue task cost before running: 284 ms 
+[2025-08-21T14:53:27.054] [INFO] debug-file - Finished :entry:default@ProcessStartupConfig... after 3 ms 
+[2025-08-21T14:53:27.056] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.056] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.057] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.057] [DEBUG] debug-file - Executing task :entry:default@BuildNativeWithNinja
+[2025-08-21T14:53:27.057] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.057] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.058] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.058] [DEBUG] debug-file - entry : default@BuildNativeWithNinja cost memory 0.066131591796875
+[2025-08-21T14:53:27.058] [DEBUG] debug-file - runTaskFromQueue task cost before running: 290 ms 
+[2025-08-21T14:53:27.059] [INFO] debug-file - Finished :entry:default@BuildNativeWithNinja... after 2 ms 
+[2025-08-21T14:53:27.062] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.062] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.062] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.063] [DEBUG] debug-file - restool module names: entry; moduleName=entry, taskName=default@ProcessResource
+[2025-08-21T14:53:27.065] [DEBUG] debug-file - Executing task :entry:default@ProcessResource
+[2025-08-21T14:53:27.068] [DEBUG] debug-file - Incremental task entry:default@ProcessResource pre-execution cost: 2 ms .
+[2025-08-21T14:53:27.068] [DEBUG] debug-file - entry : default@ProcessResource cost memory 0.1519012451171875
+[2025-08-21T14:53:27.073] [INFO] debug-file - UP-TO-DATE :entry:default@ProcessResource...  
+[2025-08-21T14:53:27.075] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.075] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.075] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.079] [DEBUG] debug-file - Executing task :entry:default@GenerateLoaderJson
+[2025-08-21T14:53:27.095] [DEBUG] debug-file - Incremental task entry:default@GenerateLoaderJson pre-execution cost: 10 ms .
+[2025-08-21T14:53:27.095] [DEBUG] debug-file - entry : default@GenerateLoaderJson cost memory -1.144927978515625
+[2025-08-21T14:53:27.100] [INFO] debug-file - UP-TO-DATE :entry:default@GenerateLoaderJson...  
+[2025-08-21T14:53:27.103] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.103] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.103] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.103] [DEBUG] debug-file - Executing task :entry:default@ProcessLibs
+[2025-08-21T14:53:27.107] [DEBUG] debug-file - Incremental task entry:default@ProcessLibs pre-execution cost: 2 ms .
+[2025-08-21T14:53:27.107] [DEBUG] debug-file - entry : default@ProcessLibs cost memory 0.12554931640625
+[2025-08-21T14:53:27.107] [INFO] debug-file - UP-TO-DATE :entry:default@ProcessLibs...  
+[2025-08-21T14:53:27.109] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.109] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.109] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.110] [DEBUG] debug-file - restool module names: entry; moduleName=entry, taskName=default@CompileResource
+[2025-08-21T14:53:27.113] [DEBUG] debug-file - Executing task :entry:default@CompileResource
+[2025-08-21T14:53:27.130] [DEBUG] debug-file - Incremental task entry:default@CompileResource pre-execution cost: 17 ms .
+[2025-08-21T14:53:27.130] [DEBUG] debug-file - entry : default@CompileResource cost memory -1.1736602783203125
+[2025-08-21T14:53:27.131] [INFO] debug-file - UP-TO-DATE :entry:default@CompileResource...  
+[2025-08-21T14:53:27.134] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.134] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.134] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.136] [DEBUG] debug-file - Executing task :entry:default@DoNativeStrip
+[2025-08-21T14:53:27.137] [DEBUG] debug-file - Task 'entry:default@DoNativeStrip' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T14:53:27.138] [DEBUG] debug-file - Incremental task entry:default@DoNativeStrip pre-execution cost: 2 ms .
+[2025-08-21T14:53:27.138] [DEBUG] debug-file - entry : default@DoNativeStrip cost memory 0.0735626220703125
+[2025-08-21T14:53:27.138] [INFO] debug-file - UP-TO-DATE :entry:default@DoNativeStrip...  
+[2025-08-21T14:53:27.140] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.140] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.140] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.144] [DEBUG] debug-file - Executing task :entry:default@CompileArkTS
+[2025-08-21T14:53:27.144] [DEBUG] debug-file - obfuscationOptions: undefined
+[2025-08-21T14:53:27.157] [DEBUG] debug-file - entry:default@CompileArkTS is not up-to-date, since the input file 'E:\Deveco_Project\test\entry\src\main\ets' has been changed.
+[2025-08-21T14:53:27.157] [DEBUG] debug-file - Incremental task entry:default@CompileArkTS pre-execution cost: 11 ms .
+[2025-08-21T14:53:27.176] [DEBUG] debug-file - build config:
+[2025-08-21T14:53:27.176] [DEBUG] debug-file - {
+  moduleType: 'entry',
+  perf: 1,
+  targetName: '.default',
+  packageManagerType: 'ohpm',
+  localPropertiesPath: 'E:\\Deveco_Project\\test\\local.properties',
+  isPreview: false,
+  isOhosTest: false,
+  isLocalTest: false,
+  buildMode: 'Debug',
+  watchMode: 'false',
+  aceProfilePath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\resources\\base\\profile',
+  etsLoaderPath: 'E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\build-tools\\ets-loader',
+  modulePath: 'E:\\Deveco_Project\\test\\entry',
+  testFrameworkPar: {
+    testMode: undefined,
+    coveragePathFilter: undefined,
+    coverageMode: undefined
+  },
+  needCoverageInsert: false,
+  debugLine: false,
+  projectTopDir: 'E:\\Deveco_Project\\test',
+  compileSdkVersion: 18,
+  compatibleSdkVersion: 12,
+  compatibleSdkVersionStage: 'beta1',
+  bundleName: 'c***e',
+  etsLoaderVersion: '5.1.0.125',
+  etsLoaderReleaseType: 'Release',
+  aotCompileMode: 'type',
+  apPath: 'E:\\Deveco_Project\\test\\entry\\modules.ap',
+  entryModuleName: 'entry',
+  entryModuleVersion: '1.0.0',
+  entryPackageName: 'entry',
+  allModuleNameHash: 'c5b8debb8bf2129f7f264d4b4ca90a0a',
+  externalApiPaths: [ 'E:\\DevEco Studio\\sdk\\default\\hms\\ets' ],
+  compilerTypes: undefined,
+  isCrossplatform: false,
+  hvigorPluginFile: undefined,
+  compilePluginPath: undefined,
+  buildGeneratedProfilePath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\generated\\profile\\default',
+  bundleType: 'app',
+  arkTSVersion: undefined,
+  apiVersion: 18,
+  needCompleteSourcesMap: false,
+  isFaMode: false,
+  strictMode: undefined,
+  buildDir: 'E:\\Deveco_Project\\test\\entry\\build',
+  deviceTypes: [ 'phone', 'tablet' ],
+  useNormalizedOHMUrl: false,
+  pkgContextInfo: undefined,
+  ohPackagePathMap: {},
+  dependencyAliasMap: {},
+  permission: {
+    requestPermissions: [ [Object], [Object], [Object] ],
+    definePermissions: undefined
+  },
+  integratedHsp: false,
+  projectArkOption: { runtimeOnly: { sources: [] } },
+  sourceMapDir: undefined,
+  branchElimination: false,
+  transformLib: undefined,
+  caseSensitiveCheck: false,
+  tsImportSendable: false,
+  resolveConflictMode: true,
+  depName2RootPath: {},
+  depName2DepInfo: {},
+  rootPathSet: [ 'E:\\Deveco_Project\\test' ],
+  useNativeResolver: true,
+  shouldEmitJs: true,
+  useTscResolve: false,
+  singleFileEmit: false,
+  userProjectConfig: {
+    autoLazyImport: false,
+    allowEmptyBundleName: false,
+    reExportCheckMode: 'noCheck'
+  },
+  autoLazyImport: false,
+  allowEmptyBundleName: false,
+  reExportCheckMode: 'noCheck',
+  arkCompileCachePath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\cache\\default\\default@CompileArkTS\\esmodule',
+  aceModuleJsonPath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\ark_module.json',
+  appResource: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\ResourceTable.txt',
+  rawFileResource: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\resources\\rawfile',
+  resourceTableHash: '6a9890140dec5071911539909a4cb31a',
+  runtimeOS: 'HarmonyOS',
+  sdkInfo: 'false:18:5.1.0.125:Release',
+  aceModuleRoot: 'E:\\Deveco_Project\\test\\entry\\src\\main\\ets',
+  compileMode: 'esmodule',
+  aceSuperVisualPath: 'E:\\Deveco_Project\\test\\entry\\src\\main\\supervisual',
+  aceBuildJson: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\loader\\default\\loader.json',
+  cachePath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\cache\\default\\default@CompileArkTS\\esmodule\\debug',
+  aceModuleBuild: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\loader_out\\default\\ets',
+  supportChunks: true,
+  declaredFilesPath: undefined,
+  pkgNameToPkgBriefInfo: {
+    entry: {
+      pkgRoot: 'E:\\Deveco_Project\\test\\entry',
+      originalSourceRoots: undefined,
+      sourceRoots: [Array],
+      pkgName: 'entry'
+    }
+  },
+  projectModel: {
+    'E:\\Deveco_Project\\test\\entry\\src\\main': {
+      moduleName: 'entry',
+      modulePkgPath: 'E:\\Deveco_Project\\test\\entry',
+      belongProjectPath: 'E:\\Deveco_Project\\test'
+    },
+    'E:\\Deveco_Project\\test\\entry': {
+      moduleName: 'entry',
+      modulePkgPath: 'E:\\Deveco_Project\\test\\entry',
+      belongProjectPath: 'E:\\Deveco_Project\\test'
+    },
+    'E:\\Deveco_Project\\test': {
+      moduleName: 'test',
+      modulePkgPath: 'E:\\Deveco_Project\\test',
+      belongProjectPath: 'E:\\Deveco_Project\\test'
+    }
+  },
+  pkgJsonFileHash: 'eaaaa359a2bbaa025153253e73ea279e',
+  allModulePaths: [ 'E:\\Deveco_Project\\test\\entry' ],
+  routerMap: {},
+  obfuscationOptions: undefined,
+  compileBlockPkg: [],
+  mockParams: {
+    decorator: '@MockSetup',
+    packageName: '@ohos/hamock',
+    etsSourceRootPath: 'src/main/ets',
+    mockConfigPath: undefined,
+    mockConfigKey2ModuleInfo: {}
+  },
+  copyCodeResourceEnable: true,
+  copyCodeResourceExcludes: [],
+  uiTransformOptimization: false,
+  otherPaths: {
+    'entry/*': [
+      '..\\*',
+      '..\\..\\..\\build\\default\\generated\\profile\\default\\*'
+    ]
+  },
+  collectImportersConfig: undefined
+}
+[2025-08-21T14:53:27.176] [DEBUG] debug-file - Compile arkts with external api path: E:\DevEco Studio\sdk\default\hms\ets
+[2025-08-21T14:53:27.177] [DEBUG] debug-file - default@CompileArkTS work[160] is submitted.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - default@CompileArkTS work[160] is pushed to ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[31] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[30] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[29] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[28] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[27] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[26] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[25] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[24] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[23] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[22] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[21] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[20] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.178] [DEBUG] debug-file - A work dispatched to worker[19] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[18] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[17] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[16] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[15] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[14] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[13] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[12] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[11] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[10] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[9] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[8] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[7] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[6] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - A work dispatched to worker[5] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - default@CompileArkTS work[160] has been dispatched to worker[4].
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - default@CompileArkTS work[160] is dispatched.
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - CopyResources startTime: 53794131094200
+[2025-08-21T14:53:27.179] [DEBUG] debug-file - default@CompileArkTS work[161] is submitted.
+[2025-08-21T14:53:27.180] [DEBUG] debug-file - default@CompileArkTS work[161] is pushed to ready queue.
+[2025-08-21T14:53:27.180] [DEBUG] debug-file - A work dispatched to worker[31] failed because unable to get work from ready queue.
+[2025-08-21T14:53:27.180] [DEBUG] debug-file - Create  resident worker with id: 30.
+[2025-08-21T14:53:27.181] [DEBUG] debug-file - default@CompileArkTS work[161] has been dispatched to worker[30].
+[2025-08-21T14:53:27.182] [DEBUG] debug-file - default@CompileArkTS work[161] is dispatched.
+[2025-08-21T14:53:27.182] [DEBUG] debug-file - entry : default@CompileArkTS cost memory 0.08740234375
+[2025-08-21T14:53:27.185] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.185] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.185] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.191] [DEBUG] debug-file - Executing task :entry:default@BuildJS
+[2025-08-21T14:53:27.196] [DEBUG] debug-file - entry : default@BuildJS cost memory 0.11991119384765625
+[2025-08-21T14:53:27.196] [DEBUG] debug-file - runTaskFromQueue task cost before running: 428 ms 
+[2025-08-21T14:53:27.196] [INFO] debug-file - Finished :entry:default@BuildJS... after 5 ms 
+[2025-08-21T14:53:27.199] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.200] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T14:53:27.200] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T14:53:27.203] [DEBUG] debug-file - Executing task :entry:default@CacheNativeLibs
+[2025-08-21T14:53:27.203] [DEBUG] debug-file - Task 'entry:default@CacheNativeLibs' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T14:53:27.208] [DEBUG] debug-file - Incremental task entry:default@CacheNativeLibs pre-execution cost: 4 ms .
+[2025-08-21T14:53:27.208] [DEBUG] debug-file - entry : default@CacheNativeLibs cost memory 0.08138275146484375
+[2025-08-21T14:53:27.208] [INFO] debug-file - UP-TO-DATE :entry:default@CacheNativeLibs...  
+[2025-08-21T14:53:28.600] [DEBUG] debug-file - worker[30] has one work done.
+[2025-08-21T14:53:28.600] [DEBUG] debug-file - CopyResources is end, endTime: 53795551625200
+[2025-08-21T14:53:28.600] [DEBUG] debug-file - default@CompileArkTS work[161] done.
+[2025-08-21T14:53:28.600] [DEBUG] debug-file - A work dispatched to worker[30] failed because unable to get work from ready queue.
+[2025-08-21T14:54:07.609] [DEBUG] debug-file - session manager: send message to worker process.
+[2025-08-21T14:54:07.610] [DEBUG] debug-file - session manager: send message to worker process.
+[2025-08-21T14:54:07.610] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2025-08-21T14:54:07.625] [WARN] debug-file - BUILD FAILED in 40 s 856 ms 
+[2025-08-21T14:54:07.625] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@PreBuild is up-to-date.
+[2025-08-21T14:54:07.625] [DEBUG] debug-file - Update task entry:default@CreateModuleInfo output file:E:\Deveco_Project\test\entry\build\default\generated\profile\default\ModuleInfo.ts cache.
+[2025-08-21T14:54:07.626] [DEBUG] debug-file - Incremental task entry:default@CreateModuleInfo post-execution cost:1 ms .
+[2025-08-21T14:54:07.626] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@GenerateMetadata is up-to-date.
+[2025-08-21T14:54:07.626] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@MergeProfile is up-to-date.
+[2025-08-21T14:54:07.626] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@CreateBuildProfile is up-to-date.
+[2025-08-21T14:54:07.626] [DEBUG] debug-file - Update task entry:default@GeneratePkgContextInfo output file:E:\Deveco_Project\test\entry\build\default\intermediates\loader\default\pkgContextInfo.json cache.
+[2025-08-21T14:54:07.626] [DEBUG] debug-file - Incremental task entry:default@GeneratePkgContextInfo post-execution cost:1 ms .
+[2025-08-21T14:54:07.627] [DEBUG] debug-file - Update task entry:default@ProcessIntegratedHsp output file:E:\Deveco_Project\test\build\cache\default\integrated_hsp\integratedHspCache.json cache.
+[2025-08-21T14:54:07.627] [DEBUG] debug-file - Incremental task entry:default@ProcessIntegratedHsp post-execution cost:1 ms .
+[2025-08-21T14:54:07.627] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@MakePackInfo is up-to-date.
+[2025-08-21T14:54:07.627] [DEBUG] debug-file - Update task entry:default@SyscapTransform input file:E:\DevEco Studio\sdk\default\openharmony\toolchains\syscap_tool.exe cache by regenerate.
+[2025-08-21T14:54:07.627] [DEBUG] debug-file - Update task entry:default@SyscapTransform input file:E:\DevEco Studio\sdk\default\openharmony\ets\api\device-define cache by regenerate.
+[2025-08-21T14:54:07.629] [DEBUG] debug-file - Update task entry:default@SyscapTransform output file:E:\Deveco_Project\test\entry\build\default\intermediates\syscap\default\rpcid.sc cache.
+[2025-08-21T14:54:07.629] [DEBUG] debug-file - Incremental task entry:default@SyscapTransform post-execution cost:3 ms .
+[2025-08-21T14:54:07.629] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@ProcessProfile is up-to-date.
+[2025-08-21T14:54:07.629] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@ProcessRouterMap is up-to-date.
+[2025-08-21T14:54:07.630] [DEBUG] debug-file - Update task entry:default@ProcessStartupConfig output file:E:\Deveco_Project\test\entry\build\default\intermediates\startup\default\startup_config.json cache.
+[2025-08-21T14:54:07.630] [DEBUG] debug-file - Incremental task entry:default@ProcessStartupConfig post-execution cost:1 ms .
+[2025-08-21T14:54:07.630] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@ProcessResource is up-to-date.
+[2025-08-21T14:54:07.630] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@GenerateLoaderJson is up-to-date.
+[2025-08-21T14:54:07.630] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@ProcessLibs is up-to-date.
+[2025-08-21T14:54:07.630] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@CompileResource is up-to-date.
+[2025-08-21T14:54:07.630] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@DoNativeStrip is up-to-date.
+[2025-08-21T14:54:07.632] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\intermediates\loader\default cache by regenerate.
+[2025-08-21T14:54:07.632] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\ResourceTable.txt cache by regenerate.
+[2025-08-21T14:54:07.633] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\ark_module.json cache by regenerate.
+[2025-08-21T14:54:07.633] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\resources\base\profile cache by regenerate.
+[2025-08-21T14:54:07.633] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\src\main\ets cache from map.
+[2025-08-21T14:54:07.633] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\generated\profile\default\BuildProfile.ets cache by regenerate.
+[2025-08-21T14:54:07.633] [DEBUG] debug-file - Update task entry:default@CompileArkTS output file:E:\Deveco_Project\test\entry\build\default\intermediates\loader_out\default\ets cache.
+[2025-08-21T14:54:07.634] [DEBUG] debug-file - Incremental task entry:default@CompileArkTS post-execution cost:4 ms .
+[2025-08-21T14:54:07.635] [DEBUG] debug-file - Update task entry:default@BuildJS input file:E:\Deveco_Project\test\entry\build\default\intermediates\loader\default cache by regenerate.
+[2025-08-21T14:54:07.635] [DEBUG] debug-file - Update task entry:default@BuildJS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\ResourceTable.txt cache by regenerate.
+[2025-08-21T14:54:07.636] [DEBUG] debug-file - Update task entry:default@BuildJS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\ark_module.json cache by regenerate.
+[2025-08-21T14:54:07.636] [DEBUG] debug-file - Update task entry:default@BuildJS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\resources\base\profile cache by regenerate.
+[2025-08-21T14:54:07.636] [DEBUG] debug-file - Update task entry:default@BuildJS output file:E:\Deveco_Project\test\entry\build\default\intermediates\loader_out\default\js cache.
+[2025-08-21T14:54:07.637] [DEBUG] debug-file - Incremental task entry:default@BuildJS post-execution cost:3 ms .
+[2025-08-21T14:54:07.637] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@CacheNativeLibs is up-to-date.
+[2025-08-21T14:54:07.658] [DEBUG] debug-file - Cleanup worker 4.
+[2025-08-21T14:54:07.659] [DEBUG] debug-file - Worker 4 has been cleaned up.
+[2025-08-21T14:54:07.659] [DEBUG] debug-file - Current idle worker size: 1.
+[2025-08-21T14:54:07.659] [DEBUG] debug-file - Current resident worker size: 2.
+[2025-08-21T14:54:07.659] [DEBUG] debug-file - Cleanup worker 30.
+[2025-08-21T14:54:07.659] [DEBUG] debug-file - Worker 30 has been cleaned up.
+[2025-08-21T14:54:07.659] [DEBUG] debug-file - Current idle worker size: 0.
+[2025-08-21T14:54:07.659] [DEBUG] debug-file - Current resident worker size: 2.
+[2025-08-21T14:54:07.659] [DEBUG] debug-file - hvigor build process will be closed.
+[2025-08-21T14:54:07.660] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2025-08-21T14:54:07.666] [DEBUG] debug-file - worker[30] exits with exit code 1.
+[2025-08-21T14:54:07.725] [DEBUG] debug-file - worker[4] exits with exit code 1.
+[2025-08-21T15:14:46.749] [DEBUG] debug-file - java daemon tryConnect failed Error: connect ECONNREFUSED 127.0.0.1:45050
+[2025-08-21T15:14:47.278] [DEBUG] debug-file - java daemon started at port 45050 pid 29836
+[2025-08-21T15:14:43.985] [DEBUG] debug-file - env: nodejsVersion=v18.20.1
+[2025-08-21T15:14:44.464] [DEBUG] debug-file - env: daemon=true
+[2025-08-21T15:14:43.987] [DEBUG] debug-file - env: hvigor-config.json5 content = {
+  modelVersion: '5.1.0',
+  dependencies: {},
+  properties: {
+    sdkPath: 'E:\\DevEco Studio\\sdk',
+    harmonyosSdkPath: 'E:\\DevEco Studio\\sdk\\HarmonyOS\\5.0.0.36',
+    nodejsPath: 'E:\\DevEco Studio\\tools\\node',
+    ohpmPath: 'E:\\DevEco Studio\\tools\\ohpm'
+  }
+}
+[2025-08-21T15:14:49.329] [DEBUG] debug-file - session manager: set active socket. socketId=fw-NKMefjbzGR89QAAAB
+[2025-08-21T15:14:49.345] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2025-08-21T15:14:49.360] [DEBUG] debug-file - Hvigor init with startParameters:{
+  hvigorfileTypeCheck: false,
+  parallelExecution: true,
+  incrementalExecution: true,
+  printStackTrace: false,
+  daemon: true,
+  analyze: 1,
+  logLevel: Level { level: 20000, levelStr: 'INFO', colour: 'green' }
+}
+[2025-08-21T15:14:49.377] [DEBUG] debug-file - Cache service initialization finished in 17 ms 
+[2025-08-21T15:14:49.385] [DEBUG] debug-file - hvigorfile, resolving E:\Deveco_Project\test\hvigorfile.ts
+[2025-08-21T15:15:06.966] [DEBUG] debug-file - hvigorfile, require result:  { default: { plugins: [] } }
+[2025-08-21T15:15:06.966] [DEBUG] debug-file - hvigorfile, binding system plugins null
+[2025-08-21T15:15:07.132] [DEBUG] debug-file - Start initialize project's product build option map with build mode debug.
+[2025-08-21T15:15:07.132] [DEBUG] debug-file - Picking option from product 'default' with build mode 'debug'.
+[2025-08-21T15:15:07.133] [DEBUG] debug-file - Product 'default' build option initialized
+[2025-08-21T15:15:07.133] [DEBUG] debug-file - End initialize project's product build option map with build mode 'debug'.
+[2025-08-21T15:15:07.135] [DEBUG] debug-file - Obtain build option for product 'default'in this build.
+[2025-08-21T15:15:07.142] [DEBUG] debug-file - Local scan or download HarmonyOS sdk components toolchains,ets,js,native,previewer
+[2025-08-21T15:15:07.147] [DEBUG] debug-file - Local scan or download hmscore sdk components toolchains,ets,native
+[2025-08-21T15:15:07.152] [DEBUG] debug-file - Start recording SDK configuration permission data.
+[2025-08-21T15:15:07.184] [DEBUG] debug-file - Sdk init in 46 ms 
+[2025-08-21T15:15:07.201] [DEBUG] debug-file - Project task initialization takes 16 ms 
+[2025-08-21T15:15:07.201] [DEBUG] debug-file - hvigorfile, binding custom plugins []
+[2025-08-21T15:15:07.201] [DEBUG] debug-file - hvigorfile, no custom plugins were found in E:\Deveco_Project\test\hvigorfile.ts
+[2025-08-21T15:15:07.201] [DEBUG] debug-file - hvigorfile, resolve finished E:\Deveco_Project\test\hvigorfile.ts
+[2025-08-21T15:15:07.206] [DEBUG] debug-file - hvigorfile, resolving E:\Deveco_Project\test\entry\hvigorfile.ts
+[2025-08-21T15:15:07.211] [DEBUG] debug-file - hvigorfile, require result:  { default: { plugins: [] } }
+[2025-08-21T15:15:07.211] [DEBUG] debug-file - hvigorfile, binding system plugins null
+[2025-08-21T15:15:07.221] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=debug
+[2025-08-21T15:15:07.221] [DEBUG] debug-file - Target 'default' config initialized
+[2025-08-21T15:15:07.222] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2025-08-21T15:15:07.222] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2025-08-21T15:15:07.222] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=release
+[2025-08-21T15:15:07.222] [DEBUG] debug-file - Target 'default' config initialized
+[2025-08-21T15:15:07.222] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2025-08-21T15:15:07.222] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2025-08-21T15:15:07.222] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=debug
+[2025-08-21T15:15:07.223] [DEBUG] debug-file - Target 'default' config initialized
+[2025-08-21T15:15:07.223] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2025-08-21T15:15:07.223] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2025-08-21T15:15:07.223] [DEBUG] debug-file - Obtain build option for module 'entry' target 'default'in this build.
+[2025-08-21T15:15:07.227] [DEBUG] debug-file - Module entry task initialization takes 3 ms 
+[2025-08-21T15:15:07.227] [DEBUG] debug-file - hvigorfile, binding custom plugins []
+[2025-08-21T15:15:07.227] [DEBUG] debug-file - hvigorfile, no custom plugins were found in E:\Deveco_Project\test\entry\hvigorfile.ts
+[2025-08-21T15:15:07.227] [DEBUG] debug-file - hvigorfile, resolve finished E:\Deveco_Project\test\entry\hvigorfile.ts
+[2025-08-21T15:15:07.238] [DEBUG] debug-file - hvigorfile, resolve hvigorfile dependencies in 11 ms 
+[2025-08-21T15:15:07.239] [DEBUG] debug-file - project has submodules:entry
+[2025-08-21T15:15:07.249] [DEBUG] debug-file - start to load updatedOhPackageInfo to the disk
+[2025-08-21T15:15:07.256] [DEBUG] debug-file - load to the disk finished
+[2025-08-21T15:15:07.257] [DEBUG] debug-file - Start to initialize dependency information.
+[2025-08-21T15:15:07.259] [DEBUG] debug-file - Module test Collected Dependency: 
+[2025-08-21T15:15:07.259] [DEBUG] debug-file - Module test's total dependency: 0
+[2025-08-21T15:15:07.260] [DEBUG] debug-file - Start to initialize dependency information.
+[2025-08-21T15:15:07.262] [DEBUG] debug-file - Module entry Collected Dependency: 
+[2025-08-21T15:15:07.262] [DEBUG] debug-file - Module entry's total dependency: 0
+[2025-08-21T15:15:07.266] [DEBUG] debug-file - Configuration phase cost:17 s 886 ms 
+[2025-08-21T15:15:07.269] [DEBUG] debug-file - Configuration task cost before running: 17 s 919 ms 
+[2025-08-21T15:15:07.269] [DEBUG] debug-file - Executing task :entry:init
+[2025-08-21T15:15:07.269] [DEBUG] debug-file - entry : init cost memory 0.0154876708984375
+[2025-08-21T15:15:07.270] [DEBUG] debug-file - runTaskFromQueue task cost before running: 17 s 920 ms 
+[2025-08-21T15:15:07.270] [INFO] debug-file - Finished :entry:init... after 1 ms 
+[2025-08-21T15:15:07.270] [DEBUG] debug-file - Executing task ::init
+[2025-08-21T15:15:07.270] [DEBUG] debug-file - test : init cost memory 0.01282501220703125
+[2025-08-21T15:15:07.270] [DEBUG] debug-file - runTaskFromQueue task cost before running: 17 s 921 ms 
+[2025-08-21T15:15:07.270] [INFO] debug-file - Finished ::init... after 1 ms 
+[2025-08-21T15:15:07.285] [DEBUG] debug-file - Obtain build option for module 'entry' target 'default'in this build.
+[2025-08-21T15:15:07.290] [DEBUG] debug-file - Since there is no instance or instance is terminated, create a new worker pool.
+[2025-08-21T15:15:07.290] [DEBUG] debug-file - Worker pool is initialized with config:  {
+  minPoolNum: 2,
+  maxPoolNum: undefined,
+  maxCoreSize: undefined,
+  cacheCapacity: undefined,
+  cacheTtl: undefined
+}
+[2025-08-21T15:15:07.291] [DEBUG] debug-file - Create  resident worker with id: 0.
+[2025-08-21T15:15:07.294] [DEBUG] debug-file - session manager: send message to worker process.
+[2025-08-21T15:15:07.294] [DEBUG] debug-file - session manager: send message to worker process.
+[2025-08-21T15:15:07.293] [DEBUG] debug-file - Create  resident worker with id: 1.
+[2025-08-21T15:15:07.295] [DEBUG] debug-file - Cleanup worker 0.
+[2025-08-21T15:15:07.295] [DEBUG] debug-file - Worker 0 has been cleaned up.
+[2025-08-21T15:15:07.295] [DEBUG] debug-file - Current idle worker size: 1.
+[2025-08-21T15:15:07.295] [DEBUG] debug-file - Current resident worker size: 2.
+[2025-08-21T15:15:07.295] [DEBUG] debug-file - Cleanup worker 1.
+[2025-08-21T15:15:07.295] [DEBUG] debug-file - Worker 1 has been cleaned up.
+[2025-08-21T15:15:07.295] [DEBUG] debug-file - Current idle worker size: 0.
+[2025-08-21T15:15:07.296] [DEBUG] debug-file - Current resident worker size: 2.
+[2025-08-21T15:15:07.297] [DEBUG] debug-file - hvigor build process will be closed.
+[2025-08-21T15:15:07.302] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2025-08-21T15:15:07.303] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2025-08-21T15:15:07.303] [DEBUG] debug-file - worker[0] exits with exit code 0.
+[2025-08-21T15:15:07.303] [DEBUG] debug-file - worker[1] exits with exit code 0.
+[2025-08-21T15:17:26.363] [DEBUG] debug-file - session manager: set active socket. socketId=fUMqyPOsxmkG8ZdFAAAD
+[2025-08-21T15:17:26.374] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2025-08-21T15:17:26.393] [DEBUG] debug-file - Hvigor init with startParameters:{
+  hvigorfileTypeCheck: false,
+  parallelExecution: true,
+  incrementalExecution: true,
+  printStackTrace: false,
+  daemon: true,
+  analyze: 1,
+  logLevel: Level { level: 20000, levelStr: 'INFO', colour: 'green' }
+}
+[2025-08-21T15:17:26.397] [DEBUG] debug-file - Cache service initialization finished in 5 ms 
+[2025-08-21T15:17:26.408] [DEBUG] debug-file - hvigorfile, resolving E:\Deveco_Project\test\hvigorfile.ts
+[2025-08-21T15:17:26.413] [DEBUG] debug-file - hvigorfile, require result:  { default: { plugins: [] } }
+[2025-08-21T15:17:26.413] [DEBUG] debug-file - hvigorfile, binding system plugins null
+[2025-08-21T15:17:26.419] [DEBUG] debug-file - Start initialize project's product build option map with build mode debug.
+[2025-08-21T15:17:26.419] [DEBUG] debug-file - Picking option from product 'default' with build mode 'debug'.
+[2025-08-21T15:17:26.420] [DEBUG] debug-file - Product 'default' build option initialized
+[2025-08-21T15:17:26.420] [DEBUG] debug-file - End initialize project's product build option map with build mode 'debug'.
+[2025-08-21T15:17:26.422] [DEBUG] debug-file - Obtain build option for product 'default'in this build.
+[2025-08-21T15:17:26.431] [DEBUG] debug-file - Start recording SDK configuration permission data.
+[2025-08-21T15:17:26.455] [DEBUG] debug-file - Sdk init in 32 ms 
+[2025-08-21T15:17:26.482] [DEBUG] debug-file - Project task initialization takes 26 ms 
+[2025-08-21T15:17:26.483] [DEBUG] debug-file - hvigorfile, binding custom plugins []
+[2025-08-21T15:17:26.483] [DEBUG] debug-file - hvigorfile, no custom plugins were found in E:\Deveco_Project\test\hvigorfile.ts
+[2025-08-21T15:17:26.483] [DEBUG] debug-file - hvigorfile, resolve finished E:\Deveco_Project\test\hvigorfile.ts
+[2025-08-21T15:17:26.491] [DEBUG] debug-file - hvigorfile, resolving E:\Deveco_Project\test\entry\hvigorfile.ts
+[2025-08-21T15:17:26.495] [DEBUG] debug-file - hvigorfile, require result:  { default: { plugins: [] } }
+[2025-08-21T15:17:26.495] [DEBUG] debug-file - hvigorfile, binding system plugins null
+[2025-08-21T15:17:26.502] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=debug
+[2025-08-21T15:17:26.502] [DEBUG] debug-file - Target 'default' config initialized
+[2025-08-21T15:17:26.502] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2025-08-21T15:17:26.502] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2025-08-21T15:17:26.502] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=release
+[2025-08-21T15:17:26.502] [DEBUG] debug-file - Target 'default' config initialized
+[2025-08-21T15:17:26.502] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2025-08-21T15:17:26.503] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2025-08-21T15:17:26.503] [DEBUG] debug-file - Start initialize module-target build option map, moduleName=entry, buildMode=debug
+[2025-08-21T15:17:26.503] [DEBUG] debug-file - Target 'default' config initialized
+[2025-08-21T15:17:26.503] [DEBUG] debug-file - Module 'entry' target 'default' build option initialized
+[2025-08-21T15:17:26.503] [DEBUG] debug-file - End initialize module-target build option map, moduleName=entry
+[2025-08-21T15:17:26.503] [DEBUG] debug-file - Obtain build option for module 'entry' target 'default'in this build.
+[2025-08-21T15:17:26.506] [DEBUG] debug-file - Module entry task initialization takes 1 ms 
+[2025-08-21T15:17:26.506] [DEBUG] debug-file - hvigorfile, binding custom plugins []
+[2025-08-21T15:17:26.506] [DEBUG] debug-file - hvigorfile, no custom plugins were found in E:\Deveco_Project\test\entry\hvigorfile.ts
+[2025-08-21T15:17:26.507] [DEBUG] debug-file - hvigorfile, resolve finished E:\Deveco_Project\test\entry\hvigorfile.ts
+[2025-08-21T15:17:26.525] [DEBUG] debug-file - hvigorfile, resolve hvigorfile dependencies in 17 ms 
+[2025-08-21T15:17:26.526] [DEBUG] debug-file - project has submodules:entry
+[2025-08-21T15:17:26.528] [DEBUG] debug-file - start to load updatedOhPackageInfo to the disk
+[2025-08-21T15:17:26.535] [DEBUG] debug-file - load to the disk finished
+[2025-08-21T15:17:26.537] [DEBUG] debug-file - Start to initialize dependency information.
+[2025-08-21T15:17:26.538] [DEBUG] debug-file - Module test Collected Dependency: 
+[2025-08-21T15:17:26.538] [DEBUG] debug-file - Module test's total dependency: 0
+[2025-08-21T15:17:26.538] [DEBUG] debug-file - Start to initialize dependency information.
+[2025-08-21T15:17:26.541] [DEBUG] debug-file - Module entry Collected Dependency: 
+[2025-08-21T15:17:26.542] [DEBUG] debug-file - Module entry's total dependency: 0
+[2025-08-21T15:17:26.545] [DEBUG] debug-file - Configuration phase cost:145 ms 
+[2025-08-21T15:17:26.551] [DEBUG] debug-file - Configuration task cost before running: 172 ms 
+[2025-08-21T15:17:26.555] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.555] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.555] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.561] [DEBUG] debug-file - Executing task :entry:default@PreBuild
+[2025-08-21T15:17:26.573] [DEBUG] debug-file - Incremental task entry:default@PreBuild pre-execution cost: 8 ms .
+[2025-08-21T15:17:26.573] [DEBUG] debug-file - entry : default@PreBuild cost memory 0.3139190673828125
+[2025-08-21T15:17:26.575] [INFO] debug-file - UP-TO-DATE :entry:default@PreBuild...  
+[2025-08-21T15:17:26.578] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.578] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.578] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.579] [DEBUG] debug-file - Executing task :entry:default@CreateModuleInfo
+[2025-08-21T15:17:26.580] [DEBUG] debug-file - Task 'entry:default@CreateModuleInfo' cost while wrapping incremental declarations: 2 ms 
+[2025-08-21T15:17:26.581] [DEBUG] debug-file - entry : default@CreateModuleInfo cost memory 0.064910888671875
+[2025-08-21T15:17:26.581] [DEBUG] debug-file - runTaskFromQueue task cost before running: 202 ms 
+[2025-08-21T15:17:26.582] [INFO] debug-file - Finished :entry:default@CreateModuleInfo... after 3 ms 
+[2025-08-21T15:17:26.586] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.586] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.586] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.590] [DEBUG] debug-file - Executing task :entry:default@GenerateMetadata
+[2025-08-21T15:17:26.591] [DEBUG] debug-file - Task 'entry:default@GenerateMetadata' cost while wrapping incremental declarations: 2 ms 
+[2025-08-21T15:17:26.593] [DEBUG] debug-file - Incremental task entry:default@GenerateMetadata pre-execution cost: 2 ms .
+[2025-08-21T15:17:26.593] [DEBUG] debug-file - entry : default@GenerateMetadata cost memory 0.10350799560546875
+[2025-08-21T15:17:26.593] [INFO] debug-file - UP-TO-DATE :entry:default@GenerateMetadata...  
+[2025-08-21T15:17:26.596] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.596] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.596] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.596] [DEBUG] debug-file - Executing task :entry:default@ConfigureCmake
+[2025-08-21T15:17:26.596] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.596] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.596] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.596] [DEBUG] debug-file - entry : default@ConfigureCmake cost memory 0.05101776123046875
+[2025-08-21T15:17:26.597] [DEBUG] debug-file - runTaskFromQueue task cost before running: 218 ms 
+[2025-08-21T15:17:26.597] [INFO] debug-file - Finished :entry:default@ConfigureCmake... after 1 ms 
+[2025-08-21T15:17:26.599] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.599] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.600] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.600] [DEBUG] debug-file - Executing task :entry:default@MergeProfile
+[2025-08-21T15:17:26.603] [DEBUG] debug-file - Incremental task entry:default@MergeProfile pre-execution cost: 2 ms .
+[2025-08-21T15:17:26.603] [DEBUG] debug-file - entry : default@MergeProfile cost memory 0.12075042724609375
+[2025-08-21T15:17:26.603] [INFO] debug-file - UP-TO-DATE :entry:default@MergeProfile...  
+[2025-08-21T15:17:26.606] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.606] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.606] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.607] [DEBUG] debug-file - Executing task :entry:default@CreateBuildProfile
+[2025-08-21T15:17:26.608] [DEBUG] debug-file - Task 'entry:default@CreateBuildProfile' cost while wrapping incremental declarations: 2 ms 
+[2025-08-21T15:17:26.610] [DEBUG] debug-file - Incremental task entry:default@CreateBuildProfile pre-execution cost: 2 ms .
+[2025-08-21T15:17:26.610] [DEBUG] debug-file - entry : default@CreateBuildProfile cost memory 0.10701751708984375
+[2025-08-21T15:17:26.610] [INFO] debug-file - UP-TO-DATE :entry:default@CreateBuildProfile...  
+[2025-08-21T15:17:26.614] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.614] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.614] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.615] [DEBUG] debug-file - Executing task :entry:default@PreCheckSyscap
+[2025-08-21T15:17:26.615] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.615] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.615] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.616] [DEBUG] debug-file - entry : default@PreCheckSyscap cost memory 0.0482177734375
+[2025-08-21T15:17:26.616] [DEBUG] debug-file - runTaskFromQueue task cost before running: 237 ms 
+[2025-08-21T15:17:26.616] [INFO] debug-file - Finished :entry:default@PreCheckSyscap... after 1 ms 
+[2025-08-21T15:17:26.619] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.619] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.619] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.621] [DEBUG] debug-file - Executing task :entry:default@GeneratePkgContextInfo
+[2025-08-21T15:17:26.631] [DEBUG] debug-file - Task 'entry:default@GeneratePkgContextInfo' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T15:17:26.631] [DEBUG] debug-file - entry : default@GeneratePkgContextInfo cost memory 0.22928619384765625
+[2025-08-21T15:17:26.632] [DEBUG] debug-file - runTaskFromQueue task cost before running: 253 ms 
+[2025-08-21T15:17:26.632] [INFO] debug-file - Finished :entry:default@GeneratePkgContextInfo... after 11 ms 
+[2025-08-21T15:17:26.634] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.635] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.635] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.639] [DEBUG] debug-file - Executing task :entry:default@ProcessIntegratedHsp
+[2025-08-21T15:17:26.641] [DEBUG] debug-file - entry:default@ProcessIntegratedHsp is not up-to-date, since the output file 'E:\Deveco_Project\test\build\cache\default\integrated_hsp\integratedHspCache.json' does not exist.
+[2025-08-21T15:17:26.641] [DEBUG] debug-file - Incremental task entry:default@ProcessIntegratedHsp pre-execution cost: 2 ms .
+[2025-08-21T15:17:26.641] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.641] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.641] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.641] [DEBUG] debug-file - entry : default@ProcessIntegratedHsp cost memory 0.1322021484375
+[2025-08-21T15:17:26.641] [DEBUG] debug-file - runTaskFromQueue task cost before running: 262 ms 
+[2025-08-21T15:17:26.642] [INFO] debug-file - Finished :entry:default@ProcessIntegratedHsp... after 3 ms 
+[2025-08-21T15:17:26.645] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.645] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.645] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.646] [DEBUG] debug-file - Executing task :entry:default@BuildNativeWithCmake
+[2025-08-21T15:17:26.646] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.646] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.646] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.646] [DEBUG] debug-file - entry : default@BuildNativeWithCmake cost memory 0.04937744140625
+[2025-08-21T15:17:26.647] [DEBUG] debug-file - runTaskFromQueue task cost before running: 268 ms 
+[2025-08-21T15:17:26.647] [INFO] debug-file - Finished :entry:default@BuildNativeWithCmake... after 1 ms 
+[2025-08-21T15:17:26.649] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.649] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.650] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.651] [DEBUG] debug-file - Executing task :entry:default@MakePackInfo
+[2025-08-21T15:17:26.654] [DEBUG] debug-file - Incremental task entry:default@MakePackInfo pre-execution cost: 3 ms .
+[2025-08-21T15:17:26.654] [DEBUG] debug-file - entry : default@MakePackInfo cost memory 0.14701080322265625
+[2025-08-21T15:17:26.655] [INFO] debug-file - UP-TO-DATE :entry:default@MakePackInfo...  
+[2025-08-21T15:17:26.658] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.658] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.658] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.660] [DEBUG] debug-file - Executing task :entry:default@SyscapTransform
+[2025-08-21T15:17:26.660] [DEBUG] debug-file - File: 'E:\Deveco_Project\test\entry\src\main\syscap.json' from 'sysCapJsonPath' is not exists, just ignore.
+[2025-08-21T15:17:26.661] [DEBUG] debug-file - Task 'entry:default@SyscapTransform' cost while wrapping incremental declarations: 2 ms 
+[2025-08-21T15:17:26.675] [DEBUG] debug-file - entry:default@SyscapTransform is not up-to-date, since the output file 'E:\Deveco_Project\test\entry\build\default\intermediates\syscap\default\rpcid.sc' does not exist.
+[2025-08-21T15:17:26.675] [DEBUG] debug-file - Incremental task entry:default@SyscapTransform pre-execution cost: 15 ms .
+[2025-08-21T15:17:26.675] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.675] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.675] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.676] [DEBUG] debug-file - entry : default@SyscapTransform cost memory 0.17608642578125
+[2025-08-21T15:17:26.676] [DEBUG] debug-file - runTaskFromQueue task cost before running: 297 ms 
+[2025-08-21T15:17:26.676] [INFO] debug-file - Finished :entry:default@SyscapTransform... after 16 ms 
+[2025-08-21T15:17:26.679] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.679] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.679] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.680] [DEBUG] debug-file - Executing task :entry:default@ProcessProfile
+[2025-08-21T15:17:26.682] [DEBUG] debug-file - Incremental task entry:default@ProcessProfile pre-execution cost: 1 ms .
+[2025-08-21T15:17:26.683] [DEBUG] debug-file - entry : default@ProcessProfile cost memory 0.12110137939453125
+[2025-08-21T15:17:26.683] [INFO] debug-file - UP-TO-DATE :entry:default@ProcessProfile...  
+[2025-08-21T15:17:26.685] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.685] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.685] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.688] [DEBUG] debug-file - Executing task :entry:default@ProcessRouterMap
+[2025-08-21T15:17:26.692] [DEBUG] debug-file - Incremental task entry:default@ProcessRouterMap pre-execution cost: 3 ms .
+[2025-08-21T15:17:26.692] [DEBUG] debug-file - entry : default@ProcessRouterMap cost memory 0.15821075439453125
+[2025-08-21T15:17:26.693] [INFO] debug-file - UP-TO-DATE :entry:default@ProcessRouterMap...  
+[2025-08-21T15:17:26.697] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.697] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.697] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.697] [DEBUG] debug-file - Executing task :entry:default@ProcessStartupConfig
+[2025-08-21T15:17:26.698] [DEBUG] debug-file - Task 'entry:default@ProcessStartupConfig' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T15:17:26.700] [DEBUG] debug-file - entry:default@ProcessStartupConfig is not up-to-date, since the output file 'E:\Deveco_Project\test\entry\build\default\intermediates\startup\default\startup_config.json' does not exist.
+[2025-08-21T15:17:26.700] [DEBUG] debug-file - Incremental task entry:default@ProcessStartupConfig pre-execution cost: 2 ms .
+[2025-08-21T15:17:26.700] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.700] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.700] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.701] [DEBUG] debug-file - entry : default@ProcessStartupConfig cost memory 0.1826629638671875
+[2025-08-21T15:17:26.701] [DEBUG] debug-file - runTaskFromQueue task cost before running: 322 ms 
+[2025-08-21T15:17:26.702] [INFO] debug-file - Finished :entry:default@ProcessStartupConfig... after 4 ms 
+[2025-08-21T15:17:26.704] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.705] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.705] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.705] [DEBUG] debug-file - Executing task :entry:default@BuildNativeWithNinja
+[2025-08-21T15:17:26.706] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.706] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.706] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.707] [DEBUG] debug-file - entry : default@BuildNativeWithNinja cost memory 0.06845855712890625
+[2025-08-21T15:17:26.707] [DEBUG] debug-file - runTaskFromQueue task cost before running: 328 ms 
+[2025-08-21T15:17:26.708] [INFO] debug-file - Finished :entry:default@BuildNativeWithNinja... after 2 ms 
+[2025-08-21T15:17:26.710] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.710] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.710] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.712] [DEBUG] debug-file - restool module names: entry; moduleName=entry, taskName=default@ProcessResource
+[2025-08-21T15:17:26.728] [DEBUG] debug-file - Executing task :entry:default@ProcessResource
+[2025-08-21T15:17:26.730] [DEBUG] debug-file - Incremental task entry:default@ProcessResource pre-execution cost: 2 ms .
+[2025-08-21T15:17:26.730] [DEBUG] debug-file - entry : default@ProcessResource cost memory 0.1631011962890625
+[2025-08-21T15:17:26.734] [INFO] debug-file - UP-TO-DATE :entry:default@ProcessResource...  
+[2025-08-21T15:17:26.736] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.737] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.737] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.740] [DEBUG] debug-file - Executing task :entry:default@GenerateLoaderJson
+[2025-08-21T15:17:26.754] [DEBUG] debug-file - Incremental task entry:default@GenerateLoaderJson pre-execution cost: 8 ms .
+[2025-08-21T15:17:26.754] [DEBUG] debug-file - entry : default@GenerateLoaderJson cost memory 0.6009674072265625
+[2025-08-21T15:17:26.759] [INFO] debug-file - UP-TO-DATE :entry:default@GenerateLoaderJson...  
+[2025-08-21T15:17:26.761] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.762] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.762] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.762] [DEBUG] debug-file - Executing task :entry:default@ProcessLibs
+[2025-08-21T15:17:26.766] [DEBUG] debug-file - Incremental task entry:default@ProcessLibs pre-execution cost: 2 ms .
+[2025-08-21T15:17:26.767] [DEBUG] debug-file - entry : default@ProcessLibs cost memory 0.17321014404296875
+[2025-08-21T15:17:26.767] [INFO] debug-file - UP-TO-DATE :entry:default@ProcessLibs...  
+[2025-08-21T15:17:26.770] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.770] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.770] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.771] [DEBUG] debug-file - restool module names: entry; moduleName=entry, taskName=default@CompileResource
+[2025-08-21T15:17:26.773] [DEBUG] debug-file - Executing task :entry:default@CompileResource
+[2025-08-21T15:17:26.792] [DEBUG] debug-file - Incremental task entry:default@CompileResource pre-execution cost: 18 ms .
+[2025-08-21T15:17:26.792] [DEBUG] debug-file - entry : default@CompileResource cost memory -2.832366943359375
+[2025-08-21T15:17:26.793] [INFO] debug-file - UP-TO-DATE :entry:default@CompileResource...  
+[2025-08-21T15:17:26.796] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.796] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.796] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.798] [DEBUG] debug-file - Executing task :entry:default@DoNativeStrip
+[2025-08-21T15:17:26.799] [DEBUG] debug-file - Task 'entry:default@DoNativeStrip' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T15:17:26.800] [DEBUG] debug-file - Incremental task entry:default@DoNativeStrip pre-execution cost: 1 ms .
+[2025-08-21T15:17:26.800] [DEBUG] debug-file - entry : default@DoNativeStrip cost memory 0.07942962646484375
+[2025-08-21T15:17:26.800] [INFO] debug-file - UP-TO-DATE :entry:default@DoNativeStrip...  
+[2025-08-21T15:17:26.803] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.803] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.803] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.807] [DEBUG] debug-file - Executing task :entry:default@CompileArkTS
+[2025-08-21T15:17:26.808] [DEBUG] debug-file - obfuscationOptions: undefined
+[2025-08-21T15:17:26.829] [DEBUG] debug-file - build config:
+[2025-08-21T15:17:26.830] [DEBUG] debug-file - {
+  moduleType: 'entry',
+  perf: 1,
+  targetName: '.default',
+  packageManagerType: 'ohpm',
+  localPropertiesPath: 'E:\\Deveco_Project\\test\\local.properties',
+  isPreview: false,
+  isOhosTest: false,
+  isLocalTest: false,
+  buildMode: 'Debug',
+  watchMode: 'false',
+  aceProfilePath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\resources\\base\\profile',
+  etsLoaderPath: 'E:\\DevEco Studio\\sdk\\default\\openharmony\\ets\\build-tools\\ets-loader',
+  modulePath: 'E:\\Deveco_Project\\test\\entry',
+  testFrameworkPar: {
+    testMode: undefined,
+    coveragePathFilter: undefined,
+    coverageMode: undefined
+  },
+  needCoverageInsert: false,
+  debugLine: false,
+  projectTopDir: 'E:\\Deveco_Project\\test',
+  compileSdkVersion: 18,
+  compatibleSdkVersion: 12,
+  compatibleSdkVersionStage: 'beta1',
+  bundleName: 'c***e',
+  etsLoaderVersion: '5.1.0.125',
+  etsLoaderReleaseType: 'Release',
+  aotCompileMode: 'type',
+  apPath: 'E:\\Deveco_Project\\test\\entry\\modules.ap',
+  entryModuleName: 'entry',
+  entryModuleVersion: '1.0.0',
+  entryPackageName: 'entry',
+  allModuleNameHash: 'c5b8debb8bf2129f7f264d4b4ca90a0a',
+  externalApiPaths: [ 'E:\\DevEco Studio\\sdk\\default\\hms\\ets' ],
+  compilerTypes: undefined,
+  isCrossplatform: false,
+  hvigorPluginFile: undefined,
+  compilePluginPath: undefined,
+  buildGeneratedProfilePath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\generated\\profile\\default',
+  bundleType: 'app',
+  arkTSVersion: undefined,
+  apiVersion: 18,
+  needCompleteSourcesMap: false,
+  isFaMode: false,
+  strictMode: undefined,
+  buildDir: 'E:\\Deveco_Project\\test\\entry\\build',
+  deviceTypes: [ 'phone', 'tablet' ],
+  useNormalizedOHMUrl: false,
+  pkgContextInfo: undefined,
+  ohPackagePathMap: {},
+  dependencyAliasMap: {},
+  permission: {
+    requestPermissions: [ [Object], [Object], [Object] ],
+    definePermissions: undefined
+  },
+  integratedHsp: false,
+  projectArkOption: { runtimeOnly: { sources: [] } },
+  sourceMapDir: undefined,
+  branchElimination: false,
+  transformLib: undefined,
+  caseSensitiveCheck: false,
+  tsImportSendable: false,
+  resolveConflictMode: true,
+  depName2RootPath: {},
+  depName2DepInfo: {},
+  rootPathSet: [ 'E:\\Deveco_Project\\test' ],
+  useNativeResolver: true,
+  shouldEmitJs: true,
+  useTscResolve: false,
+  singleFileEmit: false,
+  userProjectConfig: {
+    autoLazyImport: false,
+    allowEmptyBundleName: false,
+    reExportCheckMode: 'noCheck'
+  },
+  autoLazyImport: false,
+  allowEmptyBundleName: false,
+  reExportCheckMode: 'noCheck',
+  arkCompileCachePath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\cache\\default\\default@CompileArkTS\\esmodule',
+  aceModuleJsonPath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\ark_module.json',
+  appResource: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\ResourceTable.txt',
+  rawFileResource: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\resources\\rawfile',
+  resourceTableHash: '6a9890140dec5071911539909a4cb31a',
+  runtimeOS: 'HarmonyOS',
+  sdkInfo: 'false:18:5.1.0.125:Release',
+  aceModuleRoot: 'E:\\Deveco_Project\\test\\entry\\src\\main\\ets',
+  compileMode: 'esmodule',
+  aceSuperVisualPath: 'E:\\Deveco_Project\\test\\entry\\src\\main\\supervisual',
+  aceBuildJson: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\loader\\default\\loader.json',
+  cachePath: 'E:\\Deveco_Project\\test\\entry\\build\\default\\cache\\default\\default@CompileArkTS\\esmodule\\debug',
+  aceModuleBuild: 'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\loader_out\\default\\ets',
+  supportChunks: true,
+  declaredFilesPath: undefined,
+  pkgNameToPkgBriefInfo: {
+    entry: {
+      pkgRoot: 'E:\\Deveco_Project\\test\\entry',
+      originalSourceRoots: undefined,
+      sourceRoots: [Array],
+      pkgName: 'entry'
+    }
+  },
+  projectModel: {
+    'E:\\Deveco_Project\\test\\entry\\src\\main': {
+      moduleName: 'entry',
+      modulePkgPath: 'E:\\Deveco_Project\\test\\entry',
+      belongProjectPath: 'E:\\Deveco_Project\\test'
+    },
+    'E:\\Deveco_Project\\test\\entry': {
+      moduleName: 'entry',
+      modulePkgPath: 'E:\\Deveco_Project\\test\\entry',
+      belongProjectPath: 'E:\\Deveco_Project\\test'
+    },
+    'E:\\Deveco_Project\\test': {
+      moduleName: 'test',
+      modulePkgPath: 'E:\\Deveco_Project\\test',
+      belongProjectPath: 'E:\\Deveco_Project\\test'
+    }
+  },
+  pkgJsonFileHash: 'eaaaa359a2bbaa025153253e73ea279e',
+  allModulePaths: [ 'E:\\Deveco_Project\\test\\entry' ],
+  routerMap: {},
+  obfuscationOptions: undefined,
+  compileBlockPkg: [],
+  mockParams: {
+    decorator: '@MockSetup',
+    packageName: '@ohos/hamock',
+    etsSourceRootPath: 'src/main/ets',
+    mockConfigPath: undefined,
+    mockConfigKey2ModuleInfo: {}
+  },
+  copyCodeResourceEnable: true,
+  copyCodeResourceExcludes: [],
+  uiTransformOptimization: false,
+  otherPaths: {
+    'entry/*': [
+      '..\\*',
+      '..\\..\\..\\build\\default\\generated\\profile\\default\\*'
+    ]
+  },
+  collectImportersConfig: undefined
+}
+[2025-08-21T15:17:26.830] [DEBUG] debug-file - Compile arkts with external api path: E:\DevEco Studio\sdk\default\hms\ets
+[2025-08-21T15:17:26.832] [DEBUG] debug-file - default@CompileArkTS work[0] is submitted.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - default@CompileArkTS work[0] is pushed to ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[31] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[30] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[29] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[28] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[27] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[26] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[25] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[24] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[23] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[22] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[21] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[20] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[19] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[18] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[17] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[16] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[15] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[14] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[13] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[12] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[11] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[10] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[9] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.833] [DEBUG] debug-file - A work dispatched to worker[8] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.834] [DEBUG] debug-file - A work dispatched to worker[7] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.834] [DEBUG] debug-file - A work dispatched to worker[6] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.834] [DEBUG] debug-file - A work dispatched to worker[5] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.834] [DEBUG] debug-file - Create  resident worker with id: 4.
+[2025-08-21T15:17:26.835] [DEBUG] debug-file - default@CompileArkTS work[0] has been dispatched to worker[4].
+[2025-08-21T15:17:26.835] [DEBUG] debug-file - default@CompileArkTS work[0] is dispatched.
+[2025-08-21T15:17:26.835] [DEBUG] debug-file - CopyResources startTime: 1225494421100
+[2025-08-21T15:17:26.835] [DEBUG] debug-file - default@CompileArkTS work[1] is submitted.
+[2025-08-21T15:17:26.836] [DEBUG] debug-file - default@CompileArkTS work[1] is pushed to ready queue.
+[2025-08-21T15:17:26.836] [DEBUG] debug-file - A work dispatched to worker[31] failed because unable to get work from ready queue.
+[2025-08-21T15:17:26.836] [DEBUG] debug-file - Create  resident worker with id: 30.
+[2025-08-21T15:17:26.837] [DEBUG] debug-file - default@CompileArkTS work[1] has been dispatched to worker[30].
+[2025-08-21T15:17:26.837] [DEBUG] debug-file - default@CompileArkTS work[1] is dispatched.
+[2025-08-21T15:17:26.837] [DEBUG] debug-file - entry : default@CompileArkTS cost memory 1.9211807250976562
+[2025-08-21T15:17:26.840] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.840] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.840] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.843] [DEBUG] debug-file - Executing task :entry:default@BuildJS
+[2025-08-21T15:17:26.846] [DEBUG] debug-file - entry : default@BuildJS cost memory 0.12664794921875
+[2025-08-21T15:17:26.846] [DEBUG] debug-file - runTaskFromQueue task cost before running: 468 ms 
+[2025-08-21T15:17:26.847] [INFO] debug-file - Finished :entry:default@BuildJS... after 4 ms 
+[2025-08-21T15:17:26.849] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.849] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:26.850] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:26.852] [DEBUG] debug-file - Executing task :entry:default@CacheNativeLibs
+[2025-08-21T15:17:26.853] [DEBUG] debug-file - Task 'entry:default@CacheNativeLibs' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T15:17:26.854] [DEBUG] debug-file - Incremental task entry:default@CacheNativeLibs pre-execution cost: 2 ms .
+[2025-08-21T15:17:26.855] [DEBUG] debug-file - entry : default@CacheNativeLibs cost memory 0.09430694580078125
+[2025-08-21T15:17:26.855] [INFO] debug-file - UP-TO-DATE :entry:default@CacheNativeLibs...  
+[2025-08-21T15:17:28.088] [DEBUG] debug-file - worker[30] has one work done.
+[2025-08-21T15:17:28.088] [DEBUG] debug-file - CopyResources is end, endTime: 1226747272300
+[2025-08-21T15:17:28.088] [DEBUG] debug-file - default@CompileArkTS work[1] done.
+[2025-08-21T15:17:28.088] [DEBUG] debug-file - A work dispatched to worker[30] failed because unable to get work from ready queue.
+[2025-08-21T15:17:49.092] [INFO] debug-file - [33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:30:19
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:30:32
+ 'SlotType' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:30:41
+ 'SOCIAL_COMMUNICATION' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:32:24
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:32:37
+ 'ContentType' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:32:49
+ 'NOTIFICATION_CONTENT_BASIC_TEXT' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:79:13
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:79:26
+ 'publish' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:93:19
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:93:32
+ 'SlotType' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:93:41
+ 'SOCIAL_COMMUNICATION' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:95:24
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:95:37
+ 'ContentType' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:95:49
+ 'NOTIFICATION_CONTENT_BASIC_TEXT' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:142:13
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:142:26
+ 'publish' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:151:13
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:151:26
+ 'cancel' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:190:19
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:190:32
+ 'SlotType' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:190:41
+ 'SOCIAL_COMMUNICATION' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:192:24
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:192:37
+ 'ContentType' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:192:49
+ 'NOTIFICATION_CONTENT_BASIC_TEXT' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:201:13
+ 'notification' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/services/NotificationService.ts:201:26
+ 'publish' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/utils/NavigationManager.ets:47:16
+ 'pushUrl' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/utils/NavigationManager.ets:61:14
+ 'pushUrl' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/utils/NavigationManager.ets:72:14
+ 'back' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/utils/NavigationManager.ets:81:14
+ 'replaceUrl' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/utils/NavigationManager.ets:92:21
+ 'getState' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Splash.ets:11:7
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Index.ets:62:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Index.ets:69:7
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Index.ets:79:7
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Index.ets:159:7
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Index.ets:182:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Dashboard.ets:50:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Dashboard.ets:59:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Dashboard.ets:69:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Dashboard.ets:79:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Dashboard.ets:113:19
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Dashboard.ets:255:19
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Dashboard.ets:275:19
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Dashboard.ets:295:19
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Dashboard.ets:360:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Pomodoro.ets:194:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Pomodoro.ets:212:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Pomodoro.ets:554:11
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Pomodoro.ets:583:11
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Pomodoro.ets:612:11
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Pomodoro.ets:642:11
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Tasks.ets:34:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Tasks.ets:39:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Tasks.ets:47:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Tasks.ets:77:13
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Calendar.ets:66:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Calendar.ets:75:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Calendar.ets:85:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Calendar.ets:162:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Calendar.ets:257:13
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Settings.ets:132:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Settings.ets:152:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Settings.ets:157:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Settings.ets:162:5
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Settings.ets:230:13
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Settings.ets:375:11
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Settings.ets:402:11
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Settings.ets:429:11
+ 'animateTo' has been deprecated.
+[39m[39m
+[33mWARN: [33m[33mArkTS:WARN File: E:/Deveco_Project/test/entry/src/main/ets/pages/Settings.ets:457:11
+ 'animateTo' has been deprecated.
+[39m[39m
+
+[2025-08-21T15:17:49.093] [DEBUG] debug-file - Ark compile task finished.finished time is 1247752636700
+[2025-08-21T15:17:49.094] [DEBUG] debug-file - worker[4] has one work done.
+[2025-08-21T15:17:49.109] [DEBUG] debug-file - default@CompileArkTS work[0] done.
+[2025-08-21T15:17:49.109] [DEBUG] debug-file - A work dispatched to worker[4] failed because unable to get work from ready queue.
+[2025-08-21T15:17:49.113] [INFO] debug-file - Finished :entry:default@CompileArkTS... after 19 s 316 ms 
+[2025-08-21T15:17:49.116] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.116] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.116] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:49.117] [DEBUG] debug-file - Executing task :entry:default@GeneratePkgModuleJson
+[2025-08-21T15:17:49.117] [DEBUG] debug-file - Task 'entry:default@GeneratePkgModuleJson' cost while wrapping incremental declarations: 1 ms 
+[2025-08-21T15:17:49.118] [DEBUG] debug-file - Incremental task entry:default@GeneratePkgModuleJson pre-execution cost: 1 ms .
+[2025-08-21T15:17:49.118] [DEBUG] debug-file - entry : default@GeneratePkgModuleJson cost memory 0.074371337890625
+[2025-08-21T15:17:49.118] [INFO] debug-file - UP-TO-DATE :entry:default@GeneratePkgModuleJson...  
+[2025-08-21T15:17:49.122] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.122] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.122] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:49.128] [DEBUG] debug-file - Executing task :entry:default@PackageHap
+[2025-08-21T15:17:49.136] [DEBUG] debug-file - entry:default@PackageHap is not up-to-date, since the input file 'E:\Deveco_Project\test\entry\build\default\intermediates\loader_out\default\ets' has been changed.
+[2025-08-21T15:17:49.136] [DEBUG] debug-file - Incremental task entry:default@PackageHap pre-execution cost: 7 ms .
+[2025-08-21T15:17:49.137] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.137] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.137] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:49.141] [DEBUG] debug-file - Use tool [E:\DevEco Studio\sdk\default\openharmony\toolchains\lib\app_packing_tool.jar]
+ [
+  'java',
+  '-Dfile.encoding=GBK',
+  '-jar',
+  'E:\\DevEco Studio\\sdk\\default\\openharmony\\toolchains\\lib\\app_packing_tool.jar',
+  '--mode',
+  'hap',
+  '--force',
+  'true',
+  '--lib-path',
+  'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\stripped_native_libs\\default',
+  '--json-path',
+  'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\package\\default\\module.json',
+  '--resources-path',
+  'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\resources',
+  '--index-path',
+  'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\res\\default\\resources.index',
+  '--pack-info-path',
+  'E:\\Deveco_Project\\test\\entry\\build\\default\\outputs\\default\\pack.info',
+  '--out-path',
+  'E:\\Deveco_Project\\test\\entry\\build\\default\\outputs\\default\\entry-default-unsigned.hap',
+  '--ets-path',
+  'E:\\Deveco_Project\\test\\entry\\build\\default\\intermediates\\loader_out\\default\\ets'
+]
+[2025-08-21T15:17:49.647] [DEBUG] debug-file - java daemon socket received message:{"code":0,"message":"pack success"}
+[2025-08-21T15:17:49.653] [DEBUG] debug-file - entry : default@PackageHap cost memory -2.2261199951171875
+[2025-08-21T15:17:49.653] [DEBUG] debug-file - runTaskFromQueue task cost before running: 23 s 275 ms 
+[2025-08-21T15:17:49.655] [INFO] debug-file - Finished :entry:default@PackageHap... after 526 ms 
+[2025-08-21T15:17:49.659] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.659] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.659] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:49.662] [DEBUG] debug-file - Executing task :entry:default@SignHap
+[2025-08-21T15:17:49.665] [DEBUG] debug-file - entry:default@SignHap is not up-to-date, since the input file 'E:\Deveco_Project\test\entry\build\default\outputs\default\entry-default-unsigned.hap' has been changed.
+[2025-08-21T15:17:49.665] [DEBUG] debug-file - Incremental task entry:default@SignHap pre-execution cost: 2 ms .
+[2025-08-21T15:17:49.665] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.665] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:49.665] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:49.710] [DEBUG] debug-file - java daemon socket close code:1000 reason:close by user
+[2025-08-21T15:17:50.498] [DEBUG] debug-file - java daemon socket received message:{"code":0,"message":"verify profile success"}
+[2025-08-21T15:17:50.509] [DEBUG] debug-file - java daemon socket close code:1000 reason:close by user
+[2025-08-21T15:17:50.917] [DEBUG] debug-file - java daemon socket received message:{"code":0,"message":"sign app success"}
+[2025-08-21T15:17:50.918] [DEBUG] debug-file - entry : default@SignHap cost memory 0.2445068359375
+[2025-08-21T15:17:50.918] [DEBUG] debug-file - runTaskFromQueue task cost before running: 24 s 539 ms 
+[2025-08-21T15:17:50.919] [INFO] debug-file - Finished :entry:default@SignHap... after 1 s 257 ms 
+[2025-08-21T15:17:50.922] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:50.922] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:50.922] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:50.923] [DEBUG] debug-file - Executing task :entry:default@CollectDebugSymbol
+[2025-08-21T15:17:50.929] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:50.929] [DEBUG] debug-file - jsonObjWithoutParam {} at undefined
+[2025-08-21T15:17:50.929] [DEBUG] debug-file - jsonObjWithoutParam {"modelVersion":"5.0.0","name":"entry","version":"1.0.0","description":"CubeTime app entry module","main":"","author":"","license":"","dependencies":{},"devDependencies":{}} at undefined
+[2025-08-21T15:17:50.929] [DEBUG] debug-file - entry : default@CollectDebugSymbol cost memory 0.2501220703125
+[2025-08-21T15:17:50.929] [DEBUG] debug-file - runTaskFromQueue task cost before running: 24 s 550 ms 
+[2025-08-21T15:17:50.930] [INFO] debug-file - Finished :entry:default@CollectDebugSymbol... after 7 ms 
+[2025-08-21T15:17:50.932] [DEBUG] debug-file - Executing task :entry:assembleHap
+[2025-08-21T15:17:50.932] [DEBUG] debug-file - entry : assembleHap cost memory 0.01190185546875
+[2025-08-21T15:17:50.932] [DEBUG] debug-file - runTaskFromQueue task cost before running: 24 s 554 ms 
+[2025-08-21T15:17:50.933] [INFO] debug-file - Finished :entry:assembleHap... after 1 ms 
+[2025-08-21T15:17:50.946] [DEBUG] debug-file - BUILD SUCCESSFUL in 24 s 567 ms 
+[2025-08-21T15:17:50.947] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@PreBuild is up-to-date.
+[2025-08-21T15:17:50.947] [DEBUG] debug-file - Update task entry:default@CreateModuleInfo output file:E:\Deveco_Project\test\entry\build\default\generated\profile\default\ModuleInfo.ts cache.
+[2025-08-21T15:17:50.948] [DEBUG] debug-file - Incremental task entry:default@CreateModuleInfo post-execution cost:1 ms .
+[2025-08-21T15:17:50.948] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@GenerateMetadata is up-to-date.
+[2025-08-21T15:17:50.948] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@MergeProfile is up-to-date.
+[2025-08-21T15:17:50.948] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@CreateBuildProfile is up-to-date.
+[2025-08-21T15:17:50.948] [DEBUG] debug-file - Update task entry:default@GeneratePkgContextInfo output file:E:\Deveco_Project\test\entry\build\default\intermediates\loader\default\pkgContextInfo.json cache.
+[2025-08-21T15:17:50.948] [DEBUG] debug-file - Incremental task entry:default@GeneratePkgContextInfo post-execution cost:1 ms .
+[2025-08-21T15:17:50.949] [DEBUG] debug-file - Update task entry:default@ProcessIntegratedHsp output file:E:\Deveco_Project\test\build\cache\default\integrated_hsp\integratedHspCache.json cache.
+[2025-08-21T15:17:50.949] [DEBUG] debug-file - Incremental task entry:default@ProcessIntegratedHsp post-execution cost:1 ms .
+[2025-08-21T15:17:50.949] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@MakePackInfo is up-to-date.
+[2025-08-21T15:17:50.949] [DEBUG] debug-file - Update task entry:default@SyscapTransform input file:E:\DevEco Studio\sdk\default\openharmony\toolchains\syscap_tool.exe cache by regenerate.
+[2025-08-21T15:17:50.950] [DEBUG] debug-file - Update task entry:default@SyscapTransform input file:E:\DevEco Studio\sdk\default\openharmony\ets\api\device-define cache by regenerate.
+[2025-08-21T15:17:50.951] [DEBUG] debug-file - Update task entry:default@SyscapTransform output file:E:\Deveco_Project\test\entry\build\default\intermediates\syscap\default\rpcid.sc cache.
+[2025-08-21T15:17:50.952] [DEBUG] debug-file - Incremental task entry:default@SyscapTransform post-execution cost:3 ms .
+[2025-08-21T15:17:50.952] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@ProcessProfile is up-to-date.
+[2025-08-21T15:17:50.952] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@ProcessRouterMap is up-to-date.
+[2025-08-21T15:17:50.952] [DEBUG] debug-file - Update task entry:default@ProcessStartupConfig output file:E:\Deveco_Project\test\entry\build\default\intermediates\startup\default\startup_config.json cache.
+[2025-08-21T15:17:50.953] [DEBUG] debug-file - Incremental task entry:default@ProcessStartupConfig post-execution cost:1 ms .
+[2025-08-21T15:17:50.953] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@ProcessResource is up-to-date.
+[2025-08-21T15:17:50.953] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@GenerateLoaderJson is up-to-date.
+[2025-08-21T15:17:50.953] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@ProcessLibs is up-to-date.
+[2025-08-21T15:17:50.953] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@CompileResource is up-to-date.
+[2025-08-21T15:17:50.953] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@DoNativeStrip is up-to-date.
+[2025-08-21T15:17:50.955] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\intermediates\loader\default cache by regenerate.
+[2025-08-21T15:17:50.956] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\ResourceTable.txt cache by regenerate.
+[2025-08-21T15:17:50.956] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\ark_module.json cache by regenerate.
+[2025-08-21T15:17:50.957] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\resources\base\profile cache by regenerate.
+[2025-08-21T15:17:50.958] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\src\main\ets cache by regenerate.
+[2025-08-21T15:17:50.964] [DEBUG] debug-file - Update task entry:default@CompileArkTS input file:E:\Deveco_Project\test\entry\build\default\generated\profile\default\BuildProfile.ets cache by regenerate.
+[2025-08-21T15:17:50.964] [DEBUG] debug-file - Update task entry:default@CompileArkTS output file:E:\Deveco_Project\test\entry\build\default\intermediates\loader_out\default\ets cache.
+[2025-08-21T15:17:50.965] [DEBUG] debug-file - Incremental task entry:default@CompileArkTS post-execution cost:12 ms .
+[2025-08-21T15:17:50.966] [DEBUG] debug-file - Update task entry:default@BuildJS input file:E:\Deveco_Project\test\entry\build\default\intermediates\loader\default cache by regenerate.
+[2025-08-21T15:17:50.967] [DEBUG] debug-file - Update task entry:default@BuildJS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\ResourceTable.txt cache by regenerate.
+[2025-08-21T15:17:50.967] [DEBUG] debug-file - Update task entry:default@BuildJS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\ark_module.json cache by regenerate.
+[2025-08-21T15:17:50.967] [DEBUG] debug-file - Update task entry:default@BuildJS input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\resources\base\profile cache by regenerate.
+[2025-08-21T15:17:50.968] [DEBUG] debug-file - Update task entry:default@BuildJS output file:E:\Deveco_Project\test\entry\build\default\intermediates\loader_out\default\js cache.
+[2025-08-21T15:17:50.968] [DEBUG] debug-file - Incremental task entry:default@BuildJS post-execution cost:4 ms .
+[2025-08-21T15:17:50.968] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@CacheNativeLibs is up-to-date.
+[2025-08-21T15:17:50.968] [DEBUG] debug-file - There is no need to refresh cache, since the incremental task entry:default@GeneratePkgModuleJson is up-to-date.
+[2025-08-21T15:17:50.969] [DEBUG] debug-file - Update task entry:default@PackageHap input file:E:\Deveco_Project\test\entry\build\default\intermediates\stripped_native_libs\default cache by regenerate.
+[2025-08-21T15:17:50.970] [DEBUG] debug-file - Update task entry:default@PackageHap input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\module.json cache by regenerate.
+[2025-08-21T15:17:50.970] [DEBUG] debug-file - Update task entry:default@PackageHap input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\resources cache by regenerate.
+[2025-08-21T15:17:50.973] [DEBUG] debug-file - Update task entry:default@PackageHap input file:E:\Deveco_Project\test\entry\build\default\intermediates\res\default\resources.index cache by regenerate.
+[2025-08-21T15:17:50.973] [DEBUG] debug-file - Update task entry:default@PackageHap input file:E:\Deveco_Project\test\entry\build\default\outputs\default\pack.info cache by regenerate.
+[2025-08-21T15:17:50.974] [DEBUG] debug-file - Update task entry:default@PackageHap input file:E:\Deveco_Project\test\entry\build\default\intermediates\loader_out\default\ets cache from map.
+[2025-08-21T15:17:50.974] [DEBUG] debug-file - Update task entry:default@PackageHap input file:E:\Deveco_Project\test\entry\build\default\intermediates\loader_out\default\ets\sourceMaps.map cache by regenerate.
+[2025-08-21T15:17:50.974] [DEBUG] debug-file - Update task entry:default@PackageHap input file:E:\Deveco_Project\test\entry\build\default\generated\profile\default\BuildProfile.ets cache by regenerate.
+[2025-08-21T15:17:50.975] [DEBUG] debug-file - Update task entry:default@PackageHap output file:E:\Deveco_Project\test\entry\build\default\outputs\default\entry-default-unsigned.hap cache.
+[2025-08-21T15:17:50.975] [DEBUG] debug-file - Update task entry:default@PackageHap output file:E:\Deveco_Project\test\entry\build\default\intermediates\source_map\default\sourceMaps.map cache.
+[2025-08-21T15:17:50.976] [DEBUG] debug-file - Update task entry:default@PackageHap output file:E:\Deveco_Project\test\entry\build\default\outputs\default\mapping\sourceMaps.map cache.
+[2025-08-21T15:17:50.976] [DEBUG] debug-file - Incremental task entry:default@PackageHap post-execution cost:8 ms .
+[2025-08-21T15:17:50.977] [DEBUG] debug-file - Update task entry:default@SignHap input file:C:\Users\RIck\.ohos\config\default_test_FSSenT3JKsyYvyIlKtL5EaYCuT9BTXUbdg-nTfAGFro=.cer cache by regenerate.
+[2025-08-21T15:17:50.977] [DEBUG] debug-file - Update task entry:default@SignHap input file:C:\Users\RIck\.ohos\config\default_test_FSSenT3JKsyYvyIlKtL5EaYCuT9BTXUbdg-nTfAGFro=.p7b cache by regenerate.
+[2025-08-21T15:17:50.977] [DEBUG] debug-file - Update task entry:default@SignHap input file:C:\Users\RIck\.ohos\config\default_test_FSSenT3JKsyYvyIlKtL5EaYCuT9BTXUbdg-nTfAGFro=.p12 cache by regenerate.
+[2025-08-21T15:17:50.978] [DEBUG] debug-file - Update task entry:default@SignHap input file:E:\Deveco_Project\test\entry\build\default\outputs\default\entry-default-unsigned.hap cache from map.
+[2025-08-21T15:17:50.978] [DEBUG] debug-file - Update task entry:default@SignHap output file:E:\Deveco_Project\test\entry\build\default\outputs\default\entry-default-signed.hap cache.
+[2025-08-21T15:17:50.978] [DEBUG] debug-file - Incremental task entry:default@SignHap post-execution cost:2 ms .
+[2025-08-21T15:17:50.980] [DEBUG] debug-file - Update task entry:default@CollectDebugSymbol input file:E:\Deveco_Project\test\entry\build\default\intermediates\loader_out\default\ets\sourceMaps.map cache by regenerate.
+[2025-08-21T15:17:50.981] [DEBUG] debug-file - Update task entry:default@CollectDebugSymbol input file:E:\Deveco_Project\test\entry\build\default\intermediates\libs\default cache by regenerate.
+[2025-08-21T15:17:50.981] [DEBUG] debug-file - Update task entry:default@CollectDebugSymbol output file:E:\Deveco_Project\test\entry\build\default\outputs\default\symbol cache.
+[2025-08-21T15:17:50.981] [DEBUG] debug-file - Incremental task entry:default@CollectDebugSymbol post-execution cost:4 ms .
+[2025-08-21T15:17:51.008] [DEBUG] debug-file - Cleanup worker 30.
+[2025-08-21T15:17:51.008] [DEBUG] debug-file - Worker 30 has been cleaned up.
+[2025-08-21T15:17:51.008] [DEBUG] debug-file - Current idle worker size: 1.
+[2025-08-21T15:17:51.008] [DEBUG] debug-file - Current resident worker size: 2.
+[2025-08-21T15:17:51.009] [DEBUG] debug-file - hvigor build process will be closed.
+[2025-08-21T15:17:51.009] [DEBUG] debug-file - java daemon socket close code:1000 reason:close by user
+[2025-08-21T15:17:51.015] [DEBUG] debug-file - session manager: send message to worker process.
+[2025-08-21T15:17:51.015] [DEBUG] debug-file - session manager: send message to worker process.
+[2025-08-21T15:17:51.015] [DEBUG] debug-file - worker[30] exits with exit code 1.
+[2025-08-21T15:17:51.015] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
+[2025-08-21T15:17:51.016] [DEBUG] debug-file - watch worker: worker id should be larger than 0. Nothing will be sent to any worker thread.
