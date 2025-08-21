@@ -60,19 +60,33 @@ struct CalendarPage {
   @State taskScale: number = 0
   @State taskOpacity: number = 0
 
-  // 页面入场动画 - 只在页面加载时触发
+  // 页面入场动画 - 更快更有弹性
   private animateIn() {
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+    // 标题动画 - 弹性进入
+    animateTo({ 
+      duration: 350, 
+      curve: Curve.Friction
+    }, () => {
       this.titleScale = 1
       this.titleOpacity = 1
     })
     
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+    // 日历网格动画 - 轻微延迟的弹性效果
+    animateTo({ 
+      duration: 400, 
+      curve: Curve.Friction,
+      delay: 80
+    }, () => {
       this.calendarScale = 1
       this.calendarOpacity = 1
     })
     
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+    // 任务列表动画 - 更有弹性的效果
+    animateTo({ 
+      duration: 450, 
+      curve: Curve.Friction,
+      delay: 160
+    }, () => {
       this.taskScale = 1
       this.taskOpacity = 1
     })
@@ -143,16 +157,23 @@ struct CalendarPage {
     return ['日', '一', '二', '三', '四', '五', '六'];
   }
 
-  // 页面切换动画
+  // 页面切换动画 - 底部导航条保持不动
   private animateTransition(callback: () => void) {
     animateTo({ 
-      duration: 200, 
-      curve: Curve.EaseIn,
+      duration: 400, 
+      curve: Curve.Friction,
       onFinish: callback
     }, () => {
+      // 导航条保持不动，只隐藏其他元素
       this.titleOpacity = 0
+      this.titleScale = 0.3
       this.calendarOpacity = 0
+      this.calendarScale = 0.3
       this.taskOpacity = 0
+      this.taskScale = 0.3
+      // 导航条保持可见和原始大小
+      this.navOpacity = 1
+      this.navScale = 1
     })
   }
 
@@ -190,8 +211,7 @@ struct CalendarPage {
   aboutToAppear() {
     this.generateScramble()
     this.loadBestTime()
-    // 确保页面返回时重置为可见状态
-    this.resetVisibility()
+    // 首次进入时直接执行动画，不重置状态
     this.animateIn()
   }
 
@@ -232,7 +252,20 @@ struct CalendarPage {
           .width(24)
           .height(24)
           .fillColor('#6B7280')
-          .onClick(() => this.animateTransition(() => navigationManager.navigateBack()))
+          .onClick(() => {
+            // 使用自定义返回动画
+            animateTo({ duration: 300, curve: Curve.Friction }, () => {
+              this.titleOpacity = 0;
+              this.titleScale = 0.3;
+              this.calendarOpacity = 0;
+              this.calendarScale = 0.3;
+              this.taskOpacity = 0;
+              this.taskScale = 0.3;
+            });
+            setTimeout(() => {
+              navigationManager.navigateBack();
+            }, 300);
+          })
       }
       .width('100%')
       .padding(16)

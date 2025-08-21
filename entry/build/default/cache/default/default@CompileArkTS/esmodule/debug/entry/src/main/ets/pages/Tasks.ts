@@ -121,14 +121,18 @@ class Tasks extends ViewPU {
             this.cardOpacity = 1;
         });
     }
+    // 页面切换动画 - 从小放大的缩放效果
     private animateTransition(callback: () => void) {
         Context.animateTo({
-            duration: 200,
-            curve: Curve.EaseIn,
+            duration: 400,
+            curve: Curve.Friction,
             onFinish: callback
         }, () => {
+            // 页面缩小消失效果
             this.titleOpacity = 0;
+            this.titleScale = 0.3;
             this.cardOpacity = 0;
+            this.cardScale = 0.3;
         });
     }
     private resetVisibility() {
@@ -157,7 +161,18 @@ class Tasks extends ViewPU {
             Image.width(24);
             Image.height(24);
             Image.fillColor('#6B7280');
-            Image.onClick(() => this.animateTransition(() => navigationManager.navigateBack()));
+            Image.onClick(() => {
+                // 使用自定义返回动画
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateBack();
+                }, 300);
+            });
         }, Image);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('待办事项');

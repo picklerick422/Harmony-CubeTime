@@ -16,7 +16,7 @@ interface SettingsPage_Params {
     itemOpacity?: number;
     settingsItems?: SettingsItem[];
 }
-import { navigationManager, TransitionType } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import { navigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 class OptionItem {
     value: string;
     label: string;
@@ -211,19 +211,23 @@ class SettingsPage extends ViewPU {
             this.settingsItems[itemIndex].value = value;
         }
     }
-    // 页面切换动画
+    // 页面切换动画 - 底部导航条保持不动
     private animateTransition(callback: () => void): void {
         Context.animateTo({
-            duration: 200,
-            curve: Curve.EaseIn,
+            duration: 400,
+            curve: Curve.Friction,
             onFinish: callback
         }, () => {
-            this.titleScale = 0;
+            // 导航条保持不动，只隐藏其他元素
             this.titleOpacity = 0;
-            this.itemScale = 0;
+            this.titleScale = 0.3;
             this.itemOpacity = 0;
-            this.cardScale = 0;
+            this.itemScale = 0.3;
             this.cardOpacity = 0;
+            this.cardScale = 0.3;
+            // 导航条保持可见和原始大小
+            this.navOpacity = 1;
+            this.navScale = 1;
         });
     }
     // 页面入场动画 - 只在页面加载时触发
@@ -242,8 +246,7 @@ class SettingsPage extends ViewPU {
         });
     }
     aboutToAppear(): void {
-        // 确保页面返回时重置为可见状态
-        this.resetVisibility();
+        // 首次进入时直接执行动画，不重置状态
         this.animateIn();
     }
     onPageShow(): void {
@@ -312,7 +315,18 @@ class SettingsPage extends ViewPU {
             Image.height(24);
             Image.fillColor('#6B7280');
             Image.onClick(() => {
-                this.animateTransition(() => navigationManager.navigateBack());
+                // 使用自定义返回动画
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateBack();
+                }, 300);
             });
         }, Image);
         // 顶部标题
@@ -540,7 +554,18 @@ class SettingsPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                this.animateTransition(() => navigationManager.navigateTo('Pomodoro', TransitionType.SLIDE_LEFT));
+                // 使用自定义动画序列
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateTo('Pomodoro');
+                }, 300);
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -562,7 +587,18 @@ class SettingsPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                this.animateTransition(() => navigationManager.navigateTo('Tasks', TransitionType.SLIDE_LEFT));
+                // 使用自定义动画序列
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateTo('Tasks');
+                }, 300);
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -584,7 +620,18 @@ class SettingsPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                this.animateTransition(() => navigationManager.navigateTo('Calendar', TransitionType.SLIDE_LEFT));
+                // 使用自定义动画序列
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateTo('Calendar');
+                }, 300);
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -606,7 +653,18 @@ class SettingsPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                this.animateTransition(() => navigationManager.navigateBack());
+                // 使用自定义返回动画
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateBack();
+                }, 300);
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {

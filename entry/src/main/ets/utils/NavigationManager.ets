@@ -8,10 +8,11 @@ export enum TransitionType {
   SLIDE_DOWN = 'slide_down',
   FADE = 'fade',
   ZOOM = 'zoom',
-  FLIP = 'flip'
+  FLIP = 'flip',
+  CUSTOM = 'custom' // 自定义动画类型
 }
 
-// 页面切换管理器 - 简化版本，专注于解决空白页面问题
+// 页面切换管理器 - 支持自定义动画序列
 export class NavigationManager {
   private static instance: NavigationManager;
   
@@ -29,6 +30,29 @@ export class NavigationManager {
   // 设置全局默认动画
   public setDefaultTransition(type: TransitionType): void {
     this.currentTransition = type;
+  }
+
+  // 使用自定义动画序列的页面跳转
+  public navigateToWithCustomAnimation(
+    page: string, 
+    currentPageAnimation: () => void,
+    onAnimationComplete: () => void
+  ): void {
+    try {
+      // 执行当前页面的缩小动画
+      currentPageAnimation();
+      
+      // 等待动画完成后跳转
+      setTimeout(() => {
+        router.pushUrl({
+          url: `pages/${page}`,
+          params: { useCustomAnimation: true }
+        });
+        onAnimationComplete();
+      }, 300); // 等待缩小动画完成
+    } catch (error) {
+      console.error('自定义导航失败:', error);
+    }
   }
 
   // 简单的页面跳转，使用系统默认动画

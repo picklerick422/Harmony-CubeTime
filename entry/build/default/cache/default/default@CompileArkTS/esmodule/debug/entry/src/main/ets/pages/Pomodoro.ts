@@ -22,7 +22,7 @@ interface PomodoroPage_Params {
     taskOpacity?: number;
     timer?: number;
 }
-import { navigationManager, TransitionType } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import { navigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 class OptionItem {
     value: string;
     label: string;
@@ -415,22 +415,22 @@ class PomodoroPage extends ViewPU {
             }
         }
     }
+    // 页面切换动画 - 从小放大的缩放效果
     private animateTransition(callback: () => void) {
         Context.animateTo({
-            duration: 200,
-            curve: Curve.EaseIn,
-            onFinish: () => {
-                callback();
-            }
+            duration: 400,
+            curve: Curve.Friction,
+            onFinish: callback
         }, () => {
-            this.titleScale = 0.8;
+            // 页面缩小消失效果
             this.titleOpacity = 0;
-            this.cardScale = 0.8;
+            this.titleScale = 0.3;
             this.cardOpacity = 0;
-            this.timerScale = 0.8;
+            this.cardScale = 0.3;
             this.timerOpacity = 0;
-            this.taskScale = 0.8;
+            this.timerScale = 0.3;
             this.taskOpacity = 0;
+            this.taskScale = 0.3;
         });
     }
     private animateIn() {
@@ -903,7 +903,20 @@ class PomodoroPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                navigationManager.navigateTo('Tasks', TransitionType.SLIDE_LEFT);
+                // 使用自定义动画序列
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.timerOpacity = 0;
+                    this.timerScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.taskOpacity = 0;
+                    this.taskScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateTo('Tasks');
+                }, 300);
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -925,7 +938,20 @@ class PomodoroPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                navigationManager.navigateTo('Calendar', TransitionType.SLIDE_LEFT);
+                // 使用自定义动画序列
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.timerOpacity = 0;
+                    this.timerScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.taskOpacity = 0;
+                    this.taskScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateTo('Calendar');
+                }, 300);
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -947,7 +973,20 @@ class PomodoroPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                navigationManager.navigateTo('Settings', TransitionType.SLIDE_LEFT);
+                // 使用自定义动画序列
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.timerOpacity = 0;
+                    this.timerScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.taskOpacity = 0;
+                    this.taskScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateTo('Settings');
+                }, 300);
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -969,7 +1008,20 @@ class PomodoroPage extends ViewPU {
             Column.width('20%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
-                this.animateTransition(() => navigationManager.navigateBack());
+                // 使用自定义返回动画
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.timerOpacity = 0;
+                    this.timerScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.taskOpacity = 0;
+                    this.taskScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateBack();
+                }, 300);
             });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {

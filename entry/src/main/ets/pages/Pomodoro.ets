@@ -189,22 +189,22 @@ struct PomodoroPage {
     }
   }
 
+  // 页面切换动画 - 从小放大的缩放效果
   private animateTransition(callback: () => void) {
     animateTo({
-      duration: 200,
-      curve: Curve.EaseIn,
-      onFinish: () => {
-        callback();
-      }
+      duration: 400,
+      curve: Curve.Friction,
+      onFinish: callback
     }, () => {
-      this.titleScale = 0.8
-      this.titleOpacity = 0
-      this.cardScale = 0.8
-      this.cardOpacity = 0
-      this.timerScale = 0.8
-      this.timerOpacity = 0
-      this.taskScale = 0.8
-      this.taskOpacity = 0
+      // 页面缩小消失效果
+      this.titleOpacity = 0;
+      this.titleScale = 0.3;
+      this.cardOpacity = 0;
+      this.cardScale = 0.3;
+      this.timerOpacity = 0;
+      this.timerScale = 0.3;
+      this.taskOpacity = 0;
+      this.taskScale = 0.3;
     });
   }
 
@@ -538,7 +538,20 @@ struct PomodoroPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          navigationManager.navigateTo('Tasks', TransitionType.SLIDE_LEFT);
+          // 使用自定义动画序列
+          animateTo({ duration: 300, curve: Curve.Friction }, () => {
+            this.titleOpacity = 0;
+            this.titleScale = 0.3;
+            this.timerOpacity = 0;
+            this.timerScale = 0.3;
+            this.cardOpacity = 0;
+            this.cardScale = 0.3;
+            this.taskOpacity = 0;
+            this.taskScale = 0.3;
+          });
+          setTimeout(() => {
+            navigationManager.navigateTo('Tasks');
+          }, 300);
         })
 
         Column() {
@@ -554,7 +567,20 @@ struct PomodoroPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          navigationManager.navigateTo('Calendar', TransitionType.SLIDE_LEFT);
+          // 使用自定义动画序列
+          animateTo({ duration: 300, curve: Curve.Friction }, () => {
+            this.titleOpacity = 0;
+            this.titleScale = 0.3;
+            this.timerOpacity = 0;
+            this.timerScale = 0.3;
+            this.cardOpacity = 0;
+            this.cardScale = 0.3;
+            this.taskOpacity = 0;
+            this.taskScale = 0.3;
+          });
+          setTimeout(() => {
+            navigationManager.navigateTo('Calendar');
+          }, 300);
         })
 
         Column() {
@@ -570,7 +596,20 @@ struct PomodoroPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          navigationManager.navigateTo('Settings', TransitionType.SLIDE_LEFT);
+          // 使用自定义动画序列
+          animateTo({ duration: 300, curve: Curve.Friction }, () => {
+            this.titleOpacity = 0;
+            this.titleScale = 0.3;
+            this.timerOpacity = 0;
+            this.timerScale = 0.3;
+            this.cardOpacity = 0;
+            this.cardScale = 0.3;
+            this.taskOpacity = 0;
+            this.taskScale = 0.3;
+          });
+          setTimeout(() => {
+            navigationManager.navigateTo('Settings');
+          }, 300);
         })
 
         Column() {
@@ -587,7 +626,20 @@ struct PomodoroPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          this.animateTransition(() => navigationManager.navigateBack());
+          // 使用自定义返回动画
+          animateTo({ duration: 300, curve: Curve.Friction }, () => {
+            this.titleOpacity = 0;
+            this.titleScale = 0.3;
+            this.timerOpacity = 0;
+            this.timerScale = 0.3;
+            this.cardOpacity = 0;
+            this.cardScale = 0.3;
+            this.taskOpacity = 0;
+            this.taskScale = 0.3;
+          });
+          setTimeout(() => {
+            navigationManager.navigateBack();
+          }, 300);
         })
       }
       .width('100%')

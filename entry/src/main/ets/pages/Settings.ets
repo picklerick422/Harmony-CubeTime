@@ -127,19 +127,23 @@ struct SettingsPage {
     }
   }
 
-  // 页面切换动画
+  // 页面切换动画 - 底部导航条保持不动
   private animateTransition(callback: () => void): void {
     animateTo({ 
-      duration: 200, 
-      curve: Curve.EaseIn,
+      duration: 400, 
+      curve: Curve.Friction,
       onFinish: callback
     }, () => {
-      this.titleScale = 0
+      // 导航条保持不动，只隐藏其他元素
       this.titleOpacity = 0
-      this.itemScale = 0
+      this.titleScale = 0.3
       this.itemOpacity = 0
-      this.cardScale = 0
+      this.itemScale = 0.3
       this.cardOpacity = 0
+      this.cardScale = 0.3
+      // 导航条保持可见和原始大小
+      this.navOpacity = 1
+      this.navScale = 1
     })
   }
 
@@ -162,8 +166,7 @@ struct SettingsPage {
   }
 
   aboutToAppear(): void {
-    // 确保页面返回时重置为可见状态
-    this.resetVisibility();
+    // 首次进入时直接执行动画，不重置状态
     this.animateIn();
   }
 
@@ -223,7 +226,18 @@ struct SettingsPage {
           .height(24)
           .fillColor('#6B7280')
           .onClick(() => {
-            this.animateTransition(() => navigationManager.navigateBack());
+            // 使用自定义返回动画
+            animateTo({ duration: 300, curve: Curve.Friction }, () => {
+              this.titleOpacity = 0;
+              this.titleScale = 0.3;
+              this.cardOpacity = 0;
+              this.cardScale = 0.3;
+              this.itemOpacity = 0;
+              this.itemScale = 0.3;
+            });
+            setTimeout(() => {
+              navigationManager.navigateBack();
+            }, 300);
           })
       }
       .width('100%')
@@ -357,7 +371,18 @@ struct SettingsPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          this.animateTransition(() => navigationManager.navigateTo('Pomodoro', TransitionType.SLIDE_LEFT));
+          // 使用自定义动画序列
+          animateTo({ duration: 300, curve: Curve.Friction }, () => {
+            this.titleOpacity = 0;
+            this.titleScale = 0.3;
+            this.cardOpacity = 0;
+            this.cardScale = 0.3;
+            this.itemOpacity = 0;
+            this.itemScale = 0.3;
+          });
+          setTimeout(() => {
+            navigationManager.navigateTo('Pomodoro');
+          }, 300);
         })
 
         Column() {
@@ -373,7 +398,18 @@ struct SettingsPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          this.animateTransition(() => navigationManager.navigateTo('Tasks', TransitionType.SLIDE_LEFT));
+          // 使用自定义动画序列
+          animateTo({ duration: 300, curve: Curve.Friction }, () => {
+            this.titleOpacity = 0;
+            this.titleScale = 0.3;
+            this.cardOpacity = 0;
+            this.cardScale = 0.3;
+            this.itemOpacity = 0;
+            this.itemScale = 0.3;
+          });
+          setTimeout(() => {
+            navigationManager.navigateTo('Tasks');
+          }, 300);
         })
 
         Column() {
@@ -389,7 +425,18 @@ struct SettingsPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          this.animateTransition(() => navigationManager.navigateTo('Calendar', TransitionType.SLIDE_LEFT));
+          // 使用自定义动画序列
+          animateTo({ duration: 300, curve: Curve.Friction }, () => {
+            this.titleOpacity = 0;
+            this.titleScale = 0.3;
+            this.cardOpacity = 0;
+            this.cardScale = 0.3;
+            this.itemOpacity = 0;
+            this.itemScale = 0.3;
+          });
+          setTimeout(() => {
+            navigationManager.navigateTo('Calendar');
+          }, 300);
         })
 
         Column() {
@@ -406,7 +453,18 @@ struct SettingsPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          this.animateTransition(() => navigationManager.navigateBack());
+          // 使用自定义返回动画
+          animateTo({ duration: 300, curve: Curve.Friction }, () => {
+            this.titleOpacity = 0;
+            this.titleScale = 0.3;
+            this.cardOpacity = 0;
+            this.cardScale = 0.3;
+            this.itemOpacity = 0;
+            this.itemScale = 0.3;
+          });
+          setTimeout(() => {
+            navigationManager.navigateBack();
+          }, 300);
         })
       }
       .width('100%')

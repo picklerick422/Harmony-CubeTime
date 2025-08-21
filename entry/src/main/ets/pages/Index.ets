@@ -34,6 +34,8 @@ struct Index {
   @State private buttonOpacity: number = 0
   @State private navScale: number = 0.9
   @State private navOpacity: number = 0
+  @State private iconOpacity: number = 0
+  @State private iconScale: number = 0
   
   @State private itemScale: number = 1
   @State private itemOpacity: number = 1
@@ -43,8 +45,7 @@ struct Index {
   aboutToAppear() {
     this.generateScramble()
     this.loadBestTime()
-    // 确保页面返回时重置为可见状态
-    this.resetVisibility()
+    // 首次进入时直接执行动画，不重置状态
     this.animateIn()
   }
 
@@ -53,25 +54,42 @@ struct Index {
     this.resetVisibility()
     this.animateIn()
   }
-  // 入场动画
+
+  // 页面加载动画 - 协调动画速度
   private animateIn() {
-    animateTo({ duration: 600, curve: Curve.EaseOut }, () => {
-      this.titleOpacity = 1;
-      this.titleScale = 1;
-      this.cardOpacity = 1;
-      this.cardScale = 1;
-      this.buttonOpacity = 1;
-      this.buttonScale = 1;
-      this.timerOpacity = 1;
-      this.timerScale = 1;
-      this.navOpacity = 1;
-      this.navScale = 1;
-      this.itemOpacity = 1;
-      this.itemScale = 1;
-    });
+    // 快速但有层次的动画，总时长400ms
+    // 标题 - 立即出现（200ms）
+    animateTo({ duration: 200, curve: Curve.Friction }, () => {
+      this.titleOpacity = 1
+      this.titleScale = 1
+    })
+
+    // 主要内容 - 轻微延迟（250ms）
+    setTimeout(() => {
+      animateTo({ duration: 200, curve: Curve.Friction }, () => {
+        this.cardOpacity = 1
+        this.cardScale = 1
+        this.timerOpacity = 1
+        this.timerScale = 1
+      })
+    }, 100)
+
+    // 操作按钮 - 最后出现（200ms）
+    setTimeout(() => {
+      animateTo({ duration: 200, curve: Curve.Friction }, () => {
+        this.buttonOpacity = 1
+        this.buttonScale = 1
+        this.navOpacity = 1
+        this.navScale = 1
+        this.iconOpacity = 1
+        this.iconScale = 1
+      })
+    }, 200)
+
+    // 底部图标
   }
 
-
+  //need to be corrected
   private generateScramble() {
     const moves = ["R", "U", "F", "L", "D", "B"]
     const modifiers = ["", "'", "2"]
@@ -134,33 +152,58 @@ struct Index {
     }
   }
 
+  // 使用自定义动画序列的页面切换
   private navigateTo(page: string) {
-    // 使用带动画的页面切换
-    this.animateTransition(() => {
-      navigationManager.navigateTo(page, TransitionType.SLIDE_LEFT);
-    })
+    navigationManager.navigateToWithCustomAnimation(page, () => {
+      // 当前页面缩小动画
+      animateTo({ duration: 300, curve: Curve.Friction }, () => {
+        this.titleOpacity = 0;
+        this.titleScale = 0.3;
+        this.cardOpacity = 0;
+        this.cardScale = 0.3;
+        this.timerOpacity = 0;
+        this.timerScale = 0.3;
+        this.buttonOpacity = 0;
+        this.buttonScale = 0.3;
+        this.iconOpacity = 0;
+        this.iconScale = 0.3;
+        // 导航条保持不动
+        this.navOpacity = 1;
+        this.navScale = 1;
+      });}, () => {
+        // 动画完成后的回调
+        console.log('页面切换动画完成');
+      }
+    );
   }
 
-  // 页面切换动画
+  // 页面切换动画 - 底部导航条保持不动
   private animateTransition(callback: () => void) {
-    // 创建退出动画效果
     animateTo({ 
-      duration: 200, 
-      curve: Curve.EaseIn,
+      duration: 300, 
+      curve: Curve.Friction,
       onFinish: callback
     }, () => {
-      // 页面淡出效果
+      // 导航条保持不动，只隐藏其他元素
       this.titleOpacity = 0
+      this.titleScale = 0.3
       this.cardOpacity = 0
+      this.cardScale = 0.3
       this.timerOpacity = 0
+      this.timerScale = 0.3
       this.buttonOpacity = 0
-      this.navOpacity = 0
+      this.buttonScale = 0.3
+      // 导航条保持可见和原始大小
+      this.navOpacity = 1
+      this.navScale = 1
+      this.iconOpacity = 0
+      this.iconScale = 0.3
     })
   }
 
   // 重置页面可见性（解决返回空白问题）
   private resetVisibility(): void {
-    // 强制重置所有动画状态为可见
+    // 强制重置所有动画状态为可见，导航条始终保持可见
     this.titleScale = 1
     this.titleOpacity = 1
     this.cardScale = 1
@@ -189,9 +232,8 @@ struct Index {
             .scale({ x: this.titleScale, y: this.titleScale })
             .opacity(this.titleOpacity)
             .animation({
-              duration: 800,
-              curve: Curve.EaseOut,
-              delay: 100
+              duration: 500,
+              curve: Curve.Friction
             })
         }
         .width('100%')
@@ -203,6 +245,7 @@ struct Index {
       .backgroundColor('#6366F1')
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
 
+      //主体部分
       Scroll() {
         Column() {
           // 魔方状态显示
@@ -215,9 +258,8 @@ struct Index {
               .scale({ x: this.cardScale, y: this.cardScale })
               .opacity(this.cardOpacity)
               .animation({
-              duration: 800,
-              curve: Curve.EaseOut,
-              delay: 200
+              duration: 500,
+              curve: Curve.Friction
             })
 
             Text(this.cubeState)
@@ -226,12 +268,11 @@ struct Index {
               .scale({ x: this.cardScale, y: this.cardScale })
               .opacity(this.cardOpacity)
               .animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 200
+                duration: 500,
+                curve: Curve.Friction
               })
           }
-          .width('100%')
+          .width('90%')
           .padding(16)
           .backgroundColor('#FFFFFF')
           .borderRadius(12)
@@ -239,9 +280,8 @@ struct Index {
           .scale({ x: this.cardScale, y: this.cardScale })
           .opacity(this.cardOpacity)
           .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 200
+            duration: 500,
+            curve: Curve.Friction
           })
 
           // 打乱显示
@@ -254,9 +294,9 @@ struct Index {
               .scale({ x: this.cardScale, y: this.cardScale })
               .opacity(this.cardOpacity)
               .animation({
-              duration: 800,
-              curve: Curve.EaseOut,
-              delay: 250
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 100
             })
 
             Text(this.scramble)
@@ -271,9 +311,9 @@ struct Index {
               .scale({ x: this.cardScale, y: this.cardScale })
               .opacity(this.cardOpacity)
               .animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 250
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 100
               })
           }
           .width('100%')
@@ -282,9 +322,9 @@ struct Index {
           .scale({ x: this.cardScale, y: this.cardScale })
           .opacity(this.cardOpacity)
           .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 250
+            duration: 500,
+            curve: Curve.Friction,
+            delay: 100
           })
 
           // 计时器显示
@@ -302,9 +342,9 @@ struct Index {
               .scale({ x: this.timerScale, y: this.timerScale })
               .opacity(this.timerOpacity)
               .animation({
-              duration: 800,
-              curve: Curve.EaseOut,
-              delay: 300
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 200
             })
           }
           .width('100%')
@@ -312,9 +352,9 @@ struct Index {
           .scale({ x: this.timerScale, y: this.timerScale })
           .opacity(this.timerOpacity)
           .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 300
+            duration: 500,
+            curve: Curve.Friction,
+            delay: 200
           })
 
           // 最佳时间
@@ -325,9 +365,9 @@ struct Index {
               .scale({ x: this.cardScale, y: this.cardScale })
               .opacity(this.cardOpacity)
               .animation({
-              duration: 800,
-              curve: Curve.EaseOut,
-              delay: 350
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 300
             })
             Text(this.formatTime(this.bestTime))
               .fontSize(24)
@@ -336,9 +376,9 @@ struct Index {
               .scale({ x: this.cardScale, y: this.cardScale })
               .opacity(this.cardOpacity)
               .animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 350
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 300
               })
           }
           .width('100%')
@@ -349,9 +389,9 @@ struct Index {
           .scale({ x: this.cardScale, y: this.cardScale })
           .opacity(this.cardOpacity)
           .animation({
-            duration: 800,
+            duration: 500,
             curve: Curve.EaseOut,
-            delay: 350
+            delay: 300
           })
 
           // 控制按钮
@@ -365,7 +405,7 @@ struct Index {
               .scale({ x: this.buttonScale, y: this.buttonScale })
               .opacity(this.buttonOpacity)
               .animation({
-              duration: 800,
+              duration: 500,
               curve: Curve.EaseOut,
               delay: 400
             })
@@ -380,13 +420,13 @@ struct Index {
                 .backgroundColor('#10B981')
                 .fontColor('#FFFFFF')
                 .borderRadius(20)
-          .scale({ x: this.buttonScale, y: this.buttonScale })
-          .opacity(this.buttonOpacity)
-          .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 400
-          })
+                .scale({ x: this.buttonScale, y: this.buttonScale })
+                .opacity(this.buttonOpacity)
+                .animation({
+                  duration: 500,
+                  curve: Curve.Friction,
+                  delay: 400
+                })
                 .onClick(() => {
                   this.startTimer()
                 })
@@ -397,13 +437,13 @@ struct Index {
                 .backgroundColor('#F59E0B')
                 .fontColor('#FFFFFF')
                 .borderRadius(20)
-          .scale({ x: this.buttonScale, y: this.buttonScale })
-          .opacity(this.buttonOpacity)
-          .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 400
-          })
+                .scale({ x: this.buttonScale, y: this.buttonScale })
+                .opacity(this.buttonOpacity)
+                .animation({
+                  duration: 500,
+                  curve: Curve.EaseOut,
+                  delay: 400
+                })
                 .onClick(() => {
                   this.stopTimer()
                 })
@@ -415,9 +455,9 @@ struct Index {
           .scale({ x: this.buttonScale, y: this.buttonScale })
           .opacity(this.buttonOpacity)
           .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 500
+            duration: 500,
+            curve: Curve.Friction,
+            delay: 400
           })
         }
       }
@@ -432,9 +472,8 @@ struct Index {
             .fillColor('#6366F1')
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-              duration: 800,
-              curve: Curve.EaseOut,
-              delay: 500
+              duration: 500,
+              curve: Curve.Friction
             })
           Text('首页')
             .fontSize(12)
@@ -442,15 +481,22 @@ struct Index {
             .margin({ top: 4 })
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 500
-          })
+              duration: 500,
+              curve: Curve.EaseOut,
+              delay: 500
+            })
         }
         .width('25%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          // 首页按钮，无需导航
+            // 首页按钮，无需导航
+        })
+        .scale({ x: this.iconScale, y: this.iconScale })
+        .opacity(this.iconOpacity)
+        .animation({
+          duration: 500,
+          curve: Curve.Friction,
+          delay: 0
         })
 
         Column() {
@@ -460,25 +506,32 @@ struct Index {
             .fillColor('#6B7280')
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 500
-          })
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 500
+            })
           Text('番茄钟')
             .fontSize(12)
             .fontColor('#6B7280')
             .margin({ top: 4 })
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 500
-          })
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 500
+            })
         }
         .width('25%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
           this.navigateTo('Pomodoro')
+        })
+        .scale({ x: this.iconScale, y: this.iconScale })
+        .opacity(this.iconOpacity)
+        .animation({
+          duration: 500,
+          curve: Curve.Friction,
+          delay: 0
         })
 
         Column() {
@@ -488,25 +541,32 @@ struct Index {
             .fillColor('#6B7280')
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 500
-          })
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 500
+            })
           Text('日历')
             .fontSize(12)
             .fontColor('#6B7280')
             .margin({ top: 4 })
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 500
-          })
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 500
+            })
         }
         .width('25%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
           this.navigateTo('Calendar')
+        })
+        .scale({ x: this.iconScale, y: this.iconScale })
+        .opacity(this.iconOpacity)
+        .animation({
+          duration: 500,
+          curve: Curve.Friction,
+          delay: 0
         })
 
         Column() {
@@ -516,25 +576,32 @@ struct Index {
             .fillColor('#6B7280')
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-            duration: 800,
-            curve: Curve.EaseOut,
-            delay: 500
-          })
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 500
+            })
           Text('设置')
             .fontSize(12)
             .fontColor('#6B7280')
             .margin({ top: 4 })
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-          duration: 800,
-          curve: Curve.EaseOut,
-          delay: 500
-        })
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 500
+            })
         }
         .width('25%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
           this.navigateTo('Settings')
+        })
+        .scale({ x: this.iconScale, y: this.iconScale })
+        .opacity(this.iconOpacity)
+        .animation({
+          duration: 500,
+          curve: Curve.Friction,
+          delay: 0
         })
       }
       .width('100%')
@@ -544,13 +611,7 @@ struct Index {
         width: { top: 1 },
         color: '#E5E7EB'
       })
-      .scale({ x: this.navScale, y: this.navScale })
-      .opacity(this.navOpacity)
-      .animation({
-          duration: 800,
-          curve: Curve.EaseOut,
-          delay: 500
-        })
+
     }
     .width('100%')
     .height('100%')

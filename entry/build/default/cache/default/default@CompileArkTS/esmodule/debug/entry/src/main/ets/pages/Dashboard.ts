@@ -294,21 +294,40 @@ class Dashboard extends ViewPU {
         this.__buttonOpacity.set(newValue);
     }
     private timeService: TimeManagementService;
-    // 页面入场动画 - 只在页面加载时触发
+    // 页面入场动画 - 更快更有弹性
     private animateIn() {
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+        // 标题动画 - 弹性进入
+        Context.animateTo({
+            duration: 350,
+            curve: Curve.Friction
+        }, () => {
             this.titleScale = 1;
             this.titleOpacity = 1;
         });
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+        // 卡片动画 - 轻微延迟的弹性效果
+        Context.animateTo({
+            duration: 400,
+            curve: Curve.Friction,
+            delay: 80
+        }, () => {
             this.cardScale = 1;
             this.cardOpacity = 1;
         });
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+        // 项目动画 - 更有弹性的效果
+        Context.animateTo({
+            duration: 450,
+            curve: Curve.Friction,
+            delay: 150
+        }, () => {
             this.itemScale = 1;
             this.itemOpacity = 1;
         });
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 400 }, () => {
+        // 按钮动画 - 弹性效果
+        Context.animateTo({
+            duration: 500,
+            curve: Curve.Friction,
+            delay: 220
+        }, () => {
             this.buttonScale = 1;
             this.buttonOpacity = 1;
         });
@@ -316,8 +335,7 @@ class Dashboard extends ViewPU {
     async aboutToAppear() {
         this.generateScramble();
         this.loadBestTime();
-        // 确保页面返回时重置为可见状态
-        this.resetVisibility();
+        // 首次进入时直接执行动画，不重置状态
         this.animateIn();
     }
     onPageShow() {
@@ -356,9 +374,20 @@ class Dashboard extends ViewPU {
             Image.height(24);
             Image.fillColor(Color.White);
             Image.onClick(() => {
-                this.animateTransition(() => {
-                    navigationManager.navigateBack();
+                // 使用自定义返回动画
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                    this.buttonOpacity = 0;
+                    this.buttonScale = 0.3;
                 });
+                setTimeout(() => {
+                    navigationManager.navigateBack();
+                }, 300);
             });
         }, Image);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -411,7 +440,7 @@ class Dashboard extends ViewPU {
                         timeLeft: this.timeLeft,
                         isRunning: this.isRunning,
                         currentMode: this.currentMode
-                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/Dashboard.ets", line: 121, col: 13 });
+                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/Dashboard.ets", line: 150, col: 13 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {
@@ -586,9 +615,20 @@ class Dashboard extends ViewPU {
             Button.createWithLabel('Tasks');
             Button.layoutWeight(1);
             Button.onClick(() => {
-                this.animateTransition(() => {
-                    navigationManager.navigateTo('pages/Tasks');
+                // 使用自定义动画序列
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                    this.buttonOpacity = 0;
+                    this.buttonScale = 0.3;
                 });
+                setTimeout(() => {
+                    navigationManager.navigateTo('pages/Tasks');
+                }, 300);
             });
             Button.scale({ x: this.buttonScale, y: this.buttonScale });
             Button.opacity(this.buttonOpacity);
@@ -598,9 +638,20 @@ class Dashboard extends ViewPU {
             Button.createWithLabel('Calendar');
             Button.layoutWeight(1);
             Button.onClick(() => {
-                this.animateTransition(() => {
-                    navigationManager.navigateTo('pages/Calendar');
+                // 使用自定义动画序列
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                    this.buttonOpacity = 0;
+                    this.buttonScale = 0.3;
                 });
+                setTimeout(() => {
+                    navigationManager.navigateTo('pages/Calendar');
+                }, 300);
             });
             Button.scale({ x: this.buttonScale, y: this.buttonScale });
             Button.opacity(this.buttonOpacity);
@@ -610,9 +661,20 @@ class Dashboard extends ViewPU {
             Button.createWithLabel('Settings');
             Button.layoutWeight(1);
             Button.onClick(() => {
-                this.animateTransition(() => {
-                    navigationManager.navigateTo('pages/Settings');
+                // 使用自定义动画序列
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                    this.buttonOpacity = 0;
+                    this.buttonScale = 0.3;
                 });
+                setTimeout(() => {
+                    navigationManager.navigateTo('pages/Settings');
+                }, 300);
             });
             Button.scale({ x: this.buttonScale, y: this.buttonScale });
             Button.opacity(this.buttonOpacity);
@@ -654,25 +716,27 @@ class Dashboard extends ViewPU {
         this.navOpacity = 1;
         this.navScale = 1;
     }
-    // 页面切换动画
+    // 页面切换动画 - 底部导航条保持不动
     private animateTransition(callback: () => void): void {
         Context.animateTo({
-            duration: 200,
-            curve: Curve.EaseIn,
+            duration: 400,
+            curve: Curve.Friction,
             onFinish: callback
         }, () => {
+            // 导航条保持不动，只隐藏其他元素
             this.titleOpacity = 0;
-            this.titleScale = 0.8;
+            this.titleScale = 0.3;
             this.buttonOpacity = 0;
-            this.buttonScale = 0.8;
+            this.buttonScale = 0.3;
             this.cardOpacity = 0;
-            this.cardScale = 0.8;
+            this.cardScale = 0.3;
             this.itemOpacity = 0;
-            this.itemScale = 0.8;
+            this.itemScale = 0.3;
             this.timerOpacity = 0;
-            this.timerScale = 0.8;
-            this.navOpacity = 0;
-            this.navScale = 0.8;
+            this.timerScale = 0.3;
+            // 导航条保持可见和原始大小
+            this.navOpacity = 1;
+            this.navScale = 1;
         });
     }
     rerender() {

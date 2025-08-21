@@ -86,7 +86,7 @@ class CalendarPage extends ViewPU {
         this.__calendarOpacity = new ObservedPropertySimplePU(0, this, "calendarOpacity");
         this.__taskScale = new ObservedPropertySimplePU(0, this, "taskScale");
         this.__taskOpacity = new ObservedPropertySimplePU(0
-        // 页面入场动画 - 只在页面加载时触发
+        // 页面入场动画 - 更快更有弹性
         , this, "taskOpacity");
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
@@ -321,17 +321,31 @@ class CalendarPage extends ViewPU {
     set taskOpacity(newValue: number) {
         this.__taskOpacity.set(newValue);
     }
-    // 页面入场动画 - 只在页面加载时触发
+    // 页面入场动画 - 更快更有弹性
     private animateIn() {
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+        // 标题动画 - 弹性进入
+        Context.animateTo({
+            duration: 350,
+            curve: Curve.Friction
+        }, () => {
             this.titleScale = 1;
             this.titleOpacity = 1;
         });
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+        // 日历网格动画 - 轻微延迟的弹性效果
+        Context.animateTo({
+            duration: 400,
+            curve: Curve.Friction,
+            delay: 80
+        }, () => {
             this.calendarScale = 1;
             this.calendarOpacity = 1;
         });
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+        // 任务列表动画 - 更有弹性的效果
+        Context.animateTo({
+            duration: 450,
+            curve: Curve.Friction,
+            delay: 160
+        }, () => {
             this.taskScale = 1;
             this.taskOpacity = 1;
         });
@@ -389,16 +403,23 @@ class CalendarPage extends ViewPU {
     getWeekDays(): string[] {
         return ['日', '一', '二', '三', '四', '五', '六'];
     }
-    // 页面切换动画
+    // 页面切换动画 - 底部导航条保持不动
     private animateTransition(callback: () => void) {
         Context.animateTo({
-            duration: 200,
-            curve: Curve.EaseIn,
+            duration: 400,
+            curve: Curve.Friction,
             onFinish: callback
         }, () => {
+            // 导航条保持不动，只隐藏其他元素
             this.titleOpacity = 0;
+            this.titleScale = 0.3;
             this.calendarOpacity = 0;
+            this.calendarScale = 0.3;
             this.taskOpacity = 0;
+            this.taskScale = 0.3;
+            // 导航条保持可见和原始大小
+            this.navOpacity = 1;
+            this.navScale = 1;
         });
     }
     changeMonth(delta: number): void {
@@ -430,8 +451,7 @@ class CalendarPage extends ViewPU {
     aboutToAppear() {
         this.generateScramble();
         this.loadBestTime();
-        // 确保页面返回时重置为可见状态
-        this.resetVisibility();
+        // 首次进入时直接执行动画，不重置状态
         this.animateIn();
     }
     onPageShow() {
@@ -487,7 +507,20 @@ class CalendarPage extends ViewPU {
             Image.width(24);
             Image.height(24);
             Image.fillColor('#6B7280');
-            Image.onClick(() => this.animateTransition(() => navigationManager.navigateBack()));
+            Image.onClick(() => {
+                // 使用自定义返回动画
+                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.calendarOpacity = 0;
+                    this.calendarScale = 0.3;
+                    this.taskOpacity = 0;
+                    this.taskScale = 0.3;
+                });
+                setTimeout(() => {
+                    navigationManager.navigateBack();
+                }, 300);
+            });
         }, Image);
         // 顶部标题栏
         Row.pop();

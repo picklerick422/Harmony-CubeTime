@@ -44,24 +44,43 @@ struct Dashboard {
 
   private timeService: TimeManagementService = TimeManagementService.getInstance();
 
-  // 页面入场动画 - 只在页面加载时触发
+  // 页面入场动画 - 更快更有弹性
   private animateIn() {
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+    // 标题动画 - 弹性进入
+    animateTo({ 
+      duration: 350, 
+      curve: Curve.Friction
+    }, () => {
       this.titleScale = 1
       this.titleOpacity = 1
     })
     
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+    // 卡片动画 - 轻微延迟的弹性效果
+    animateTo({ 
+      duration: 400, 
+      curve: Curve.Friction,
+      delay: 80
+    }, () => {
       this.cardScale = 1
       this.cardOpacity = 1
     })
     
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+    // 项目动画 - 更有弹性的效果
+    animateTo({ 
+      duration: 450, 
+      curve: Curve.Friction,
+      delay: 150
+    }, () => {
       this.itemScale = 1
       this.itemOpacity = 1
     })
     
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 400 }, () => {
+    // 按钮动画 - 弹性效果
+    animateTo({ 
+      duration: 500, 
+      curve: Curve.Friction,
+      delay: 220
+    }, () => {
       this.buttonScale = 1
       this.buttonOpacity = 1
     })
@@ -70,8 +89,7 @@ struct Dashboard {
   async aboutToAppear() {
     this.generateScramble()
     this.loadBestTime()
-    // 确保页面返回时重置为可见状态
-    this.resetVisibility()
+    // 首次进入时直接执行动画，不重置状态
     this.animateIn()
   }
 
@@ -91,9 +109,20 @@ struct Dashboard {
                 .height(24)
                 .fillColor(Color.White)
                 .onClick(() => {
-                  this.animateTransition(() => {
-                    navigationManager.navigateBack();
+                  // 使用自定义返回动画
+                  animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                    this.buttonOpacity = 0;
+                    this.buttonScale = 0.3;
                   });
+                  setTimeout(() => {
+                    navigationManager.navigateBack();
+                  }, 300);
                 })
               
               Text('仪表盘')
@@ -222,27 +251,60 @@ struct Dashboard {
             Button('Tasks')
               .layoutWeight(1)
               .onClick(() => {
-                  this.animateTransition(() => {
-                    navigationManager.navigateTo('pages/Tasks');
+                  // 使用自定义动画序列
+                  animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                    this.buttonOpacity = 0;
+                    this.buttonScale = 0.3;
                   });
+                  setTimeout(() => {
+                    navigationManager.navigateTo('pages/Tasks');
+                  }, 300);
                 })
               .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
 
             Button('Calendar')
               .layoutWeight(1)
               .onClick(() => {
-                  this.animateTransition(() => {
-                    navigationManager.navigateTo('pages/Calendar');
+                  // 使用自定义动画序列
+                  animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                    this.buttonOpacity = 0;
+                    this.buttonScale = 0.3;
                   });
+                  setTimeout(() => {
+                    navigationManager.navigateTo('pages/Calendar');
+                  }, 300);
                 })
               .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
 
             Button('Settings')
               .layoutWeight(1)
               .onClick(() => {
-                  this.animateTransition(() => {
-                    navigationManager.navigateTo('pages/Settings');
+                  // 使用自定义动画序列
+                  animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                    this.titleOpacity = 0;
+                    this.titleScale = 0.3;
+                    this.cardOpacity = 0;
+                    this.cardScale = 0.3;
+                    this.itemOpacity = 0;
+                    this.itemScale = 0.3;
+                    this.buttonOpacity = 0;
+                    this.buttonScale = 0.3;
                   });
+                  setTimeout(() => {
+                    navigationManager.navigateTo('pages/Settings');
+                  }, 300);
                 })
               .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
           }
@@ -293,25 +355,27 @@ struct Dashboard {
     this.navScale = 1;
   }
 
-  // 页面切换动画
+  // 页面切换动画 - 底部导航条保持不动
   private animateTransition(callback: () => void): void {
     animateTo({ 
-      duration: 200, 
-      curve: Curve.EaseIn,
+      duration: 400, 
+      curve: Curve.Friction,
       onFinish: callback
     }, () => {
+      // 导航条保持不动，只隐藏其他元素
       this.titleOpacity = 0;
-      this.titleScale = 0.8;
+      this.titleScale = 0.3;
       this.buttonOpacity = 0;
-      this.buttonScale = 0.8;
+      this.buttonScale = 0.3;
       this.cardOpacity = 0;
-      this.cardScale = 0.8;
+      this.cardScale = 0.3;
       this.itemOpacity = 0;
-      this.itemScale = 0.8;
+      this.itemScale = 0.3;
       this.timerOpacity = 0;
-      this.timerScale = 0.8;
-      this.navOpacity = 0;
-      this.navScale = 0.8;
+      this.timerScale = 0.3;
+      // 导航条保持可见和原始大小
+      this.navOpacity = 1;
+      this.navScale = 1;
     });
   }
 

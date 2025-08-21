@@ -42,14 +42,18 @@ struct Tasks {
     })
   }
 
+  // 页面切换动画 - 从小放大的缩放效果
   private animateTransition(callback: () => void) {
     animateTo({ 
-      duration: 200, 
-      curve: Curve.EaseIn,
+      duration: 400, 
+      curve: Curve.Friction,
       onFinish: callback
     }, () => {
+      // 页面缩小消失效果
       this.titleOpacity = 0
+      this.titleScale = 0.3
       this.cardOpacity = 0
+      this.cardScale = 0.3
     })
   }
 
@@ -68,7 +72,18 @@ struct Tasks {
           .width(24)
           .height(24)
           .fillColor('#6B7280')
-          .onClick(() => this.animateTransition(() => navigationManager.navigateBack()))
+          .onClick(() => {
+            // 使用自定义返回动画
+            animateTo({ duration: 300, curve: Curve.Friction }, () => {
+              this.titleOpacity = 0;
+              this.titleScale = 0.3;
+              this.cardOpacity = 0;
+              this.cardScale = 0.3;
+            });
+            setTimeout(() => {
+              navigationManager.navigateBack();
+            }, 300);
+          })
         
         Text('待办事项')
           .fontSize(24)

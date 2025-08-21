@@ -19,12 +19,14 @@ interface Index_Params {
     buttonOpacity?: number;
     navScale?: number;
     navOpacity?: number;
+    iconOpacity?: number;
+    iconScale?: number;
     itemScale?: number;
     itemOpacity?: number;
     selectedTab?: number;
     timer?: number;
 }
-import { navigationManager, TransitionType } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import { navigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 interface CubeState {
     isSolved: boolean;
     currentTime: string;
@@ -58,6 +60,8 @@ class Index extends ViewPU {
         this.__buttonOpacity = new ObservedPropertySimplePU(0, this, "buttonOpacity");
         this.__navScale = new ObservedPropertySimplePU(0.9, this, "navScale");
         this.__navOpacity = new ObservedPropertySimplePU(0, this, "navOpacity");
+        this.__iconOpacity = new ObservedPropertySimplePU(0, this, "iconOpacity");
+        this.__iconScale = new ObservedPropertySimplePU(0, this, "iconScale");
         this.__itemScale = new ObservedPropertySimplePU(1, this, "itemScale");
         this.__itemOpacity = new ObservedPropertySimplePU(1, this, "itemOpacity");
         this.__selectedTab = new ObservedPropertySimplePU(0, this, "selectedTab");
@@ -117,6 +121,12 @@ class Index extends ViewPU {
         if (params.navOpacity !== undefined) {
             this.navOpacity = params.navOpacity;
         }
+        if (params.iconOpacity !== undefined) {
+            this.iconOpacity = params.iconOpacity;
+        }
+        if (params.iconScale !== undefined) {
+            this.iconScale = params.iconScale;
+        }
         if (params.itemScale !== undefined) {
             this.itemScale = params.itemScale;
         }
@@ -150,6 +160,8 @@ class Index extends ViewPU {
         this.__buttonOpacity.purgeDependencyOnElmtId(rmElmtId);
         this.__navScale.purgeDependencyOnElmtId(rmElmtId);
         this.__navOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__iconOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__iconScale.purgeDependencyOnElmtId(rmElmtId);
         this.__itemScale.purgeDependencyOnElmtId(rmElmtId);
         this.__itemOpacity.purgeDependencyOnElmtId(rmElmtId);
         this.__selectedTab.purgeDependencyOnElmtId(rmElmtId);
@@ -172,6 +184,8 @@ class Index extends ViewPU {
         this.__buttonOpacity.aboutToBeDeleted();
         this.__navScale.aboutToBeDeleted();
         this.__navOpacity.aboutToBeDeleted();
+        this.__iconOpacity.aboutToBeDeleted();
+        this.__iconScale.aboutToBeDeleted();
         this.__itemScale.aboutToBeDeleted();
         this.__itemOpacity.aboutToBeDeleted();
         this.__selectedTab.aboutToBeDeleted();
@@ -298,6 +312,20 @@ class Index extends ViewPU {
     set navOpacity(newValue: number) {
         this.__navOpacity.set(newValue);
     }
+    private __iconOpacity: ObservedPropertySimplePU<number>;
+    get iconOpacity() {
+        return this.__iconOpacity.get();
+    }
+    set iconOpacity(newValue: number) {
+        this.__iconOpacity.set(newValue);
+    }
+    private __iconScale: ObservedPropertySimplePU<number>;
+    get iconScale() {
+        return this.__iconScale.get();
+    }
+    set iconScale(newValue: number) {
+        this.__iconScale.set(newValue);
+    }
     private __itemScale: ObservedPropertySimplePU<number>;
     get itemScale() {
         return this.__itemScale.get();
@@ -323,8 +351,7 @@ class Index extends ViewPU {
     aboutToAppear() {
         this.generateScramble();
         this.loadBestTime();
-        // 确保页面返回时重置为可见状态
-        this.resetVisibility();
+        // 首次进入时直接执行动画，不重置状态
         this.animateIn();
     }
     onPageShow() {
@@ -332,23 +359,37 @@ class Index extends ViewPU {
         this.resetVisibility();
         this.animateIn();
     }
-    // 入场动画
+    // 页面加载动画 - 协调动画速度
     private animateIn() {
-        Context.animateTo({ duration: 600, curve: Curve.EaseOut }, () => {
+        // 快速但有层次的动画，总时长400ms
+        // 标题 - 立即出现（200ms）
+        Context.animateTo({ duration: 200, curve: Curve.Friction }, () => {
             this.titleOpacity = 1;
             this.titleScale = 1;
-            this.cardOpacity = 1;
-            this.cardScale = 1;
-            this.buttonOpacity = 1;
-            this.buttonScale = 1;
-            this.timerOpacity = 1;
-            this.timerScale = 1;
-            this.navOpacity = 1;
-            this.navScale = 1;
-            this.itemOpacity = 1;
-            this.itemScale = 1;
         });
+        // 主要内容 - 轻微延迟（250ms）
+        setTimeout(() => {
+            Context.animateTo({ duration: 200, curve: Curve.Friction }, () => {
+                this.cardOpacity = 1;
+                this.cardScale = 1;
+                this.timerOpacity = 1;
+                this.timerScale = 1;
+            });
+        }, 100);
+        // 操作按钮 - 最后出现（200ms）
+        setTimeout(() => {
+            Context.animateTo({ duration: 200, curve: Curve.Friction }, () => {
+                this.buttonOpacity = 1;
+                this.buttonScale = 1;
+                this.navOpacity = 1;
+                this.navScale = 1;
+                this.iconOpacity = 1;
+                this.iconScale = 1;
+            });
+        }, 200);
+        // 底部图标
     }
+    //need to be corrected
     private generateScramble() {
         const moves = ["R", "U", "F", "L", "D", "B"];
         const modifiers = ["", "'", "2"];
@@ -404,31 +445,56 @@ class Index extends ViewPU {
             return `${seconds}.${milliseconds.toString().padStart(2, '0')}`;
         }
     }
+    // 使用自定义动画序列的页面切换
     private navigateTo(page: string) {
-        // 使用带动画的页面切换
-        this.animateTransition(() => {
-            navigationManager.navigateTo(page, TransitionType.SLIDE_LEFT);
+        navigationManager.navigateToWithCustomAnimation(page, () => {
+            // 当前页面缩小动画
+            Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                this.titleOpacity = 0;
+                this.titleScale = 0.3;
+                this.cardOpacity = 0;
+                this.cardScale = 0.3;
+                this.timerOpacity = 0;
+                this.timerScale = 0.3;
+                this.buttonOpacity = 0;
+                this.buttonScale = 0.3;
+                this.iconOpacity = 0;
+                this.iconScale = 0.3;
+                // 导航条保持不动
+                this.navOpacity = 1;
+                this.navScale = 1;
+            });
+        }, () => {
+            // 动画完成后的回调
+            console.log('页面切换动画完成');
         });
     }
-    // 页面切换动画
+    // 页面切换动画 - 底部导航条保持不动
     private animateTransition(callback: () => void) {
-        // 创建退出动画效果
         Context.animateTo({
-            duration: 200,
-            curve: Curve.EaseIn,
+            duration: 300,
+            curve: Curve.Friction,
             onFinish: callback
         }, () => {
-            // 页面淡出效果
+            // 导航条保持不动，只隐藏其他元素
             this.titleOpacity = 0;
+            this.titleScale = 0.3;
             this.cardOpacity = 0;
+            this.cardScale = 0.3;
             this.timerOpacity = 0;
+            this.timerScale = 0.3;
             this.buttonOpacity = 0;
-            this.navOpacity = 0;
+            this.buttonScale = 0.3;
+            // 导航条保持可见和原始大小
+            this.navOpacity = 1;
+            this.navScale = 1;
+            this.iconOpacity = 0;
+            this.iconScale = 0.3;
         });
     }
     // 重置页面可见性（解决返回空白问题）
     private resetVisibility(): void {
-        // 强制重置所有动画状态为可见
+        // 强制重置所有动画状态为可见，导航条始终保持可见
         this.titleScale = 1;
         this.titleOpacity = 1;
         this.cardScale = 1;
@@ -469,9 +535,8 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('CubeTime');
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 100
+                duration: 500,
+                curve: Curve.Friction
             });
             Text.fontSize(24);
             Text.fontWeight(FontWeight.Bold);
@@ -487,7 +552,9 @@ class Index extends ViewPU {
         // 统一紫色背景标题栏，融入状态栏
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
+            //主体部分
             Scroll.create();
+            //主体部分
             Scroll.layoutWeight(1);
         }, Scroll);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -497,12 +564,11 @@ class Index extends ViewPU {
             // 魔方状态显示
             Column.create();
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 200
+                duration: 500,
+                curve: Curve.Friction
             });
             // 魔方状态显示
-            Column.width('100%');
+            Column.width('90%');
             // 魔方状态显示
             Column.padding(16);
             // 魔方状态显示
@@ -520,9 +586,8 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('魔方状态');
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 200
+                duration: 500,
+                curve: Curve.Friction
             });
             Text.fontSize(18);
             Text.fontWeight(FontWeight.Bold);
@@ -536,9 +601,8 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.cubeState);
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 200
+                duration: 500,
+                curve: Curve.Friction
             });
             Text.fontSize(16);
             Text.fontColor('#6B7280');
@@ -553,9 +617,9 @@ class Index extends ViewPU {
             // 打乱显示
             Column.create();
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 250
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 100
             });
             // 打乱显示
             Column.width('100%');
@@ -572,9 +636,9 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('打乱');
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 250
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 100
             });
             Text.fontSize(18);
             Text.fontWeight(FontWeight.Bold);
@@ -588,9 +652,9 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.scramble);
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 250
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 100
             });
             Text.fontSize(16);
             Text.fontColor('#374151');
@@ -611,9 +675,9 @@ class Index extends ViewPU {
             // 计时器显示
             Column.create();
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 300
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 200
             });
             // 计时器显示
             Column.width('100%');
@@ -628,9 +692,9 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.formatTime(this.solveTime));
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 300
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 200
             });
             Text.fontSize(48);
             Text.fontWeight(FontWeight.Bold);
@@ -652,9 +716,9 @@ class Index extends ViewPU {
             // 最佳时间
             Column.create();
             Context.animation({
-                duration: 800,
+                duration: 500,
                 curve: Curve.EaseOut,
-                delay: 350
+                delay: 300
             });
             // 最佳时间
             Column.width('100%');
@@ -675,9 +739,9 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('最佳时间');
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 350
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 300
             });
             Text.fontSize(16);
             Text.fontColor('#6B7280');
@@ -689,9 +753,9 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.formatTime(this.bestTime));
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 350
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 300
             });
             Text.fontSize(24);
             Text.fontWeight(FontWeight.Bold);
@@ -707,9 +771,9 @@ class Index extends ViewPU {
             // 控制按钮
             Row.create();
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 500
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 400
             });
             // 控制按钮
             Row.width('100%');
@@ -726,7 +790,7 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Button.createWithLabel('重置');
             Context.animation({
-                duration: 800,
+                duration: 500,
                 curve: Curve.EaseOut,
                 delay: 400
             });
@@ -750,8 +814,8 @@ class Index extends ViewPU {
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Button.createWithLabel('开始');
                         Context.animation({
-                            duration: 800,
-                            curve: Curve.EaseOut,
+                            duration: 500,
+                            curve: Curve.Friction,
                             delay: 400
                         });
                         Button.width(100);
@@ -774,7 +838,7 @@ class Index extends ViewPU {
                     this.observeComponentCreation2((elmtId, isInitialRender) => {
                         Button.createWithLabel('停止');
                         Context.animation({
-                            duration: 800,
+                            duration: 500,
                             curve: Curve.EaseOut,
                             delay: 400
                         });
@@ -798,15 +862,11 @@ class Index extends ViewPU {
         // 控制按钮
         Row.pop();
         Column.pop();
+        //主体部分
         Scroll.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 底部导航
             Row.create();
-            Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 500
-            });
             // 底部导航
             Row.width('100%');
             // 底部导航
@@ -818,26 +878,28 @@ class Index extends ViewPU {
                 width: { top: 1 },
                 color: '#E5E7EB'
             });
-            // 底部导航
-            Row.scale({ x: this.navScale, y: this.navScale });
-            // 底部导航
-            Row.opacity(this.navOpacity);
-            Context.animation(null);
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
+            Context.animation({
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 0
+            });
             Column.width('25%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
                 // 首页按钮，无需导航
             });
+            Column.scale({ x: this.iconScale, y: this.iconScale });
+            Column.opacity(this.iconOpacity);
+            Context.animation(null);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Image.create({ "id": 16777244, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
             Context.animation({
-                duration: 800,
-                curve: Curve.EaseOut,
-                delay: 500
+                duration: 500,
+                curve: Curve.Friction
             });
             Image.width(24);
             Image.height(24);
@@ -848,7 +910,7 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('首页');
             Context.animation({
-                duration: 800,
+                duration: 500,
                 curve: Curve.EaseOut,
                 delay: 500
             });
@@ -862,11 +924,19 @@ class Index extends ViewPU {
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
+            Context.animation({
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 0
+            });
             Column.width('25%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
                 this.navigateTo('Pomodoro');
             });
+            Column.scale({ x: this.iconScale, y: this.iconScale });
+            Column.opacity(this.iconOpacity);
+            Context.animation(null);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Image.create({ "id": 16777242, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
@@ -898,11 +968,19 @@ class Index extends ViewPU {
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
+            Context.animation({
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 0
+            });
             Column.width('25%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
                 this.navigateTo('Calendar');
             });
+            Column.scale({ x: this.iconScale, y: this.iconScale });
+            Column.opacity(this.iconOpacity);
+            Context.animation(null);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Image.create({ "id": 16777241, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
@@ -934,11 +1012,19 @@ class Index extends ViewPU {
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
+            Context.animation({
+                duration: 500,
+                curve: Curve.Friction,
+                delay: 0
+            });
             Column.width('25%');
             Column.alignItems(HorizontalAlign.Center);
             Column.onClick(() => {
                 this.navigateTo('Settings');
             });
+            Column.scale({ x: this.iconScale, y: this.iconScale });
+            Column.opacity(this.iconOpacity);
+            Context.animation(null);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Image.create({ "id": 16777243, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
