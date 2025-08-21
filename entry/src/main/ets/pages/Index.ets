@@ -1,6 +1,7 @@
 import CubeStateManager from '../services/CubeStateManager';
 import TimeManagementService from '../services/TimeManagementService';
 import router from '@ohos.router';
+import { TimerDisplay } from '../components/TimerDisplay'
 
 interface CubeState {
   isSolved: boolean;
@@ -21,15 +22,59 @@ struct Index {
   @State private startTime: number = 0
   @State private showScramble: boolean = false
   @State private bestTime: number = 0
-  @State private currentScale: number = 1
-  @State private currentOpacity: number = 1
+  
+  // 弹性动画状态变量
+  @State private titleScale: number = 0.8
+  @State private titleOpacity: number = 0
+  @State private cardScale: number = 0.9
+  @State private cardOpacity: number = 0
+  @State private timerScale: number = 0.7
+  @State private timerOpacity: number = 0
+  @State private buttonScale: number = 0.8
+  @State private buttonOpacity: number = 0
+  @State private navScale: number = 0.9
+  @State private navOpacity: number = 0
+  
   @State private selectedTab: number = 0
-
   private timer: number = 0
 
   aboutToAppear() {
     this.generateScramble()
     this.loadBestTime()
+    this.animateIn()
+  }
+
+  // 页面入场动画 - 只在页面加载时触发
+  private animateIn() {
+    // 标题动画
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+      this.titleScale = 1
+      this.titleOpacity = 1
+    })
+    
+    // 卡片动画
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+      this.cardScale = 1
+      this.cardOpacity = 1
+    })
+    
+    // 计时器动画
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+      this.timerScale = 1
+      this.timerOpacity = 1
+    })
+    
+    // 按钮动画
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 400 }, () => {
+      this.buttonScale = 1
+      this.buttonOpacity = 1
+    })
+    
+    // 导航动画
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 500 }, () => {
+      this.navScale = 1
+      this.navOpacity = 1
+    })
   }
 
   private generateScramble() {
@@ -94,217 +139,389 @@ struct Index {
     }
   }
 
+  private navigateTo(page: string) {
+    router.pushUrl({ url: `pages/${page}` })
+  }
+
   build() {
     Column() {
-      // 标题栏
-      Row() {
-        Text('CubeTime')
-          .fontSize(24)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#FFFFFF')
+      // 统一紫色背景标题栏，融入状态栏
+      Column() {
+        Row() {
+          Text('CubeTime')
+            .fontSize(24)
+            .fontWeight(FontWeight.Bold)
+            .fontColor('#FFFFFF')
+            .layoutWeight(1)
+            .textAlign(TextAlign.Center)
+            .scale({ x: this.titleScale, y: this.titleScale })
+            .opacity(this.titleOpacity)
+            .animation({
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 100
+            })
+        }
+        .width('100%')
+        .height(56)
+        .justifyContent(FlexAlign.Center)
+        .alignItems(VerticalAlign.Center)
       }
       .width('100%')
-      .height(56)
-      .backgroundColor('#2563EB')
-      .justifyContent(FlexAlign.Center)
+      .backgroundColor('#6366F1')
+      .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
 
-      // 魔方状态显示
-      Column() {
-        Text('魔方状态')
-          .fontSize(18)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1F2937')
-          .margin({ bottom: 8 })
+      Scroll() {
+        Column() {
+          // 魔方状态显示
+          Column() {
+            Text('魔方状态')
+              .fontSize(18)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#1F2937')
+              .margin({ bottom: 8 })
+              .scale({ x: this.cardScale, y: this.cardScale })
+              .opacity(this.cardOpacity)
+              .animation({
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 200
+            })
 
-        Text(this.cubeState)
-          .fontSize(16)
-          .fontColor('#6B7280')
-      }
-      .width('100%')
-      .padding(16)
-      .backgroundColor('#F3F4F6')
-      .borderRadius(12)
-      .margin({ top: 16, left: 16, right: 16 })
-
-      // 打乱显示
-      Column() {
-        Text('打乱')
-          .fontSize(18)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1F2937')
-          .margin({ bottom: 8 })
-
-        Text(this.scramble)
-          .fontSize(16)
-          .fontColor('#374151')
-          .textAlign(TextAlign.Center)
+            Text(this.cubeState)
+              .fontSize(16)
+              .fontColor('#6B7280')
+              .scale({ x: this.cardScale, y: this.cardScale })
+              .opacity(this.cardOpacity)
+              .animation({
+                duration: 800,
+                curve: Curve.EaseOut,
+                delay: 200
+              })
+          }
           .width('100%')
-          .padding(12)
+          .padding(16)
           .backgroundColor('#FFFFFF')
-          .borderRadius(8)
-          .border({ width: 1, color: '#D1D5DB' })
-      }
-      .width('100%')
-      .padding(16)
-      .margin({ left: 16, right: 16 })
-
-      // 计时器显示
-      Column() {
-        Text(this.formatTime(this.solveTime))
-          .fontSize(48)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1F2937')
-          .textAlign(TextAlign.Center)
-          .width('100%')
-          .padding(32)
-          .backgroundColor('#FFFFFF')
-          .borderRadius(16)
-          .border({ width: 2, color: '#2563EB' })
-          .scale({ x: this.currentScale, y: this.currentScale })
-          .opacity(this.currentOpacity)
+          .borderRadius(12)
+          .margin({ left: 16, right: 16, top: 16 })
+          .scale({ x: this.cardScale, y: this.cardScale })
+          .opacity(this.cardOpacity)
           .animation({
-            duration: 200,
-            curve: Curve.EaseInOut
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 200
           })
-      }
-      .width('100%')
-      .padding(16)
 
-      // 最佳时间
-      Column() {
-        Text('最佳时间')
-          .fontSize(16)
-          .fontColor('#6B7280')
-        Text(this.formatTime(this.bestTime))
-          .fontSize(24)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#059669')
-      }
-      .width('100%')
-      .padding(16)
-      .backgroundColor('#F0FDF4')
-      .borderRadius(12)
-      .margin({ left: 16, right: 16 })
-
-      // 控制按钮
-      Row() {
-        Button('重置')
-          .width(100)
-          .height(40)
-          .backgroundColor('#6B7280')
-          .fontColor('#FFFFFF')
-          .borderRadius(20)
-          .onClick(() => {
-            this.resetTimer()
-            animateTo({
-              duration: 200,
-              curve: Curve.EaseInOut
-            }, () => {
-              this.currentScale = 1.1
-              this.currentOpacity = 0.8
+          // 打乱显示
+          Column() {
+            Text('打乱')
+              .fontSize(18)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#1F2937')
+              .margin({ bottom: 8 })
+              .scale({ x: this.cardScale, y: this.cardScale })
+              .opacity(this.cardOpacity)
+              .animation({
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 250
             })
-            setTimeout(() => {
-              this.currentScale = 1
-              this.currentOpacity = 1
-            }, 200)
+
+            Text(this.scramble)
+              .fontSize(16)
+              .fontColor('#374151')
+              .textAlign(TextAlign.Center)
+              .width('100%')
+              .padding(12)
+              .backgroundColor('#FFFFFF')
+              .borderRadius(8)
+              .border({ width: 1, color: '#E5E7EB' })
+              .scale({ x: this.cardScale, y: this.cardScale })
+              .opacity(this.cardOpacity)
+              .animation({
+                duration: 800,
+                curve: Curve.EaseOut,
+                delay: 250
+              })
+          }
+          .width('100%')
+          .padding(16)
+          .margin({ left: 16, right: 16 })
+          .scale({ x: this.cardScale, y: this.cardScale })
+          .opacity(this.cardOpacity)
+          .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 250
           })
 
-        Button(this.isTiming ? '停止' : '开始')
-          .width(120)
-          .height(48)
-          .backgroundColor(this.isTiming ? '#EF4444' : '#10B981')
-          .fontColor('#FFFFFF')
-          .borderRadius(24)
-          .margin({ left: 16 })
-          .onClick(() => {
-            if (this.isTiming) {
-              this.stopTimer()
+          // 计时器显示
+          Column() {
+            Text(this.formatTime(this.solveTime))
+              .fontSize(48)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#1F2937')
+              .textAlign(TextAlign.Center)
+              .width('100%')
+              .padding(32)
+              .backgroundColor('#FFFFFF')
+              .borderRadius(16)
+              .border({ width: 2, color: '#6366F1' })
+              .scale({ x: this.timerScale, y: this.timerScale })
+              .opacity(this.timerOpacity)
+              .animation({
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 300
+            })
+          }
+          .width('100%')
+          .padding(16)
+          .scale({ x: this.timerScale, y: this.timerScale })
+          .opacity(this.timerOpacity)
+          .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 300
+          })
+
+          // 最佳时间
+          Column() {
+            Text('最佳时间')
+              .fontSize(16)
+              .fontColor('#6B7280')
+              .scale({ x: this.cardScale, y: this.cardScale })
+              .opacity(this.cardOpacity)
+              .animation({
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 350
+            })
+            Text(this.formatTime(this.bestTime))
+              .fontSize(24)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#059669')
+              .scale({ x: this.cardScale, y: this.cardScale })
+              .opacity(this.cardOpacity)
+              .animation({
+                duration: 800,
+                curve: Curve.EaseOut,
+                delay: 350
+              })
+          }
+          .width('100%')
+          .padding(16)
+          .backgroundColor('#F0FDF4')
+          .borderRadius(12)
+          .margin({ left: 16, right: 16 })
+          .scale({ x: this.cardScale, y: this.cardScale })
+          .opacity(this.cardOpacity)
+          .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 350
+          })
+
+          // 控制按钮
+          Row() {
+            Button('重置')
+              .width(100)
+              .height(40)
+              .backgroundColor('#EF4444')
+              .fontColor('#FFFFFF')
+              .borderRadius(20)
+              .scale({ x: this.buttonScale, y: this.buttonScale })
+              .opacity(this.buttonOpacity)
+              .animation({
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 400
+            })
+              .onClick(() => {
+                this.resetTimer()
+              })
+
+            if (!this.isTiming) {
+              Button('开始')
+                .width(100)
+                .height(40)
+                .backgroundColor('#10B981')
+                .fontColor('#FFFFFF')
+                .borderRadius(20)
+          .scale({ x: this.buttonScale, y: this.buttonScale })
+          .opacity(this.buttonOpacity)
+          .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 400
+          })
+                .onClick(() => {
+                  this.startTimer()
+                })
             } else {
-              this.startTimer()
-            }
-            animateTo({
-              duration: 200,
-              curve: Curve.EaseInOut
-            }, () => {
-              this.currentScale = 1.1
-              this.currentOpacity = 0.8
-            })
-            setTimeout(() => {
-              this.currentScale = 1
-              this.currentOpacity = 1
-            }, 200)
+              Button('停止')
+                .width(100)
+                .height(40)
+                .backgroundColor('#F59E0B')
+                .fontColor('#FFFFFF')
+                .borderRadius(20)
+          .scale({ x: this.buttonScale, y: this.buttonScale })
+          .opacity(this.buttonOpacity)
+          .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 400
           })
+                .onClick(() => {
+                  this.stopTimer()
+                })
+            }
+          }
+          .width('100%')
+          .justifyContent(FlexAlign.SpaceEvenly)
+          .padding(16)
+          .scale({ x: this.buttonScale, y: this.buttonScale })
+          .opacity(this.buttonOpacity)
+          .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 500
+          })
+        }
       }
-      .width('100%')
-      .justifyContent(FlexAlign.Center)
-      .margin({ top: 16 })
+      .layoutWeight(1)
 
       // 底部导航
       Row() {
         Column() {
-          Text('🏠')
-            .fontSize(24)
-            .fontColor(this.selectedTab === 0 ? '#2563EB' : '#9CA3AF')
+          Image($r('app.media.ic_tasks'))
+            .width(24)
+            .height(24)
+            .fillColor('#6366F1')
+            .scale({ x: this.navScale, y: this.navScale })
+            .animation({
+              duration: 800,
+              curve: Curve.EaseOut,
+              delay: 500
+            })
           Text('首页')
             .fontSize(12)
-            .fontColor(this.selectedTab === 0 ? '#2563EB' : '#9CA3AF')
+            .fontColor('#6366F1')
+            .margin({ top: 4 })
+            .scale({ x: this.navScale, y: this.navScale })
+            .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 500
+          })
         }
         .width('25%')
+        .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          this.selectedTab = 0
-          // 已经在首页，不需要跳转
+          // 首页按钮，无需导航
         })
 
         Column() {
-          Text('📊')
-            .fontSize(24)
-            .fontColor(this.selectedTab === 1 ? '#2563EB' : '#9CA3AF')
-          Text('统计')
+          Image($r('app.media.ic_pomodoro'))
+            .width(24)
+            .height(24)
+            .fillColor('#6B7280')
+            .scale({ x: this.navScale, y: this.navScale })
+            .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 500
+          })
+          Text('番茄钟')
             .fontSize(12)
-            .fontColor(this.selectedTab === 1 ? '#2563EB' : '#9CA3AF')
+            .fontColor('#6B7280')
+            .margin({ top: 4 })
+            .scale({ x: this.navScale, y: this.navScale })
+            .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 500
+          })
         }
         .width('25%')
+        .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          this.selectedTab = 1
-          router.pushUrl({ url: 'pages/Dashboard' })
+          this.navigateTo('Pomodoro')
         })
 
         Column() {
-          Text('⏱️')
-            .fontSize(24)
-            .fontColor(this.selectedTab === 2 ? '#2563EB' : '#9CA3AF')
-          Text('计时')
+          Image($r('app.media.ic_calendar'))
+            .width(24)
+            .height(24)
+            .fillColor('#6B7280')
+            .scale({ x: this.navScale, y: this.navScale })
+            .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 500
+          })
+          Text('日历')
             .fontSize(12)
-            .fontColor(this.selectedTab === 2 ? '#2563EB' : '#9CA3AF')
+            .fontColor('#6B7280')
+            .margin({ top: 4 })
+            .scale({ x: this.navScale, y: this.navScale })
+            .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 500
+          })
         }
         .width('25%')
+        .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          this.selectedTab = 2
-          router.pushUrl({ url: 'pages/Pomodoro' })
+          this.navigateTo('Calendar')
         })
 
         Column() {
-          Text('⚙️')
-            .fontSize(24)
-            .fontColor(this.selectedTab === 3 ? '#2563EB' : '#9CA3AF')
+          Image($r('app.media.ic_settings'))
+            .width(24)
+            .height(24)
+            .fillColor('#6B7280')
+            .scale({ x: this.navScale, y: this.navScale })
+            .animation({
+            duration: 800,
+            curve: Curve.EaseOut,
+            delay: 500
+          })
           Text('设置')
             .fontSize(12)
-            .fontColor(this.selectedTab === 3 ? '#2563EB' : '#9CA3AF')
+            .fontColor('#6B7280')
+            .margin({ top: 4 })
+            .scale({ x: this.navScale, y: this.navScale })
+            .animation({
+          duration: 800,
+          curve: Curve.EaseOut,
+          delay: 500
+        })
         }
         .width('25%')
+        .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          this.selectedTab = 3
-          router.pushUrl({ url: 'pages/Settings' })
+          this.navigateTo('Settings')
         })
       }
       .width('100%')
-      .height(60)
+      .padding({ top: 12, bottom: 8 })
       .backgroundColor('#FFFFFF')
-      .border({ width: 1, color: '#E5E7EB', style: BorderStyle.Solid })
-      .position({ bottom: 0 })
+      .border({
+        width: { top: 1 },
+        color: '#E5E7EB'
+      })
+      .scale({ x: this.navScale, y: this.navScale })
+      .opacity(this.navOpacity)
+      .animation({
+          duration: 800,
+          curve: Curve.EaseOut,
+          delay: 500
+        })
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#F9FAFB')
+    .backgroundColor('#F2F2F7')
   }
 }

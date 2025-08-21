@@ -38,6 +38,13 @@ class SettingsItem {
 @Entry
 @Component
 struct SettingsPage {
+  @State titleScale: number = 0.8
+  @State titleOpacity: number = 0
+  @State cardScale: number = 0.9
+  @State cardOpacity: number = 0
+  @State itemScale: number = 0.8
+  @State itemOpacity: number = 0
+
   @State settingsItems: SettingsItem[] = [
     new SettingsItem(
       'theme',
@@ -113,6 +120,24 @@ struct SettingsPage {
     }
   }
 
+  // 页面入场动画 - 只在页面加载时触发
+  private animateIn() {
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+      this.titleScale = 1
+      this.titleOpacity = 1
+    })
+    
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+      this.cardScale = 1
+      this.cardOpacity = 1
+    })
+    
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+      this.itemScale = 1
+      this.itemOpacity = 1
+    })
+  }
+
   build() {
     Column() {
       // 顶部标题
@@ -122,6 +147,8 @@ struct SettingsPage {
           .fontWeight(FontWeight.Bold)
           .fontColor('#1F2937')
           .layoutWeight(1)
+          .scale({ x: this.titleScale, y: this.titleScale })
+          .opacity(this.titleOpacity)
 
         Image($r('app.media.ic_back'))
           .width(24)
@@ -174,6 +201,8 @@ struct SettingsPage {
             .padding(16)
             .backgroundColor('#FFFFFF')
             .borderRadius(12)
+            .scale({ x: this.itemScale, y: this.itemScale })
+            .opacity(this.itemOpacity)
           }
         })
       }
@@ -226,6 +255,8 @@ struct SettingsPage {
         .padding(16)
         .backgroundColor('#FFFFFF')
         .borderRadius(12)
+        .scale({ x: this.cardScale, y: this.cardScale })
+        .opacity(this.cardOpacity)
       }
       .width('100%')
       .padding({ left: 16, right: 16, bottom: 16 })

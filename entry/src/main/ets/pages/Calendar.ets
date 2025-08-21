@@ -42,6 +42,31 @@ struct CalendarPage {
   @State newEventTitle: string = '';
   @State newEventTime: string = '';
 
+  @State titleScale: number = 0
+  @State titleOpacity: number = 0
+  @State calendarScale: number = 0
+  @State calendarOpacity: number = 0
+  @State taskScale: number = 0
+  @State taskOpacity: number = 0
+
+  // 页面入场动画 - 只在页面加载时触发
+  private animateIn() {
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+      this.titleScale = 1
+      this.titleOpacity = 1
+    })
+    
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+      this.calendarScale = 1
+      this.calendarOpacity = 1
+    })
+    
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+      this.taskScale = 1
+      this.taskOpacity = 1
+    })
+  }
+
   formatDate(date: Date): string {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');

@@ -2,6 +2,12 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
 interface SettingsPage_Params {
+    titleScale?: number;
+    titleOpacity?: number;
+    cardScale?: number;
+    cardOpacity?: number;
+    itemScale?: number;
+    itemOpacity?: number;
     settingsItems?: SettingsItem[];
 }
 import router from "@ohos:router";
@@ -35,6 +41,12 @@ class SettingsPage extends ViewPU {
         if (typeof paramsLambda === "function") {
             this.paramsGenerator_ = paramsLambda;
         }
+        this.__titleScale = new ObservedPropertySimplePU(0.8, this, "titleScale");
+        this.__titleOpacity = new ObservedPropertySimplePU(0, this, "titleOpacity");
+        this.__cardScale = new ObservedPropertySimplePU(0.9, this, "cardScale");
+        this.__cardOpacity = new ObservedPropertySimplePU(0, this, "cardOpacity");
+        this.__itemScale = new ObservedPropertySimplePU(0.8, this, "itemScale");
+        this.__itemOpacity = new ObservedPropertySimplePU(0, this, "itemOpacity");
         this.__settingsItems = new ObservedPropertyObjectPU([
             new SettingsItem('theme', '主题模式', '选择应用的主题颜色', 'select', [
                 new OptionItem('light', '浅色'),
@@ -64,6 +76,24 @@ class SettingsPage extends ViewPU {
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params: SettingsPage_Params) {
+        if (params.titleScale !== undefined) {
+            this.titleScale = params.titleScale;
+        }
+        if (params.titleOpacity !== undefined) {
+            this.titleOpacity = params.titleOpacity;
+        }
+        if (params.cardScale !== undefined) {
+            this.cardScale = params.cardScale;
+        }
+        if (params.cardOpacity !== undefined) {
+            this.cardOpacity = params.cardOpacity;
+        }
+        if (params.itemScale !== undefined) {
+            this.itemScale = params.itemScale;
+        }
+        if (params.itemOpacity !== undefined) {
+            this.itemOpacity = params.itemOpacity;
+        }
         if (params.settingsItems !== undefined) {
             this.settingsItems = params.settingsItems;
         }
@@ -71,12 +101,66 @@ class SettingsPage extends ViewPU {
     updateStateVars(params: SettingsPage_Params) {
     }
     purgeVariableDependenciesOnElmtId(rmElmtId) {
+        this.__titleScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__titleOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__cardScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__cardOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__itemScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__itemOpacity.purgeDependencyOnElmtId(rmElmtId);
         this.__settingsItems.purgeDependencyOnElmtId(rmElmtId);
     }
     aboutToBeDeleted() {
+        this.__titleScale.aboutToBeDeleted();
+        this.__titleOpacity.aboutToBeDeleted();
+        this.__cardScale.aboutToBeDeleted();
+        this.__cardOpacity.aboutToBeDeleted();
+        this.__itemScale.aboutToBeDeleted();
+        this.__itemOpacity.aboutToBeDeleted();
         this.__settingsItems.aboutToBeDeleted();
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
+    }
+    private __titleScale: ObservedPropertySimplePU<number>;
+    get titleScale() {
+        return this.__titleScale.get();
+    }
+    set titleScale(newValue: number) {
+        this.__titleScale.set(newValue);
+    }
+    private __titleOpacity: ObservedPropertySimplePU<number>;
+    get titleOpacity() {
+        return this.__titleOpacity.get();
+    }
+    set titleOpacity(newValue: number) {
+        this.__titleOpacity.set(newValue);
+    }
+    private __cardScale: ObservedPropertySimplePU<number>;
+    get cardScale() {
+        return this.__cardScale.get();
+    }
+    set cardScale(newValue: number) {
+        this.__cardScale.set(newValue);
+    }
+    private __cardOpacity: ObservedPropertySimplePU<number>;
+    get cardOpacity() {
+        return this.__cardOpacity.get();
+    }
+    set cardOpacity(newValue: number) {
+        this.__cardOpacity.set(newValue);
+    }
+    private __itemScale: ObservedPropertySimplePU<number>;
+    get itemScale() {
+        return this.__itemScale.get();
+    }
+    set itemScale(newValue: number) {
+        this.__itemScale.set(newValue);
+    }
+    private __itemOpacity: ObservedPropertySimplePU<number>;
+    get itemOpacity() {
+        return this.__itemOpacity.get();
+    }
+    set itemOpacity(newValue: number) {
+        this.__itemOpacity.set(newValue);
     }
     private __settingsItems: ObservedPropertyObjectPU<SettingsItem[]>;
     get settingsItems() {
@@ -90,6 +174,21 @@ class SettingsPage extends ViewPU {
         if (itemIndex !== -1) {
             this.settingsItems[itemIndex].value = value;
         }
+    }
+    // 页面入场动画 - 只在页面加载时触发
+    private animateIn() {
+        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+            this.titleScale = 1;
+            this.titleOpacity = 1;
+        });
+        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+            this.cardScale = 1;
+            this.cardOpacity = 1;
+        });
+        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+            this.itemScale = 1;
+            this.itemOpacity = 1;
+        });
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -112,6 +211,8 @@ class SettingsPage extends ViewPU {
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#1F2937');
             Text.layoutWeight(1);
+            Text.scale({ x: this.titleScale, y: this.titleScale });
+            Text.opacity(this.titleOpacity);
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -157,6 +258,8 @@ class SettingsPage extends ViewPU {
                             Column.padding(16);
                             Column.backgroundColor('#FFFFFF');
                             Column.borderRadius(12);
+                            Column.scale({ x: this.itemScale, y: this.itemScale });
+                            Column.opacity(this.itemOpacity);
                         }, Column);
                         this.observeComponentCreation2((elmtId, isInitialRender) => {
                             Row.create();
@@ -247,6 +350,8 @@ class SettingsPage extends ViewPU {
             Column.padding(16);
             Column.backgroundColor('#FFFFFF');
             Column.borderRadius(12);
+            Column.scale({ x: this.cardScale, y: this.cardScale });
+            Column.opacity(this.cardOpacity);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();

@@ -11,6 +11,12 @@ interface CalendarPage_Params {
     newTaskTitle?: string;
     newEventTitle?: string;
     newEventTime?: string;
+    titleScale?: number;
+    titleOpacity?: number;
+    calendarScale?: number;
+    calendarOpacity?: number;
+    taskScale?: number;
+    taskOpacity?: number;
 }
 import router from "@ohos:router";
 interface CalendarTask {
@@ -54,6 +60,14 @@ class CalendarPage extends ViewPU {
         this.__newTaskTitle = new ObservedPropertySimplePU('', this, "newTaskTitle");
         this.__newEventTitle = new ObservedPropertySimplePU('', this, "newEventTitle");
         this.__newEventTime = new ObservedPropertySimplePU('', this, "newEventTime");
+        this.__titleScale = new ObservedPropertySimplePU(0, this, "titleScale");
+        this.__titleOpacity = new ObservedPropertySimplePU(0, this, "titleOpacity");
+        this.__calendarScale = new ObservedPropertySimplePU(0, this, "calendarScale");
+        this.__calendarOpacity = new ObservedPropertySimplePU(0, this, "calendarOpacity");
+        this.__taskScale = new ObservedPropertySimplePU(0, this, "taskScale");
+        this.__taskOpacity = new ObservedPropertySimplePU(0
+        // 页面入场动画 - 只在页面加载时触发
+        , this, "taskOpacity");
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
     }
@@ -85,6 +99,24 @@ class CalendarPage extends ViewPU {
         if (params.newEventTime !== undefined) {
             this.newEventTime = params.newEventTime;
         }
+        if (params.titleScale !== undefined) {
+            this.titleScale = params.titleScale;
+        }
+        if (params.titleOpacity !== undefined) {
+            this.titleOpacity = params.titleOpacity;
+        }
+        if (params.calendarScale !== undefined) {
+            this.calendarScale = params.calendarScale;
+        }
+        if (params.calendarOpacity !== undefined) {
+            this.calendarOpacity = params.calendarOpacity;
+        }
+        if (params.taskScale !== undefined) {
+            this.taskScale = params.taskScale;
+        }
+        if (params.taskOpacity !== undefined) {
+            this.taskOpacity = params.taskOpacity;
+        }
     }
     updateStateVars(params: CalendarPage_Params) {
     }
@@ -98,6 +130,12 @@ class CalendarPage extends ViewPU {
         this.__newTaskTitle.purgeDependencyOnElmtId(rmElmtId);
         this.__newEventTitle.purgeDependencyOnElmtId(rmElmtId);
         this.__newEventTime.purgeDependencyOnElmtId(rmElmtId);
+        this.__titleScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__titleOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__calendarScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__calendarOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__taskScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__taskOpacity.purgeDependencyOnElmtId(rmElmtId);
     }
     aboutToBeDeleted() {
         this.__currentDate.aboutToBeDeleted();
@@ -109,6 +147,12 @@ class CalendarPage extends ViewPU {
         this.__newTaskTitle.aboutToBeDeleted();
         this.__newEventTitle.aboutToBeDeleted();
         this.__newEventTime.aboutToBeDeleted();
+        this.__titleScale.aboutToBeDeleted();
+        this.__titleOpacity.aboutToBeDeleted();
+        this.__calendarScale.aboutToBeDeleted();
+        this.__calendarOpacity.aboutToBeDeleted();
+        this.__taskScale.aboutToBeDeleted();
+        this.__taskOpacity.aboutToBeDeleted();
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
@@ -174,6 +218,63 @@ class CalendarPage extends ViewPU {
     }
     set newEventTime(newValue: string) {
         this.__newEventTime.set(newValue);
+    }
+    private __titleScale: ObservedPropertySimplePU<number>;
+    get titleScale() {
+        return this.__titleScale.get();
+    }
+    set titleScale(newValue: number) {
+        this.__titleScale.set(newValue);
+    }
+    private __titleOpacity: ObservedPropertySimplePU<number>;
+    get titleOpacity() {
+        return this.__titleOpacity.get();
+    }
+    set titleOpacity(newValue: number) {
+        this.__titleOpacity.set(newValue);
+    }
+    private __calendarScale: ObservedPropertySimplePU<number>;
+    get calendarScale() {
+        return this.__calendarScale.get();
+    }
+    set calendarScale(newValue: number) {
+        this.__calendarScale.set(newValue);
+    }
+    private __calendarOpacity: ObservedPropertySimplePU<number>;
+    get calendarOpacity() {
+        return this.__calendarOpacity.get();
+    }
+    set calendarOpacity(newValue: number) {
+        this.__calendarOpacity.set(newValue);
+    }
+    private __taskScale: ObservedPropertySimplePU<number>;
+    get taskScale() {
+        return this.__taskScale.get();
+    }
+    set taskScale(newValue: number) {
+        this.__taskScale.set(newValue);
+    }
+    private __taskOpacity: ObservedPropertySimplePU<number>;
+    get taskOpacity() {
+        return this.__taskOpacity.get();
+    }
+    set taskOpacity(newValue: number) {
+        this.__taskOpacity.set(newValue);
+    }
+    // 页面入场动画 - 只在页面加载时触发
+    private animateIn() {
+        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+            this.titleScale = 1;
+            this.titleOpacity = 1;
+        });
+        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+            this.calendarScale = 1;
+            this.calendarOpacity = 1;
+        });
+        Context.animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+            this.taskScale = 1;
+            this.taskOpacity = 1;
+        });
     }
     formatDate(date: Date): string {
         const year = date.getFullYear();

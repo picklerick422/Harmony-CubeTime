@@ -242,49 +242,70 @@ class Index extends ViewPU {
             Column.debugLine("entry/src/main/ets/pages/Index.ets(98:5)", "entry");
             Column.width('100%');
             Column.height('100%');
-            Column.backgroundColor('#F9FAFB');
+            Column.backgroundColor('#F2F2F7');
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 标题栏
+            // 统一紫色背景标题栏，融入状态栏
+            Column.create();
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(100:7)", "entry");
+            // 统一紫色背景标题栏，融入状态栏
+            Column.width('100%');
+            // 统一紫色背景标题栏，融入状态栏
+            Column.backgroundColor('#6366F1');
+            // 统一紫色背景标题栏，融入状态栏
+            Column.expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP]);
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Index.ets(100:7)", "entry");
-            // 标题栏
+            Row.debugLine("entry/src/main/ets/pages/Index.ets(101:9)", "entry");
             Row.width('100%');
-            // 标题栏
             Row.height(56);
-            // 标题栏
-            Row.backgroundColor('#2563EB');
-            // 标题栏
             Row.justifyContent(FlexAlign.Center);
+            Row.alignItems(VerticalAlign.Center);
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('CubeTime');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(101:9)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(102:11)", "entry");
             Text.fontSize(24);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#FFFFFF');
+            Text.layoutWeight(1);
+            Text.textAlign(TextAlign.Center);
         }, Text);
         Text.pop();
-        // 标题栏
         Row.pop();
+        // 统一紫色背景标题栏，融入状态栏
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Scroll.create();
+            Scroll.debugLine("entry/src/main/ets/pages/Index.ets(118:7)", "entry");
+            Scroll.layoutWeight(1);
+            Scroll.backgroundColor('#F2F2F7');
+            Scroll.edgeEffect(EdgeEffect.Spring);
+        }, Scroll);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(119:9)", "entry");
+            Column.width('100%');
+        }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 魔方状态显示
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Index.ets(112:7)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(121:11)", "entry");
             // 魔方状态显示
             Column.width('100%');
             // 魔方状态显示
             Column.padding(16);
             // 魔方状态显示
-            Column.backgroundColor('#F3F4F6');
+            Column.backgroundColor('#FFFFFF');
             // 魔方状态显示
             Column.borderRadius(12);
             // 魔方状态显示
-            Column.margin({ top: 16, left: 16, right: 16 });
+            Column.margin({ left: 16, right: 16, top: 16 });
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('魔方状态');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(113:9)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(122:13)", "entry");
             Text.fontSize(18);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#1F2937');
@@ -293,7 +314,7 @@ class Index extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.cubeState);
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(119:9)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(128:13)", "entry");
             Text.fontSize(16);
             Text.fontColor('#6B7280');
         }, Text);
@@ -303,7 +324,7 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 打乱显示
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Index.ets(130:7)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(139:11)", "entry");
             // 打乱显示
             Column.width('100%');
             // 打乱显示
@@ -313,7 +334,7 @@ class Index extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('打乱');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(131:9)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(140:13)", "entry");
             Text.fontSize(18);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#1F2937');
@@ -322,7 +343,7 @@ class Index extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.scramble);
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(137:9)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(146:13)", "entry");
             Text.fontSize(16);
             Text.fontColor('#374151');
             Text.textAlign(TextAlign.Center);
@@ -330,7 +351,7 @@ class Index extends ViewPU {
             Text.padding(12);
             Text.backgroundColor('#FFFFFF');
             Text.borderRadius(8);
-            Text.border({ width: 1, color: '#D1D5DB' });
+            Text.border({ width: 1, color: '#E5E7EB' });
         }, Text);
         Text.pop();
         // 打乱显示
@@ -338,7 +359,7 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 计时器显示
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Index.ets(152:7)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(161:11)", "entry");
             // 计时器显示
             Column.width('100%');
             // 计时器显示
@@ -346,7 +367,7 @@ class Index extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.formatTime(this.solveTime));
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(153:9)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(162:13)", "entry");
             Context.animation({
                 duration: 200,
                 curve: Curve.EaseInOut
@@ -359,7 +380,7 @@ class Index extends ViewPU {
             Text.padding(32);
             Text.backgroundColor('#FFFFFF');
             Text.borderRadius(16);
-            Text.border({ width: 2, color: '#2563EB' });
+            Text.border({ width: 2, color: '#6366F1' });
             Text.scale({ x: this.currentScale, y: this.currentScale });
             Text.opacity(this.currentOpacity);
             Context.animation(null);
@@ -370,7 +391,7 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 最佳时间
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Index.ets(174:7)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(183:11)", "entry");
             // 最佳时间
             Column.width('100%');
             // 最佳时间
@@ -384,14 +405,14 @@ class Index extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('最佳时间');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(175:9)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(184:13)", "entry");
             Text.fontSize(16);
             Text.fontColor('#6B7280');
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.formatTime(this.bestTime));
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(178:9)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(187:13)", "entry");
             Text.fontSize(24);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#059669');
@@ -402,17 +423,17 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 控制按钮
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Index.ets(190:7)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/Index.ets(199:11)", "entry");
             // 控制按钮
             Row.width('100%');
             // 控制按钮
             Row.justifyContent(FlexAlign.Center);
             // 控制按钮
-            Row.margin({ top: 16 });
+            Row.margin({ top: 16, bottom: 80 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Button.createWithLabel('重置');
-            Button.debugLine("entry/src/main/ets/pages/Index.ets(191:9)", "entry");
+            Button.debugLine("entry/src/main/ets/pages/Index.ets(200:13)", "entry");
             Button.width(100);
             Button.height(40);
             Button.backgroundColor('#6B7280');
@@ -436,7 +457,7 @@ class Index extends ViewPU {
         Button.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Button.createWithLabel(this.isTiming ? '停止' : '开始');
-            Button.debugLine("entry/src/main/ets/pages/Index.ets(212:9)", "entry");
+            Button.debugLine("entry/src/main/ets/pages/Index.ets(221:13)", "entry");
             Button.width(120);
             Button.height(48);
             Button.backgroundColor(this.isTiming ? '#EF4444' : '#10B981');
@@ -466,10 +487,12 @@ class Index extends ViewPU {
         Button.pop();
         // 控制按钮
         Row.pop();
+        Column.pop();
+        Scroll.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 底部导航
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Index.ets(243:7)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/Index.ets(258:7)", "entry");
             // 底部导航
             Row.width('100%');
             // 底部导航
@@ -483,7 +506,7 @@ class Index extends ViewPU {
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Index.ets(244:9)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(259:9)", "entry");
             Column.width('25%');
             Column.onClick(() => {
                 this.selectedTab = 0;
@@ -492,22 +515,22 @@ class Index extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('🏠');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(245:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(260:11)", "entry");
             Text.fontSize(24);
-            Text.fontColor(this.selectedTab === 0 ? '#2563EB' : '#9CA3AF');
+            Text.fontColor(this.selectedTab === 0 ? '#6366F1' : '#9CA3AF');
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('首页');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(248:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(263:11)", "entry");
             Text.fontSize(12);
-            Text.fontColor(this.selectedTab === 0 ? '#2563EB' : '#9CA3AF');
+            Text.fontColor(this.selectedTab === 0 ? '#6366F1' : '#9CA3AF');
         }, Text);
         Text.pop();
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Index.ets(258:9)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(273:9)", "entry");
             Column.width('25%');
             Column.onClick(() => {
                 this.selectedTab = 1;
@@ -516,22 +539,22 @@ class Index extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('📊');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(259:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(274:11)", "entry");
             Text.fontSize(24);
-            Text.fontColor(this.selectedTab === 1 ? '#2563EB' : '#9CA3AF');
+            Text.fontColor(this.selectedTab === 1 ? '#6366F1' : '#9CA3AF');
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('统计');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(262:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(277:11)", "entry");
             Text.fontSize(12);
-            Text.fontColor(this.selectedTab === 1 ? '#2563EB' : '#9CA3AF');
+            Text.fontColor(this.selectedTab === 1 ? '#6366F1' : '#9CA3AF');
         }, Text);
         Text.pop();
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Index.ets(272:9)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(287:9)", "entry");
             Column.width('25%');
             Column.onClick(() => {
                 this.selectedTab = 2;
@@ -540,22 +563,22 @@ class Index extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('⏱️');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(273:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(288:11)", "entry");
             Text.fontSize(24);
-            Text.fontColor(this.selectedTab === 2 ? '#2563EB' : '#9CA3AF');
+            Text.fontColor(this.selectedTab === 2 ? '#6366F1' : '#9CA3AF');
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('计时');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(276:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(291:11)", "entry");
             Text.fontSize(12);
-            Text.fontColor(this.selectedTab === 2 ? '#2563EB' : '#9CA3AF');
+            Text.fontColor(this.selectedTab === 2 ? '#6366F1' : '#9CA3AF');
         }, Text);
         Text.pop();
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Index.ets(286:9)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Index.ets(301:9)", "entry");
             Column.width('25%');
             Column.onClick(() => {
                 this.selectedTab = 3;
@@ -564,16 +587,16 @@ class Index extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('⚙️');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(287:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(302:11)", "entry");
             Text.fontSize(24);
-            Text.fontColor(this.selectedTab === 3 ? '#2563EB' : '#9CA3AF');
+            Text.fontColor(this.selectedTab === 3 ? '#6366F1' : '#9CA3AF');
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('设置');
-            Text.debugLine("entry/src/main/ets/pages/Index.ets(290:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Index.ets(305:11)", "entry");
             Text.fontSize(12);
-            Text.fontColor(this.selectedTab === 3 ? '#2563EB' : '#9CA3AF');
+            Text.fontColor(this.selectedTab === 3 ? '#6366F1' : '#9CA3AF');
         }, Text);
         Text.pop();
         Column.pop();

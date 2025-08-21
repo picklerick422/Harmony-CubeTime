@@ -12,6 +12,14 @@ interface PomodoroPage_Params {
     currentTask?: Task | null;
     tasks?: Task[];
     newTaskTitle?: string;
+    titleScale?: number;
+    titleOpacity?: number;
+    cardScale?: number;
+    cardOpacity?: number;
+    timerScale?: number;
+    timerOpacity?: number;
+    taskScale?: number;
+    taskOpacity?: number;
     timer?: number;
 }
 import router from "@ohos:router";
@@ -57,6 +65,14 @@ class PomodoroPage extends ViewPU {
             new Task('3', '回复邮件', true, 2, 1)
         ], this, "tasks");
         this.__newTaskTitle = new ObservedPropertySimplePU('', this, "newTaskTitle");
+        this.__titleScale = new ObservedPropertySimplePU(0.8, this, "titleScale");
+        this.__titleOpacity = new ObservedPropertySimplePU(0, this, "titleOpacity");
+        this.__cardScale = new ObservedPropertySimplePU(0.8, this, "cardScale");
+        this.__cardOpacity = new ObservedPropertySimplePU(0, this, "cardOpacity");
+        this.__timerScale = new ObservedPropertySimplePU(0.8, this, "timerScale");
+        this.__timerOpacity = new ObservedPropertySimplePU(0, this, "timerOpacity");
+        this.__taskScale = new ObservedPropertySimplePU(0.8, this, "taskScale");
+        this.__taskOpacity = new ObservedPropertySimplePU(0, this, "taskOpacity");
         this.timer = 0;
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
@@ -92,6 +108,30 @@ class PomodoroPage extends ViewPU {
         if (params.newTaskTitle !== undefined) {
             this.newTaskTitle = params.newTaskTitle;
         }
+        if (params.titleScale !== undefined) {
+            this.titleScale = params.titleScale;
+        }
+        if (params.titleOpacity !== undefined) {
+            this.titleOpacity = params.titleOpacity;
+        }
+        if (params.cardScale !== undefined) {
+            this.cardScale = params.cardScale;
+        }
+        if (params.cardOpacity !== undefined) {
+            this.cardOpacity = params.cardOpacity;
+        }
+        if (params.timerScale !== undefined) {
+            this.timerScale = params.timerScale;
+        }
+        if (params.timerOpacity !== undefined) {
+            this.timerOpacity = params.timerOpacity;
+        }
+        if (params.taskScale !== undefined) {
+            this.taskScale = params.taskScale;
+        }
+        if (params.taskOpacity !== undefined) {
+            this.taskOpacity = params.taskOpacity;
+        }
         if (params.timer !== undefined) {
             this.timer = params.timer;
         }
@@ -109,6 +149,14 @@ class PomodoroPage extends ViewPU {
         this.__currentTask.purgeDependencyOnElmtId(rmElmtId);
         this.__tasks.purgeDependencyOnElmtId(rmElmtId);
         this.__newTaskTitle.purgeDependencyOnElmtId(rmElmtId);
+        this.__titleScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__titleOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__cardScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__cardOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__timerScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__timerOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__taskScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__taskOpacity.purgeDependencyOnElmtId(rmElmtId);
     }
     aboutToBeDeleted() {
         this.__timeLeft.aboutToBeDeleted();
@@ -121,6 +169,14 @@ class PomodoroPage extends ViewPU {
         this.__currentTask.aboutToBeDeleted();
         this.__tasks.aboutToBeDeleted();
         this.__newTaskTitle.aboutToBeDeleted();
+        this.__titleScale.aboutToBeDeleted();
+        this.__titleOpacity.aboutToBeDeleted();
+        this.__cardScale.aboutToBeDeleted();
+        this.__cardOpacity.aboutToBeDeleted();
+        this.__timerScale.aboutToBeDeleted();
+        this.__timerOpacity.aboutToBeDeleted();
+        this.__taskScale.aboutToBeDeleted();
+        this.__taskOpacity.aboutToBeDeleted();
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
@@ -193,6 +249,62 @@ class PomodoroPage extends ViewPU {
     }
     set newTaskTitle(newValue: string) {
         this.__newTaskTitle.set(newValue);
+    }
+    private __titleScale: ObservedPropertySimplePU<number>;
+    get titleScale() {
+        return this.__titleScale.get();
+    }
+    set titleScale(newValue: number) {
+        this.__titleScale.set(newValue);
+    }
+    private __titleOpacity: ObservedPropertySimplePU<number>;
+    get titleOpacity() {
+        return this.__titleOpacity.get();
+    }
+    set titleOpacity(newValue: number) {
+        this.__titleOpacity.set(newValue);
+    }
+    private __cardScale: ObservedPropertySimplePU<number>;
+    get cardScale() {
+        return this.__cardScale.get();
+    }
+    set cardScale(newValue: number) {
+        this.__cardScale.set(newValue);
+    }
+    private __cardOpacity: ObservedPropertySimplePU<number>;
+    get cardOpacity() {
+        return this.__cardOpacity.get();
+    }
+    set cardOpacity(newValue: number) {
+        this.__cardOpacity.set(newValue);
+    }
+    private __timerScale: ObservedPropertySimplePU<number>;
+    get timerScale() {
+        return this.__timerScale.get();
+    }
+    set timerScale(newValue: number) {
+        this.__timerScale.set(newValue);
+    }
+    private __timerOpacity: ObservedPropertySimplePU<number>;
+    get timerOpacity() {
+        return this.__timerOpacity.get();
+    }
+    set timerOpacity(newValue: number) {
+        this.__timerOpacity.set(newValue);
+    }
+    private __taskScale: ObservedPropertySimplePU<number>;
+    get taskScale() {
+        return this.__taskScale.get();
+    }
+    set taskScale(newValue: number) {
+        this.__taskScale.set(newValue);
+    }
+    private __taskOpacity: ObservedPropertySimplePU<number>;
+    get taskOpacity() {
+        return this.__taskOpacity.get();
+    }
+    set taskOpacity(newValue: number) {
+        this.__taskOpacity.set(newValue);
     }
     private timer: number;
     aboutToAppear() {

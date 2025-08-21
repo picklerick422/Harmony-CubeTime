@@ -1,880 +1,0 @@
-Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚVŠif (!("finalizeConstruction" in ViewPU.prototype)) {
-    Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
-}
-import router from '@ohos.router';
-class OptionItem {
-    constructor(value, label) {
-        this.value = value;
-        this.label = label;
-    }
-}
-class SettingsItem {
-    constructor(key, title, description, type, options, value) {
-        this.key = key;
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.options = options;
-        this.value = value;
-    }
-}
-class SettingsPage extends ViewPU {
-    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
-        super(parent, __localStorage, elmtId, extraInfo);
-        if (typeof paramsLambda === "function") {
-            this.paramsGenerator_ = paramsLambda;
-        }
-        this.__settingsItems = new ObservedPropertyObjectPU([
-            new SettingsItem('theme', 'ä¸»é¢˜æ¨¡å¼', 'é€‰æ‹©åº”ç”¨çš„ä¸»é¢˜é¢œè‰²', 'select', [
-                new OptionItem('light', 'æµ…è‰²'),
-                new OptionItem('dark', 'æ·±è‰²'),
-                new OptionItem('auto', 'è·Ÿéšç³»ç»Ÿ')
-            ], 'light'),
-            new SettingsItem('pomodoro_duration', 'ç•ªèŒ„é’Ÿæ—¶é•¿', 'è®¾ç½®ä¸€ä¸ªç•ªèŒ„é’Ÿçš„æ—¶é—´é•¿åº¦', 'select', [
-                new OptionItem('15', '15åˆ†é’Ÿ'),
-                new OptionItem('25', '25åˆ†é’Ÿ'),
-                new OptionItem('30', '30åˆ†é’Ÿ'),
-                new OptionItem('45', '45åˆ†é’Ÿ')
-            ], '25'),
-            new SettingsItem('short_break', 'çŸ­ä¼‘æ¯æ—¶é•¿', 'è®¾ç½®çŸ­ä¼‘æ¯çš„æ—¶é—´é•¿åº¦', 'select', [
-                new OptionItem('3', '3åˆ†é’Ÿ'),
-                new OptionItem('5', '5åˆ†é’Ÿ'),
-                new OptionItem('10', '10åˆ†é’Ÿ')
-            ], '5'),
-            new SettingsItem('long_break', 'é•¿ä¼‘æ¯æ—¶é•¿', 'è®¾ç½®é•¿ä¼‘æ¯çš„æ—¶é—´é•¿åº¦', 'select', [
-                new OptionItem('15', '15åˆ†é’Ÿ'),
-                new OptionItem('20', '20åˆ†é’Ÿ'),
-                new OptionItem('30', '30åˆ†é’Ÿ')
-            ], '15'),
-            new SettingsItem('notifications', 'é€šçŸ¥æé†’', 'å¼€å¯æˆ–å…³é—­é€šçŸ¥æé†’', 'toggle', [], 'true'),
-            new SettingsItem('sound', 'æç¤ºéŸ³', 'å¼€å¯æˆ–å…³é—­æç¤ºéŸ³', 'toggle', [], 'true')
-        ], this, "settingsItems");
-        this.setInitiallyProvidedValue(params);
-        this.finalizeConstruction();
-    }
-    setInitiallyProvidedValue(params) {
-        if (params.settingsItems !== undefined) {
-            this.settingsItems = params.settingsItems;
-        }
-    }
-    updateStateVars(params) {
-    }
-    purgeVariableDependenciesOnElmtId(rmElmtId) {
-        this.__settingsItems.purgeDependencyOnElmtId(rmElmtId);
-    }
-    aboutToBeDeleted() {
-        this.__settingsItems.aboutToBeDeleted();
-        SubscriberManager.Get().delete(this.id__());
-        this.aboutToBeDeletedInternal();
-    }
-    get settingsItems() {
-        return this.__settingsItems.get();
-    }
-    set settingsItems(newValue) {
-        this.__settingsItems.set(newValue);
-    }
-    updateSetting(key, value) {
-        const itemIndex = this.settingsItems.findIndex(item => item.key === key);
-        if (itemIndex !== -1) {
-            this.settingsItems[itemIndex].value = value;
-        }
-    }
-    initialRender() {
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Settings.ets(117:5)", "entry");
-            Column.width('100%');
-            Column.height('100%');
-            Column.backgroundColor('#F9FAFB');
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // é¡¶éƒ¨æ ‡é¢˜
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Settings.ets(119:7)", "entry");
-            // é¡¶éƒ¨æ ‡é¢˜
-            Row.width('100%');
-            // é¡¶éƒ¨æ ‡é¢˜
-            Row.padding(16);
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('è®¾ç½®');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(120:9)", "entry");
-            Text.fontSize(24);
-            Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#1F2937');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Settings.ets(126:9)", "entry");
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-            Image.onClick(() => {
-                router.back();
-            });
-        }, Image);
-        // é¡¶éƒ¨æ ‡é¢˜
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // è®¾ç½®åˆ—è¡¨
-            List.create({ space: 12 });
-            List.debugLine("entry/src/main/ets/pages/Settings.ets(138:7)", "entry");
-            // è®¾ç½®åˆ—è¡¨
-            List.layoutWeight(1);
-            // è®¾ç½®åˆ—è¡¨
-            List.padding(16);
-        }, List);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            ForEach.create();
-            const forEachItemGenFunction = _item => {
-                const item = _item;
-                {
-                    const itemCreation = (elmtId, isInitialRender) => {
-                        ViewStackProcessor.StartGetAccessRecordingFor(elmtId);
-                        itemCreation2(elmtId, isInitialRender);
-                        if (!isInitialRender) {
-                            ListItem.pop();
-                        }
-                        ViewStackProcessor.StopGetAccessRecording();
-                    };
-                    const itemCreation2 = (elmtId, isInitialRender) => {
-                        ListItem.create(deepRenderFunction, true);
-                        ListItem.debugLine("entry/src/main/ets/pages/Settings.ets(140:11)", "entry");
-                    };
-                    const deepRenderFunction = (elmtId, isInitialRender) => {
-                        itemCreation(elmtId, isInitialRender);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Column.create();
-                            Column.debugLine("entry/src/main/ets/pages/Settings.ets(141:13)", "entry");
-                            Column.width('100%');
-                            Column.padding(16);
-                            Column.backgroundColor('#FFFFFF');
-                            Column.borderRadius(12);
-                        }, Column);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Row.create();
-                            Row.debugLine("entry/src/main/ets/pages/Settings.ets(142:15)", "entry");
-                        }, Row);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Text.create(item.title);
-                            Text.debugLine("entry/src/main/ets/pages/Settings.ets(143:17)", "entry");
-                            Text.fontSize(16);
-                            Text.fontWeight(FontWeight.Medium);
-                            Text.fontColor('#1F2937');
-                            Text.layoutWeight(1);
-                        }, Text);
-                        Text.pop();
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            If.create();
-                            if (item.type === 'toggle') {
-                                this.ifElseBranchUpdateFunction(0, () => {
-                                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                        Toggle.create({ type: ToggleType.Switch, isOn: item.value === 'true' });
-                                        Toggle.debugLine("entry/src/main/ets/pages/Settings.ets(150:19)", "entry");
-                                        Toggle.selectedColor('#10B981');
-                                        Toggle.onChange((isOn) => {
-                                            this.updateSetting(item.key, isOn ? 'true' : 'false');
-                                        });
-                                    }, Toggle);
-                                    Toggle.pop();
-                                });
-                            }
-                            else if (item.type === 'select') {
-                                this.ifElseBranchUpdateFunction(1, () => {
-                                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                        Select.create(item.options);
-                                        Select.debugLine("entry/src/main/ets/pages/Settings.ets(156:19)", "entry");
-                                        Select.selected(item.options.findIndex(option => option.value === item.value));
-                                        Select.onSelect((index) => {
-                                            this.updateSetting(item.key, item.options[index].value);
-                                        });
-                                        Select.width(100);
-                                        Select.height(32);
-                                        Select.backgroundColor('#F3F4F6');
-                                        Select.borderRadius(8);
-                                    }, Select);
-                                    Select.pop();
-                                });
-                            }
-                            else {
-                                this.ifElseBranchUpdateFunction(2, () => {
-                                });
-                            }
-                        }, If);
-                        If.pop();
-                        Row.pop();
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Text.create(item.description);
-                            Text.debugLine("entry/src/main/ets/pages/Settings.ets(168:15)", "entry");
-                            Text.fontSize(14);
-                            Text.fontColor('#6B7280');
-                            Text.margin({ top: 4 });
-                        }, Text);
-                        Text.pop();
-                        Column.pop();
-                        ListItem.pop();
-                    };
-                    this.observeComponentCreation2(itemCreation2, ListItem);
-                    ListItem.pop();
-                }
-            };
-            this.forEachUpdateFunction(elmtId, this.settingsItems, forEachItemGenFunction);
-        }, ForEach);
-        ForEach.pop();
-        // è®¾ç½®åˆ—è¡¨
-        List.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // å…³äºŽåº”ç”¨
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Settings.ets(184:7)", "entry");
-            // å…³äºŽåº”ç”¨
-            Column.width('100%');
-            // å…³äºŽåº”ç”¨
-            Column.padding({ left: 16, right: 16, bottom: 16 });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('å…³äºŽåº”ç”¨');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(185:9)", "entry");
-            Text.fontSize(18);
-            Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#1F2937');
-            Text.margin({ bottom: 12 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Settings.ets(191:9)", "entry");
-            Column.width('100%');
-            Column.padding(16);
-            Column.backgroundColor('#FFFFFF');
-            Column.borderRadius(12);
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Settings.ets(192:11)", "entry");
-            Row.padding({ bottom: 8 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('ç‰ˆæœ¬');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(193:13)", "entry");
-            Text.fontSize(14);
-            Text.fontColor('#1F2937');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('1.0.0');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(197:13)", "entry");
-            Text.fontSize(14);
-            Text.fontColor('#6B7280');
-        }, Text);
-        Text.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Settings.ets(203:11)", "entry");
-            Row.padding({ bottom: 8 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('å¼€å‘è€…');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(204:13)", "entry");
-            Text.fontSize(14);
-            Text.fontColor('#1F2937');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('ç•ªèŒ„å·¥ä½œæ³•å›¢é˜Ÿ');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(208:13)", "entry");
-            Text.fontSize(14);
-            Text.fontColor('#6B7280');
-        }, Text);
-        Text.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Settings.ets(214:11)", "entry");
-            Row.padding({ bottom: 8 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('è”ç³»é‚®ç®±');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(215:13)", "entry");
-            Text.fontSize(14);
-            Text.fontColor('#1F2937');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('support@pomodoro.com');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(219:13)", "entry");
-            Text.fontSize(14);
-            Text.fontColor('#6B7280');
-        }, Text);
-        Text.pop();
-        Row.pop();
-        Column.pop();
-        // å…³äºŽåº”ç”¨
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // åº•éƒ¨å¯¼èˆª
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Settings.ets(234:7)", "entry");
-            // åº•éƒ¨å¯¼èˆª
-            Row.width('100%');
-            // åº•éƒ¨å¯¼èˆª
-            Row.padding({ top: 12, bottom: 8 });
-            // åº•éƒ¨å¯¼èˆª
-            Row.backgroundColor('#FFFFFF');
-            // åº•éƒ¨å¯¼èˆª
-            Row.border({
-                width: { top: 1 },
-                color: '#E5E7EB'
-            });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Settings.ets(235:9)", "entry");
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777243, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Settings.ets(236:11)", "entry");
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#10B981');
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('è®¾ç½®');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(240:11)", "entry");
-            Text.fontSize(12);
-            Text.fontColor('#10B981');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Settings.ets(248:9)", "entry");
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-            Column.onClick(() => {
-                router.pushUrl({ url: 'pages/Pomodoro' });
-            });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777246, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Settings.ets(249:11)", "entry");
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('ç•ªèŒ„æ—¶é’Ÿ');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(253:11)", "entry");
-            Text.fontSize(12);
-            Text.fontColor('#6B7280');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Settings.ets(264:9)", "entry");
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-            Column.onClick(() => {
-                router.pushUrl({ url: 'pages/Tasks' });
-            });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777245, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Settings.ets(265:11)", "entry");
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('å¾…åŠž');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(269:11)", "entry");
-            Text.fontSize(12);
-            Text.fontColor('#6B7280');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Settings.ets(280:9)", "entry");
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-            Column.onClick(() => {
-                router.pushUrl({ url: 'pages/Calendar' });
-            });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777244, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Settings.ets(281:11)", "entry");
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('æ—¥åŽ†');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(285:11)", "entry");
-            Text.fontSize(12);
-            Text.fontColor('#6B7280');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Settings.ets(296:9)", "entry");
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-            Column.onClick(() => {
-                router.back();
-            });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Settings.ets(297:11)", "entry");
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-            Image.rotate({ angle: 180 });
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('è¿”å›ž');
-            Text.debugLine("entry/src/main/ets/pages/Settings.ets(302:11)", "entry");
-            Text.fontSize(12);
-            Text.fontColor('#6B7280');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        // åº•éƒ¨å¯¼èˆª
-        Row.pop();
-        Column.pop();
-    }
-    rerender() {
-        this.updateDirtyElements();
-    }
-    static getEntryName() {
-        return "SettingsPage";
-    }
-}
-registerNamedRoute(() => new SettingsPage(undefined, {}), "", { bundleName: "com.example.cubetime", moduleName: "entry", pagePath: "pages/Settings", pageFullPath: "entry/src/main/ets/pages/Settings", integratedHsp: "false", moduleType: "followWithHap" });
-//# sourceMappingURL=Settings.js.mapÂ‘ÙQ hvigor_ignore_E:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙ<E:\Deveco_Project\test\entry\src\main\ets\pages\Settings.etsÔrBšªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath¬shouldEmitJs¥entryÃÂ¼E:\Deveco_Project\test\entry¶E:\Deveco_Project\test¥entry¥1.0.0Ô  ¼E:\Deveco_Project\test\entryÃÃÚvimport router from '@ohos.router';
-
-class OptionItem {
-  value: string;
-  label: string;
-
-  constructor(value: string, label: string) {
-    this.value = value;
-    this.label = label;
-  }
-}
-
-class SettingsItem {
-  key: string;
-  title: string;
-  description: string;
-  type: string;
-  options: OptionItem[];
-  value: string;
-
-  constructor(
-    key: string,
-    title: string,
-    description: string,
-    type: string,
-    options: OptionItem[],
-    value: string
-  ) {
-    this.key = key;
-    this.title = title;
-    this.description = description;
-    this.type = type;
-    this.options = options;
-    this.value = value;
-  }
-}
-
-@Entry
-@Component
-struct SettingsPage {
-  @State settingsItems: SettingsItem[] = [
-    new SettingsItem(
-      'theme',
-      'ä¸»é¢˜æ¨¡å¼',
-      'é€‰æ‹©åº”ç”¨çš„ä¸»é¢˜é¢œè‰²',
-      'select',
-      [
-        new OptionItem('light', 'æµ…è‰²'),
-        new OptionItem('dark', 'æ·±è‰²'),
-        new OptionItem('auto', 'è·Ÿéšç³»ç»Ÿ')
-      ],
-      'light'
-    ),
-    new SettingsItem(
-      'pomodoro_duration',
-      'ç•ªèŒ„é’Ÿæ—¶é•¿',
-      'è®¾ç½®ä¸€ä¸ªç•ªèŒ„é’Ÿçš„æ—¶é—´é•¿åº¦',
-      'select',
-      [
-        new OptionItem('15', '15åˆ†é’Ÿ'),
-        new OptionItem('25', '25åˆ†é’Ÿ'),
-        new OptionItem('30', '30åˆ†é’Ÿ'),
-        new OptionItem('45', '45åˆ†é’Ÿ')
-      ],
-      '25'
-    ),
-    new SettingsItem(
-      'short_break',
-      'çŸ­ä¼‘æ¯æ—¶é•¿',
-      'è®¾ç½®çŸ­ä¼‘æ¯çš„æ—¶é—´é•¿åº¦',
-      'select',
-      [
-        new OptionItem('3', '3åˆ†é’Ÿ'),
-        new OptionItem('5', '5åˆ†é’Ÿ'),
-        new OptionItem('10', '10åˆ†é’Ÿ')
-      ],
-      '5'
-    ),
-    new SettingsItem(
-      'long_break',
-      'é•¿ä¼‘æ¯æ—¶é•¿',
-      'è®¾ç½®é•¿ä¼‘æ¯çš„æ—¶é—´é•¿åº¦',
-      'select',
-      [
-        new OptionItem('15', '15åˆ†é’Ÿ'),
-        new OptionItem('20', '20åˆ†é’Ÿ'),
-        new OptionItem('30', '30åˆ†é’Ÿ')
-      ],
-      '15'
-    ),
-    new SettingsItem(
-      'notifications',
-      'é€šçŸ¥æé†’',
-      'å¼€å¯æˆ–å…³é—­é€šçŸ¥æé†’',
-      'toggle',
-      [],
-      'true'
-    ),
-    new SettingsItem(
-      'sound',
-      'æç¤ºéŸ³',
-      'å¼€å¯æˆ–å…³é—­æç¤ºéŸ³',
-      'toggle',
-      [],
-      'true'
-    )
-  ];
-
-  private updateSetting(key: string, value: string) {
-    const itemIndex = this.settingsItems.findIndex(item => item.key === key);
-    if (itemIndex !== -1) {
-      this.settingsItems[itemIndex].value = value;
-    }
-  }
-
-  build() {
-    Column() {
-      // é¡¶éƒ¨æ ‡é¢˜
-      Row() {
-        Text('è®¾ç½®')
-          .fontSize(24)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1F2937')
-          .layoutWeight(1)
-
-        Image($r('app.media.ic_back'))
-          .width(24)
-          .height(24)
-          .fillColor('#6B7280')
-          .onClick(() => {
-            router.back();
-          })
-      }
-      .width('100%')
-      .padding(16)
-
-      // è®¾ç½®åˆ—è¡¨
-      List({ space: 12 }) {
-        ForEach(this.settingsItems, (item: SettingsItem) => {
-          ListItem() {
-            Column() {
-              Row() {
-                Text(item.title)
-                  .fontSize(16)
-                  .fontWeight(FontWeight.Medium)
-                  .fontColor('#1F2937')
-                  .layoutWeight(1)
-
-                if (item.type === 'toggle') {
-                  Toggle({ type: ToggleType.Switch, isOn: item.value === 'true' })
-                    .selectedColor('#10B981')
-                    .onChange((isOn: boolean) => {
-                      this.updateSetting(item.key, isOn ? 'true' : 'false');
-                    })
-                } else if (item.type === 'select') {
-                  Select(item.options)
-                    .selected(item.options.findIndex(option => option.value === item.value))
-                    .onSelect((index: number) => {
-                      this.updateSetting(item.key, item.options[index].value);
-                    })
-                    .width(100)
-                    .height(32)
-                    .backgroundColor('#F3F4F6')
-                    .borderRadius(8)
-                }
-              }
-
-              Text(item.description)
-                .fontSize(14)
-                .fontColor('#6B7280')
-                .margin({ top: 4 })
-            }
-            .width('100%')
-            .padding(16)
-            .backgroundColor('#FFFFFF')
-            .borderRadius(12)
-          }
-        })
-      }
-      .layoutWeight(1)
-      .padding(16)
-
-      // å…³äºŽåº”ç”¨
-      Column() {
-        Text('å…³äºŽåº”ç”¨')
-          .fontSize(18)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1F2937')
-          .margin({ bottom: 12 })
-
-        Column() {
-          Row() {
-            Text('ç‰ˆæœ¬')
-              .fontSize(14)
-              .fontColor('#1F2937')
-              .layoutWeight(1)
-            Text('1.0.0')
-              .fontSize(14)
-              .fontColor('#6B7280')
-          }
-          .padding({ bottom: 8 })
-
-          Row() {
-            Text('å¼€å‘è€…')
-              .fontSize(14)
-              .fontColor('#1F2937')
-              .layoutWeight(1)
-            Text('ç•ªèŒ„å·¥ä½œæ³•å›¢é˜Ÿ')
-              .fontSize(14)
-              .fontColor('#6B7280')
-          }
-          .padding({ bottom: 8 })
-
-          Row() {
-            Text('è”ç³»é‚®ç®±')
-              .fontSize(14)
-              .fontColor('#1F2937')
-              .layoutWeight(1)
-            Text('support@pomodoro.com')
-              .fontSize(14)
-              .fontColor('#6B7280')
-          }
-          .padding({ bottom: 8 })
-        }
-        .width('100%')
-        .padding(16)
-        .backgroundColor('#FFFFFF')
-        .borderRadius(12)
-      }
-      .width('100%')
-      .padding({ left: 16, right: 16, bottom: 16 })
-
-      // åº•éƒ¨å¯¼èˆª
-      Row() {
-        Column() {
-          Image($r('app.media.ic_settings'))
-            .width(24)
-            .height(24)
-            .fillColor('#10B981')
-          Text('è®¾ç½®')
-            .fontSize(12)
-            .fontColor('#10B981')
-            .margin({ top: 4 })
-        }
-        .width('20%')
-        .alignItems(HorizontalAlign.Center)
-
-        Column() {
-          Image($r('app.media.ic_pomodoro'))
-            .width(24)
-            .height(24)
-            .fillColor('#6B7280')
-          Text('ç•ªèŒ„æ—¶é’Ÿ')
-            .fontSize(12)
-            .fontColor('#6B7280')
-            .margin({ top: 4 })
-        }
-        .width('20%')
-        .alignItems(HorizontalAlign.Center)
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/Pomodoro' });
-        })
-
-        Column() {
-          Image($r('app.media.ic_tasks'))
-            .width(24)
-            .height(24)
-            .fillColor('#6B7280')
-          Text('å¾…åŠž')
-            .fontSize(12)
-            .fontColor('#6B7280')
-            .margin({ top: 4 })
-        }
-        .width('20%')
-        .alignItems(HorizontalAlign.Center)
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/Tasks' });
-        })
-
-        Column() {
-          Image($r('app.media.ic_calendar'))
-            .width(24)
-            .height(24)
-            .fillColor('#6B7280')
-          Text('æ—¥åŽ†')
-            .fontSize(12)
-            .fontColor('#6B7280')
-            .margin({ top: 4 })
-        }
-        .width('20%')
-        .alignItems(HorizontalAlign.Center)
-        .onClick(() => {
-          router.pushUrl({ url: 'pages/Calendar' });
-        })
-
-        Column() {
-          Image($r('app.media.ic_back'))
-            .width(24)
-            .height(24)
-            .fillColor('#6B7280')
-            .rotate({ angle: 180 })
-          Text('è¿”å›ž')
-            .fontSize(12)
-            .fontColor('#6B7280')
-            .margin({ top: 4 })
-        }
-        .width('20%')
-        .alignItems(HorizontalAlign.Center)
-        .onClick(() => {
-          router.back();
-        })
-      }
-      .width('100%')
-      .padding({ top: 12, bottom: 8 })
-      .backgroundColor('#FFFFFF')
-      .border({
-        width: { top: 1 },
-        color: '#E5E7EB'
-      })
-    }
-    .width('100%')
-    .height('100%')
-    .backgroundColor('#F9FAFB')
-  }
-}ÀÔrC‘¬@ohos.routerÔrD—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙQ hvigor_ignore_E:_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsAÃªoh-resolveÂ“ÔrE–§version¤fileªsourceRoot§sources¥names¨mappings«Settings.js ‘¬Settings.etsÜÎ–”    ”  ”  ”  ”!  !”"  "“”   ” ” •” ” ” ” ” *—” ” ” 	” ” ” ” —” ” ” 	” ” ” ” ’” 	” 	‘” 
-“”   ” ” ” ” ” ” ” ” ”' ”) ”- ”/ ”6 ”8 ”= —” ” ” 	” ” ” ” —” ” ” 	” ” ” ” —” ” ” 	” ” ”& "”' #—” ” ” 	” ” ” ” —”  ”  ”  	”  ”  ”  ”  —” !” !” !	” !” !” !” !’” "” "‘” #’” '” '‘” % ‘”< ()œ” )” )” )” *”$ *”& +”, +”. ,”9 ,”; -”ÌC -”ÌE .˜” /” /” /” /”& /”( / ”, /$”- /%˜” 0” 0” 0” 0”% 0”' 0”+ 0#”, 0$˜” 1” 1” 1” 1”% 1”' 1”- 1%”. 1&”” 2” 3” 3” 4œ” 5” 5” 5” 6”0 6”2 7”9 7”; 8”ÌI 8”ÌK 9”ÌS 9”ÌU :˜” ;” ;” ;” ;”# ;”% ;”+ ;#”, ;$˜” <” <” <” <”# <”% <”+ <#”, <$˜” =” =” =” =”# =”% =”+ =#”, =$˜” >” >” >” >”# >”% >”+ >#”, >$”” ?” Ì@” Ì@
-” ÌAœ” ÌB” ÌB” ÌB” ÌC”* ÌC”, ÌD”3 ÌD”5 ÌE”ÌA ÌE”ÌC ÌF”ÌK ÌF”ÌM ÌG˜” ÌH” ÌH” ÌH” ÌH”" ÌH”$ ÌH”) ÌH!”* ÌH"˜” ÌI” ÌI” ÌI” ÌI”" ÌI”$ ÌI”) ÌI!”* ÌI"˜” ÌJ” ÌJ” ÌJ” ÌJ”# ÌJ”% ÌJ”+ ÌJ#”, ÌJ$”” ÌK” ÌL” ÌL	” ÌMœ” ÌN” ÌN” ÌN” ÌO”) ÌO”+ ÌP”2 ÌP”4 ÌQ”Ì@ ÌQ”ÌB ÌR”ÌJ ÌR”ÌL ÌS˜” ÌT” ÌT” ÌT” ÌT”# ÌT”% ÌT”+ ÌT#”, ÌT$˜” ÌU” ÌU” ÌU” ÌU”# ÌU”% ÌU”+ ÌU#”, ÌU$˜” ÌV” ÌV” ÌV” ÌV”# ÌV”% ÌV”+ ÌV#”, ÌV$”” ÌW” ÌX” ÌX
-” ÌYÜ ” ÌZ” ÌZ” ÌZ” Ì[”, Ì[”. Ì\”4 Ì\”6 Ì]”ÌA Ì]”ÌC Ì^”ÌK Ì^”ÌM Ì_”ÌO Ì_”ÌQ Ì`”ÌW Ì`”ÌX ÌaÜ ” Ìb” Ìb” Ìb” Ìc”$ Ìc”& Ìd”+ Ìd”- Ìe”7 Ìe”9 Ìf”ÌA Ìf”ÌC Ìg”ÌE Ìg”ÌG Ìh”ÌM Ìh”ÌN Ìi‘”	 Ìj‘” #’” (	” (’” (	” (–” Ìl
-” Ìl” Ìl” Ìl#” Ìl%” Ìl2Ü ” Ìm” Ìm
-” Ìm” Ìm” Ìm” Ìm”, Ìm(”- Ìm)”6 Ìm2”7 Ìm3”; Ìm7”< Ìm8”> Ìm:”? Ìm;”ÌC Ìm?”ÌD ÌmÌ@”ÌG ÌmÌC”ÌL ÌmÌH”ÌO ÌmÌK”ÌP ÌmÌL”ÌQ ÌmÌM—” Ìn” Ìn” Ìn” Ìn” Ìn” Ìn” Ìnœ” Ìo” Ìo
-” Ìo” Ìo” Ìo”( Ìo"”) Ìo#”* Ìo$”/ Ìo)”2 Ìo,”7 Ìo1”8 Ìo2‘”	 Ìp’” Ìq” Ìq‘” Ìs’” Ìt” Ìt
-–” Ìt” Ìt
-” Í@” Í@
-” Í@” Í@–” Ìt” Ìt
-” ÍA” ÍA” ÍA”  ÍA–” Ìt” Ìt
-” ÍB”" ÍB”# ÍB”, ÍB’” Ìu” Ìu’” Ìv” Ìv	’” Ìu” Ìu–” Ìv” Ìv	” Ì…” Ì…” Ì…” Ì…’” Ìu” Ìu–” Ìv” Ìv	” Ì†” Ì†” Ì†” Ì†”” Ìw” Ìw” Ìw” Ìw–” Ìw” Ìw” Ìx” Ìx” Ìx” Ìx˜” Ìw” Ìw” Ìy” Ìy” Ìy”& Ìy ”' Ìy!”+ Ìy%–” Ìw” Ìw” Ìz” Ìz” Ìz”$ Ìz–” Ìw” Ìw” Ì{” Ì{” Ì{” Ì{’” Ìw” Ìw’” Ì}” Ì}–” Ì}” Ì}” Ì~” Ì~” Ì~” Ì~–” Ì}” Ì}” Ì” Ì” Ì” Ì–” Ì}” Ì}” Ì€” Ì€” Ì€”% Ì€—” Ì}” Ì}” Ì” Ì” Ì” Ì” Ì–” Ì‚” Ì‚” Ì‚” Ì‚” Ì‚” Ì‚’” Ìƒ
-” Ìƒ’” Ìu” Ìu’” Ìv” Ìv	’” Ìˆ” Ìˆ˜” Ì‰” Ì‰
-” Ì‰” Ì‰” Ì‰”! Ì‰”# Ì‰”% Ì‰’” Ìˆ” Ìˆ–” Ì‰” Ì‰
-” Ì³” Ì³” Ì³” Ì³’” Ìˆ” Ìˆ–” Ì‰” Ì‰
-” Ì´” Ì´” Ì´” Ì´’” ÌŠ” ÌŠ’” Ì‹
-”$ Ì‹’” ÌŒ”" ÌŒ–” ÌŒ”" ÌŒ”# Ì¬”( Ì¬”) Ì¬”/ Ì¬–” ÌŒ”" ÌŒ”# Ì­”* Ì­”+ Ì­”- Ì­–” ÌŒ”" ÌŒ”# Ì®”2 Ì®”3 Ì®”< Ì®&–” ÌŒ”" ÌŒ”# Ì¯”/ Ì¯”0 Ì¯”2 Ì¯’” Ì” Ì–” ÌŽ”  ÌŽ”( ÌŽ”, ÌŽ”- ÌŽ”2 ÌŽ–” ÌŽ”  ÌŽ”! Ì”) Ì”* Ì”, Ì˜” ÌŽ”  ÌŽ”! Ì”+ Ì”, Ì”6 Ì(”7 Ì)”= Ì/–” ÌŽ”  ÌŽ”! Ì‘”* Ì‘”+ Ì‘”4 Ì‘&–” ÌŽ”  ÌŽ”! Ì’”- Ì’”. Ì’ ”/ Ì’!’” ÌŽ” ÌŽ˜” Ì””  Ì””$ Ì””% Ì””) Ì””. Ì”"”6 Ì”*”8 Ì”,Ü ”( Ì•”. Ì•”6 Ì•”8 Ì•”< Ì•”> Ì•!”ÌH Ì•+”ÌI Ì•,”ÌO Ì•2”ÌQ Ì•4”ÌU Ì•8”ÌW Ì•:”Ì[ Ì•>”Ì\ Ì•?”Ìa Ì•ÌD”Ìf Ì•ÌI”Ìl Ì•ÌO”Ìn Ì•ÌQ–”( Ì•”. Ì•”/ Ì–”< Ì–"”= Ì–#”ÌF Ì–,™”( Ì•”. Ì•”/ Ì—”7 Ì—”8 Ì—”9 Ì—”= Ì—,”? Ì—.”ÌA Ì—0Ü ”, Ì˜”0 Ì˜”1 Ì˜”> Ì˜(”? Ì˜)”ÌC Ì˜-”ÌD Ì˜.”ÌG Ì˜1”ÌI Ì˜3”ÌM Ì˜7”ÌN Ì˜8”ÌO Ì˜9”ÌP Ì˜:”ÌV Ì˜Ì@”ÌW Ì˜ÌA”ÌX Ì˜ÌB”ÌY Ì˜ÌC”Ì` Ì˜ÌJ”Ìa Ì˜ÌK”Ìb Ì˜ÌL’”( Ì™”) Ì™’”$ Ì•”* Ì•‘” Ìš˜”! Ìš”% Ìš”) Ìš”* Ìš ”. Ìš$”3 Ìš)”; Ìš1”= Ìš3–”( Ì›”. Ì›”6 Ì›”: Ì›”; Ì›”ÌB Ì›%Ü ”( Ì›”. Ì›”/ Ìœ”7 Ìœ”8 Ìœ”< Ìœ"”= Ìœ#”ÌD Ìœ*”ÌE Ìœ+”ÌN Ìœ4”ÌO Ìœ5”ÌU Ìœ;”ÌV Ìœ<”ÌX Ìœ>”ÌY Ìœ?”Ì_ ÌœÌE”Ì` ÌœÌF”Ìe ÌœÌK”Ìj ÌœÌP”Ìn ÌœÌT”Ìo ÌœÌU”Ìt ÌœÌZ”Ìu ÌœÌ[™”( Ì›”. Ì›”/ Ì”7 Ì”8 Ì”9 Ì”> Ì,”Ì@ Ì.”ÌB Ì0Ü ”, Ìž”0 Ìž”1 Ìž”> Ìž(”? Ìž)”ÌC Ìž-”ÌD Ìž.”ÌG Ìž1”ÌI Ìž3”ÌM Ìž7”ÌN Ìž8”ÌU Ìž?”ÌV ÌžÌ@”Ì[ ÌžÌE”Ì\ ÌžÌF”Ì] ÌžÌG”Ìb ÌžÌL”Ìc ÌžÌM”Ìd ÌžÌN’”( ÌŸ”) ÌŸ–”( Ì›”. Ì›”/ Ì ”4 Ì ”5 Ì ”8 Ì –”( Ì›”. Ì›”/ Ì¡”5 Ì¡”6 Ì¡”8 Ì¡–”( Ì›”. Ì›”/ Ì¢”> Ì¢$”? Ì¢%”ÌH Ì¢.–”( Ì›”. Ì›”/ Ì£”; Ì£!”< Ì£"”= Ì£#’”$ Ì›”* Ì›‘” Ì¤‘” Ì¤’” Ì” Ì–” Ì§”  Ì§”( Ì§”, Ì§”- Ì§”8 Ì§#–” Ì§”  Ì§”! Ì¨”) Ì¨”* Ì¨”, Ì¨–” Ì§”  Ì§”! Ì©”* Ì©”+ Ì©”4 Ì©$š” Ì§”  Ì§”! Ìª”' Ìª”( Ìª”* Ìª”- Ìª”/ Ìª”0 Ìª ”2 Ìª"’” Ì§” Ì§’” ÌŒ” ÌŒ’” Ì‹
-”  Ì‹’” Ì‹
-” Ì‹””/ ÌŠ”3 ÌŠ”4 ÌŠ”ÌA ÌŠ"’” ÌŠ” ÌŠ’” Ìˆ” Ìˆ’” Ì‰” Ì‰
-’” Ì¶” Ì¶’” Ì·” Ì·’” Ì¶” Ì¶–” Ì·” Ì·” Ìå” Ìå” Ìå” Ìå’” Ì¶” Ì¶Ü ” Ì·” Ì·” Ìæ” Ìæ” Ìæ” Ìæ”! Ìæ”# Ìæ”% Ìæ”' Ìæ”, Ìæ ”. Ìæ"”0 Ìæ$”2 Ìæ&”8 Ìæ,”: Ìæ.”< Ìæ0”> Ìæ2”” Ì¸” Ì¸” Ì¸” Ì¸–” Ì¸” Ì¸” Ì¹” Ì¹” Ì¹” Ì¹˜” Ì¸” Ì¸” Ìº” Ìº” Ìº”& Ìº ”' Ìº!”+ Ìº%–” Ì¸” Ì¸” Ì»” Ì»” Ì»”$ Ì»š” Ì¸” Ì¸” Ì¼” Ì¼” Ì¼” Ì¼”  Ì¼”" Ì¼”$ Ì¼”& Ì¼ ’” Ì¸” Ì¸’” Ì¾” Ì¾–” Ì¾” Ì¾” Ìà	” Ìà” Ìà” Ìà–” Ì¾” Ì¾” Ìá	” Ìá” Ìá” Ìá–” Ì¾” Ì¾” Ìâ	”" Ìâ”# Ìâ”, Ìâ"–” Ì¾” Ì¾” Ìã	” Ìã”  Ìã”" Ìã’” Ì¿
-” Ì¿š” Ì¿
-” Ì¿” ÌÈ” ÌÈ” ÌÈ” ÌÈ”  ÌÈ”" ÌÈ”# ÌÈ”% ÌÈ ”” ÌÀ” ÌÀ” ÌÀ” ÌÀ–” ÌÀ” ÌÀ” ÌÁ” ÌÁ” ÌÁ” ÌÁ–” ÌÀ” ÌÀ” ÌÂ” ÌÂ” ÌÂ”$ ÌÂ"–” ÌÀ” ÌÀ” ÌÃ” ÌÃ” ÌÃ” ÌÃ’” ÌÀ” ÌÀ”” ÌÄ” ÌÄ” ÌÄ” ÌÄ–” ÌÄ” ÌÄ” ÌÅ” ÌÅ” ÌÅ” ÌÅ–” ÌÄ” ÌÄ” ÌÆ” ÌÆ” ÌÆ”$ ÌÆ"’” ÌÄ” ÌÄ’” Ì¿
-” Ì¿’” ÌÊ
-” ÌÊš” ÌÊ
-” ÌÊ” ÌÓ” ÌÓ” ÌÓ” ÌÓ”  ÌÓ”" ÌÓ”# ÌÓ”% ÌÓ ”” ÌË” ÌË” ÌË” ÌË–” ÌË” ÌË” ÌÌ” ÌÌ” ÌÌ” ÌÌ–” ÌË” ÌË” ÌÍ” ÌÍ” ÌÍ”$ ÌÍ"–” ÌË” ÌË” ÌÎ” ÌÎ” ÌÎ” ÌÎ’” ÌË” ÌË”” ÌÏ” ÌÏ” ÌÏ”! ÌÏ–” ÌÏ” ÌÏ” ÌÐ” ÌÐ” ÌÐ” ÌÐ–” ÌÏ” ÌÏ” ÌÑ” ÌÑ” ÌÑ”$ ÌÑ"’” ÌÏ” ÌÏ’” ÌÊ
-” ÌÊ’” ÌÕ
-” ÌÕš” ÌÕ
-” ÌÕ” ÌÞ” ÌÞ” ÌÞ” ÌÞ”  ÌÞ”" ÌÞ”# ÌÞ”% ÌÞ ”” ÌÖ” ÌÖ” ÌÖ” ÌÖ–” ÌÖ” ÌÖ” Ì×” Ì×” Ì×” Ì×–” ÌÖ” ÌÖ” ÌØ” ÌØ” ÌØ”$ ÌØ"–” ÌÖ” ÌÖ” ÌÙ” ÌÙ” ÌÙ” ÌÙ’” ÌÖ” ÌÖ”” ÌÚ” ÌÚ” ÌÚ”. ÌÚ'–” ÌÚ” ÌÚ” ÌÛ” ÌÛ” ÌÛ” ÌÛ–” ÌÚ” ÌÚ” ÌÜ” ÌÜ” ÌÜ”$ ÌÜ"’” ÌÚ” ÌÚ’” ÌÕ
-” ÌÕ’” Ì¾” Ì¾’” Ì¶” Ì¶’” Ì·” Ì·’” Ìè” Ìè’” Ìé” Ìé	’” Ìè” Ìè–” Ìé” Ìé	” Í8” Í8” Í8” Í8’” Ìè” Ìèž” Ìé” Ìé	” Í9” Í9” Í9” Í9” Í9” Í9”! Í9”# Í9”) Í9 ”+ Í9"”, Í9#”. Í9%’” Ìè” Ìè–” Ìé” Ìé	” Í:” Í:”  Í:”) Í: ’” Ìè” Ìè•” Ìé” Ìé	” Í;” Í;” Í;˜” Í<” Í<” Í<” Í<” Í<” Í<” Í<”! Í<”” Í=” Í=” Í=”  Í=‘” Í>’” Ìê” Ìê–” Ìê” Ìê” Ìô	” Ìô” Ìô” Ìô˜” Ìê” Ìê” Ìõ	” Ìõ” Ìõ”- Ìõ#”. Ìõ$”4 Ìõ*’” Ìë
-” Ìë–” Ìë
-” Ìë” Ìì” Ìì” Ìì” Ìì–” Ìë
-” Ìë” Ìí” Ìí” Ìí” Ìí–” Ìë
-” Ìë” Ìî” Ìî” Ìî”% Ìî ”” Ìï
-” Ìï” Ìï” Ìï–” Ìï
-” Ìï” Ìð” Ìð” Ìð” Ìð–” Ìï
-” Ìï” Ìñ” Ìñ” Ìñ”$ Ìñ š” Ìï
-” Ìï” Ìò” Ìò” Ìò” Ìò” Ìò” Ìò”  Ìò”" Ìò’” Ìï
-” Ìï’” Ìê” Ìê’” Ì÷” Ì÷–” Ì÷” Ì÷” Í	” Í” Í” Í˜” Ì÷” Ì÷” Í	” Í” Í”- Í#”. Í$”4 Í*—” Ì÷” Ì÷” Í	” Í” Í” Í”  Íœ” Í
-” Í” Í” Í” Í”! Í”$ Í”& Í ”6 Í0”8 Í2”9 Í3”: Í4’” Í” Í	’” Ìø
-” Ìø–” Ìø
-” Ìø” Ìù” Ìù” Ìù” Ìù–” Ìø
-” Ìø” Ìú” Ìú” Ìú” Ìú–” Ìø
-” Ìø” Ìû” Ìû” Ìû”% Ìû ”” Ìü
-” Ìü” Ìü” Ìü–” Ìü
-” Ìü” Ìý” Ìý” Ìý” Ìý–” Ìü
-” Ìü” Ìþ” Ìþ” Ìþ”$ Ìþ š” Ìü
-” Ìü” Ìÿ” Ìÿ” Ìÿ” Ìÿ” Ìÿ” Ìÿ”  Ìÿ”" Ìÿ’” Ìü
-” Ìü’” Ì÷” Ì÷’” Í” Í–” Í” Í” Í	” Í” Í” Í˜” Í” Í” Í	” Í” Í”- Í#”. Í$”4 Í*—” Í” Í” Í	” Í” Í” Í”  Íœ” Í
-” Í” Í” Í” Í”! Í”$ Í”& Í ”3 Í-”5 Í/”6 Í0”7 Í1’” Í” Í	’” Í
-” Í–” Í
-” Í” Í	” Í	” Í	” Í	–” Í
-” Í” Í
-” Í
-” Í
-” Í
-–” Í
-” Í” Í” Í” Í”% Í ”” Í
-” Í” Í” Í–” Í
-” Í” Í” Í” Í” Í–” Í
-” Í” Í” Í” Í”$ Í š” Í
-” Í” Í” Í” Í” Í” Í” Í”  Í”" Í’” Í
-” Í’” Í” Í’” Í” Í–” Í” Í” Í!	” Í!” Í!” Í!˜” Í” Í” Í"	” Í"” Í"”- Í"#”. Í"$”4 Í"*—” Í” Í” Í#	” Í#” Í#” Í#”  Í#œ” Í$
-” Í$” Í$” Í$” Í$”! Í$”$ Í$”& Í$ ”6 Í$0”8 Í$2”9 Í$3”: Í$4’” Í%” Í%	’” Í
-” Í–” Í
-” Í” Í” Í” Í” Í–” Í
-” Í” Í” Í” Í” Í–” Í
-” Í” Í” Í” Í”% Í ”” Í
-” Í” Í” Í–” Í
-” Í” Í” Í” Í” Í–” Í
-” Í” Í” Í” Í”$ Í š” Í
-” Í” Í” Í” Í” Í” Í” Í”  Í”" Í’” Í
-” Í’” Í” Í’” Í'” Í'–” Í'” Í'” Í2	” Í2” Í2” Í2˜” Í'” Í'” Í3	” Í3” Í3”- Í3#”. Í3$”4 Í3*—” Í'” Í'” Í4	” Í4” Í4” Í4”  Í4–” Í5
-” Í5” Í5” Í5” Í5” Í5’” Í6” Í6	’” Í(
-” Í(–” Í(
-” Í(” Í)” Í)” Í)” Í)–” Í(
-” Í(” Í*” Í*” Í*” Í*–” Í(
-” Í(” Í+” Í+” Í+”% Í+ š” Í(
-” Í(” Í,” Í,” Í,” Í,”  Í,”" Í,”% Í, ”' Í,"”” Í-
-” Í-” Í-” Í-–” Í-
-” Í-” Í.” Í.” Í.” Í.–” Í-
-” Í-” Í/” Í/” Í/”$ Í/ š” Í-
-” Í-” Í0” Í0” Í0” Í0” Í0” Í0”  Í0”" Í0’” Í-
-” Í-’” Í'” Í'’” Ìè” Ìè’” Ìé” Ìé	’” Ìt” Ìt
-‘” ÍCÔrF–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ×‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
- ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  ÌŽ ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ìž ‘”  ÌŸ ‘”  Ì  ‘”  Ì¡ ‘”  Ì¢ ‘”  Ì£ ‘”  Ì¤ ‘”  Ì¥ ‘”  Ì¦ ‘”  Ì§ ‘”  Ì¨ ‘”  Ì© ‘”  Ìª ‘”  Ì« ‘”  Ì¬ ‘”  Ì­ ‘”  Ì® ‘”  Ì¯ ‘”  Ì° ‘”  Ì± ‘”  Ì² ‘”  Ì³ ‘”  Ì´ ‘”  Ìµ ‘”  Ì¶ ‘”  Ì· ‘”  Ì¸ ‘”  Ì¹ ‘”  Ìº ‘”  Ì» ‘”  Ì¼ ‘”  Ì½ ‘”  Ì¾ ‘”  Ì¿ ‘”  ÌÀ ‘”  ÌÁ ‘”  ÌÂ ‘”  ÌÃ ‘”  ÌÄ ‘”  ÌÅ ‘”  ÌÆ ‘”  ÌÇ ‘”  ÌÈ ‘”  ÌÉ ‘”  ÌÊ ‘”  ÌË ‘”  ÌÌ ‘”  ÌÍ ‘”  ÌÎ ‘”  ÌÏ ‘”  ÌÐ ‘”  ÌÑ ‘”  ÌÒ ‘”  ÌÓ ‘”  ÌÔ ‘”  ÌÕ ‘”  ÌÖ ‘”  Ì× ‘”  ÌØ ‘”  ÌÙ ‘”  ÌÚ ‘”  ÌÛ ‘”  ÌÜ ‘”  ÌÝ ‘”  ÌÞ ‘”  Ìß ‘”  Ìà ‘”  Ìá ‘”  Ìâ ‘”  Ìã ‘”  Ìä ‘”  Ìå ‘”  Ìæ ‘”  Ìç ‘”  Ìè ‘”  Ìé ‘”  Ìê ‘”  Ìë ‘”  Ìì ‘”  Ìí ‘”  Ìî ‘”  Ìï ‘”  Ìð ‘”  Ìñ ‘”  Ìò ‘”  Ìó ‘”  Ìô ‘”  Ìõ ‘”  Ìö ‘”  Ì÷ ‘”  Ìø ‘”  Ìù ‘”  Ìú ‘”  Ìû ‘”  Ìü ‘”  Ìý ‘”  Ìþ ‘”  Ìÿ ‘”  Í  ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í	 ‘”  Í
- ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í ‘”  Í  ‘”  Í! ‘”  Í" ‘”  Í# ‘”  Í$ ‘”  Í% ‘”  Í& ‘”  Í' ‘”  Í( ‘”  Í) ‘”  Í* ‘”  Í+ ‘”  Í, ‘”  Í- ‘”  Í. ‘”  Í/ ‘”  Í0 ‘”  Í1 ‘”  Í2 ‘”  Í3 ‘”  Í4 ‘”  Í5 ‘”  Í6 ‘”  Í7 ‘”  Í8 ‘”  Í9 ‘”  Í: ‘”  Í; ‘”  Í< ‘”  Í= ‘”  Í> ‘”  Í? ‘”  Í@ ‘”  ÍA ‘”  ÍB ‘”  ÍC ‘”  ÍD ‘”  ÍE ‘”  ÍF ‘”  ÍG ‘”  ÍH ‘”  ÍI ‘”  ÍJ ‘”  ÍK ‘”  ÍL ‘”  ÍM ‘”  ÍN ‘”  ÍO ‘”  ÍP ‘”  ÍQ ‘”  ÍR ‘”  ÍS ‘”  ÍT ‘”  ÍU ‘”  ÍV ‘”  ÍW ‘”  ÍX ‘”  ÍY ‘”  ÍZ ‘”  Í[ ‘”  Í\ ‘”  Í] ‘”  Í^ ‘”  Í_ ‘”  Í` ‘”  Ía ‘”  Íb ‘”  Íc ‘”  Íd ‘”  Íe ‘”  Íf ‘”  Íg ‘”  Íh ‘”  Íi ‘”  Íj ‘”  Ík ‘”  Íl ‘”  Ím ‘”  Ín ‘”  Ío ‘”  Íp ‘”  Íq ‘”  Ír ‘”  Ís ‘”  Ít ‘”  Íu ‘”  Ív ‘”  Íw ‘”  Íx ‘”  Íy ‘”  Íz ‘”  Í{ ‘”  Í| ‘”  Í} ‘”  Í~ ‘”  Í ‘”  Í€ ‘”  Í ‘”  Í‚ ‘”  Íƒ ‘”  Í„ ‘”  Í… ‘”  Í† ‘”  Í‡ ‘”  Íˆ ‘”  Í‰ ‘”  ÍŠ ‘”  Í‹ ‘”  ÍŒ ‘”  Í ‘”  ÍŽ ‘”  Í ‘”  Í ‘”  Í‘ ‘”  Í’ ‘”  Í“ ‘”  Í” ‘”  Í• ‘”  Í– ‘”  Í— ‘”  Í˜ ‘”  Í™ ‘”  Íš ‘”  Í› ‘”  Íœ ‘”  Í ‘”  Íž ‘”  ÍŸ ‘”  Í  ‘”  Í¡ ‘”  Í¢ ‘”  Í£ ‘”  Í¤ ‘”  Í¥ ‘”  Í¦ ‘”  Í§ ‘”  Í¨ ‘”  Í© ‘”  Íª ‘”  Í« ‘”  Í¬ ‘”  Í­ ‘”  Í® ‘”  Í¯ ‘”  Í° ‘”  Í± ‘”  Í² ‘”  Í³ ‘”  Í´ ‘”  Íµ ‘”  Í¶ ‘”  Í· ‘”  Í¸ ‘”  Í¹ ‘”  Íº ‘”  Í» ‘”  Í¼ ‘”  Í½ ‘”  Í¾ ‘”  Í¿ ‘”  ÍÀ ‘”  ÍÁ ‘”  ÍÂ ‘”  ÍÃ ‘”  ÍÄ ‘”  ÍÅ ‘”  ÍÆ ‘”  ÍÇ ‘”  ÍÈ ‘”  ÍÉ ‘”  ÍÊ ‘”  ÍË ‘”  ÍÌ ‘”  ÍÍ ‘”  ÍÎ ‘”  ÍÏ ‘”  ÍÐ ‘”  ÍÑ ‘”  ÍÒ ‘”  ÍÓ ‘”  ÍÔ ‘”  ÍÕ ‘”  ÍÖ ÔrG’§missing¦pluginÃ¦genAbcÂÔ  ÔrH”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache‘ÔrI•¤type¥start£endªspecifiers¦source±ImportDeclarationÌ€Ì¢‘ÔrJ”¤type¥start£end¥local¶ImportDefaultSpecifierÌ‡ÌÔrK”¤type¥start£end¤nameªIdentifierÌ‡Ì¦routerÔrL•¤type¥start£end¥value£raw§LiteralÌ“Ì¡¬@ohos.router®'@ohos.router'

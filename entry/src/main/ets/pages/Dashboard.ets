@@ -28,13 +28,45 @@ struct Dashboard {
   @State private todayFocusTime: number = 0
   @State private sessionsCount: number = 0
   @State private currentStreak: number = 0
+  @State private titleScale: number = 0.8
+  @State private titleOpacity: number = 0
+  @State private cardScale: number = 0.8
+  @State private cardOpacity: number = 0
+  @State private itemScale: number = 0.8
+  @State private itemOpacity: number = 0
+  @State private buttonScale: number = 0.8
+  @State private buttonOpacity: number = 0
 
   private timeService: TimeManagementService = TimeManagementService.getInstance();
+
+  // 页面入场动画 - 只在页面加载时触发
+  private animateIn() {
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+      this.titleScale = 1
+      this.titleOpacity = 1
+    })
+    
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
+      this.cardScale = 1
+      this.cardOpacity = 1
+    })
+    
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
+      this.itemScale = 1
+      this.itemOpacity = 1
+    })
+    
+    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 400 }, () => {
+      this.buttonScale = 1
+      this.buttonOpacity = 1
+    })
+  }
 
   async aboutToAppear() {
     await this.timeService.init();
     this.loadStatistics();
     this.startTimerUpdate();
+    this.animateIn();
   }
 
   loadStatistics(): void {
@@ -58,21 +90,22 @@ struct Dashboard {
       // 统一紫色背景，覆盖整个顶部包括状态栏
       Column() {
         Row() {
-          Image($r('app.media.ic_back'))
-            .width(24)
-            .height(24)
-            .fillColor(Color.White)
-            .onClick(() => {
-              router.back();
-            })
-          
-          Text('仪表盘')
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
-            .fontColor(Color.White)
-            .layoutWeight(1)
-            .textAlign(TextAlign.Center)
-        }
+              Image($r('app.media.ic_back'))
+                .width(24)
+                .height(24)
+                .fillColor(Color.White)
+                .onClick(() => {
+                  router.back();
+                })
+              
+              Text('仪表盘')
+                .fontSize(20)
+                .fontWeight(FontWeight.Bold)
+                .fontColor(Color.White)
+                .layoutWeight(1)
+                .textAlign(TextAlign.Center)
+                .scale({ x: this.titleScale, y: this.titleScale }).opacity(this.titleOpacity)
+            }
         .width('100%')
         .height(56)
         .padding({ left: 16, right: 16 })
@@ -91,7 +124,7 @@ struct Dashboard {
               timeLeft: this.timeLeft,
               isRunning: this.isRunning,
               currentMode: this.currentMode
-            })
+            }).scale({ x: this.cardScale, y: this.cardScale }).opacity(this.cardOpacity)
 
             Row({ space: 16 }) {
               Button('Start')
@@ -128,6 +161,7 @@ struct Dashboard {
               .fontSize(18)
               .fontWeight(FontWeight.Bold)
               .margin({ bottom: 12 })
+              .scale({ x: this.itemScale, y: this.itemScale }).opacity(this.itemOpacity)
 
             Row() {
               Column() {
@@ -140,6 +174,7 @@ struct Dashboard {
               }
               .layoutWeight(1)
               .alignItems(HorizontalAlign.Center)
+              .scale({ x: this.itemScale, y: this.itemScale }).opacity(this.itemOpacity)
 
               Column() {
                 Text('Today')
@@ -151,6 +186,7 @@ struct Dashboard {
               }
               .layoutWeight(1)
               .alignItems(HorizontalAlign.Center)
+              .scale({ x: this.itemScale, y: this.itemScale }).opacity(this.itemOpacity)
 
               Column() {
                 Text('Sessions')
@@ -162,6 +198,7 @@ struct Dashboard {
               }
               .layoutWeight(1)
               .alignItems(HorizontalAlign.Center)
+              .scale({ x: this.itemScale, y: this.itemScale }).opacity(this.itemOpacity)
 
               Column() {
                 Text('Streak')
@@ -173,6 +210,7 @@ struct Dashboard {
               }
               .layoutWeight(1)
               .alignItems(HorizontalAlign.Center)
+              .scale({ x: this.itemScale, y: this.itemScale }).opacity(this.itemOpacity)
             }
           }
           .width('100%')
@@ -188,18 +226,21 @@ struct Dashboard {
               .onClick(() => {
                   router.pushUrl({ url: 'pages/Tasks' });
                 })
+              .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
 
             Button('Calendar')
               .layoutWeight(1)
               .onClick(() => {
                   router.pushUrl({ url: 'pages/Calendar' });
                 })
+              .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
 
             Button('Settings')
               .layoutWeight(1)
               .onClick(() => {
                   router.pushUrl({ url: 'pages/Settings' });
                 })
+              .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
           }
           .width('100%')
           .padding({ left: 16, right: 16, top: 16, bottom: 16 })

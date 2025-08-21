@@ -50,6 +50,15 @@ struct PomodoroPage {
   ];
   @State newTaskTitle: string = '';
 
+  @State titleScale: number = 0.8
+  @State titleOpacity: number = 0
+  @State cardScale: number = 0.8
+  @State cardOpacity: number = 0
+  @State timerScale: number = 0.8
+  @State timerOpacity: number = 0
+  @State taskScale: number = 0.8
+  @State taskOpacity: number = 0
+
   private timer: number = 0;
 
   aboutToAppear() {
