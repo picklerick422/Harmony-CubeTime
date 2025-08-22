@@ -1,4 +1,4 @@
-import { NavigationManager } from '../utils/NavigationManager';
+import { transitionManager } from '../utils/PageTransitionManager';
 import CubeStateManager from '../services/CubeStateManager';
 import NotificationService from '../services/NotificationService';
 import { Cube3DView } from '../components/Cube3DView';
@@ -48,7 +48,7 @@ struct CubeDetail {
 
   onPageShow() {
     // 页面重新显示时重置可见性和动画
-    this.resetVisibility()
+    //this.resetVisibility()
     this.animateIn()
   }
 
@@ -154,12 +154,14 @@ struct CubeDetail {
       Column() {
         Row() {
           Image($r('app.media.ic_back'))
-            .width(24)
-            .height(24)
-            .fillColor(Color.White)
-            .onClick(() => {
-              NavigationManager.getInstance().navigateBack();
-            })
+              .width(24)
+              .height(24)
+              .fillColor(Color.White)
+              .onClick(() => {
+                transitionManager.navigateTo('').catch((err: Error) => {
+                  console.error('Navigation failed:', err)
+                })
+              })
           
           Text('魔方详情')
             .fontSize(20)

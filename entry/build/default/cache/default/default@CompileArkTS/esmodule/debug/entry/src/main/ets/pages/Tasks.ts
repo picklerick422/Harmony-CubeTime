@@ -4,8 +4,9 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
 interface Tasks_Params {
     state?: TasksState;
 }
-import { NavigationManager, NavigationHelper } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import { NavigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 import type { PageAnimationState } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import { transitionManager } from "@bundle:com.example.cubetime/entry/ets/utils/PageTransitionManager";
 interface Task {
     id: string;
     title: string;
@@ -115,7 +116,21 @@ class Tasks extends ViewPU {
             Image.width(24);
             Image.height(24);
             Image.onClick(() => {
-                NavigationHelper.navigateBack(this.state.navigationManager);
+                // 返回首页的退出动画
+                Context.animateToImmediately({ duration: 300, curve: Curve.EaseIn }, () => {
+                    this.state.animationState.contentScale = 0.95;
+                    this.state.animationState.contentOpacity = 0;
+                    this.state.animationState.titleTranslateY = -20;
+                    this.state.animationState.titleOpacity = 0;
+                    this.state.animationState.buttonScale = 0.8;
+                    this.state.animationState.buttonOpacity = 0;
+                    this.state.animationState.listOpacity = 0;
+                });
+                setTimeout(() => {
+                    transitionManager.navigateTo('pages/Index').catch((err: Error) => {
+                        console.error('Navigation failed:', err);
+                    });
+                }, 300);
             });
         }, Image);
         // 标题区域

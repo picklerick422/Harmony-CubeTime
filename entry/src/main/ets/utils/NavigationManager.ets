@@ -1,5 +1,5 @@
-import router from '@ohos.router'
-import { BusinessError } from '@kit.BasicServicesKit'
+import { router } from '@kit.ArkUI'
+
 
 interface AnimationConfig {
   duration: number
@@ -167,7 +167,7 @@ export class NavigationManager {
         url: `pages/${page}`
       }).then(() => {
         console.info(`NavigationManager: Successfully navigated to ${page}`)
-      }).catch((err: BusinessError) => {
+      }).catch((err: Error) => {
         console.error(`NavigationManager navigateTo failed: ${JSON.stringify(err)}`)
       })
     })
@@ -180,7 +180,7 @@ export class NavigationManager {
         url: `pages/${page}`
       }).then(() => {
         console.info(`NavigationManager: Successfully replaced to ${page}`)
-      }).catch((err: BusinessError) => {
+      }).catch((err: Error) => {
         console.error(`NavigationManager replaceTo failed: ${JSON.stringify(err)}`)
       })
     })
@@ -205,7 +205,7 @@ export class NavigationHelper {
           url: `pages/${page}`
         }).then(() => {
           console.info(`NavigationHelper: Successfully navigated to ${page}`)
-        }).catch((err: BusinessError) => {
+        }).catch((err: Error) => {
           console.error(`NavigationHelper navigateTo failed: ${JSON.stringify(err)}`)
         })
       }, 300)

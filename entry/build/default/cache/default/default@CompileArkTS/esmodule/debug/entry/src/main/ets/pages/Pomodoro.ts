@@ -22,7 +22,7 @@ interface PomodoroPage_Params {
     taskOpacity?: number;
     timer?: number;
 }
-import router from "@ohos:router";
+import { transitionManager } from "@bundle:com.example.cubetime/entry/ets/utils/PageTransitionManager";
 class OptionItem {
     value: string;
     label: string;
@@ -309,11 +309,13 @@ class PomodoroPage extends ViewPU {
     private timer: number;
     aboutToAppear() {
         this.resetVisibility();
-        this.animateIn();
+        setTimeout(() => {
+            this.animateIn();
+        }, 50);
         this.startTimer();
     }
     onPageShow() {
-        this.resetVisibility();
+        //this.resetVisibility();
         this.animateIn();
     }
     onBackPress(): boolean | void {
@@ -431,23 +433,59 @@ class PomodoroPage extends ViewPU {
             }
         }
     }
-    private animateOut(): void {
-        Context.animateToImmediately({
-            duration: 300,
-            curve: Curve.Friction,
-            onFinish: () => {
-                router.back();
-            }
-        }, () => {
-            this.titleOpacity = 0;
-            this.titleScale = 0.3;
-            this.cardOpacity = 0;
-            this.cardScale = 0.3;
-            this.timerOpacity = 0;
-            this.timerScale = 0.3;
-            this.taskOpacity = 0;
-            this.taskScale = 0.3;
-        });
+    private animateOut(targetUrl?: string): void {
+        if (targetUrl) {
+            // 分层退出动画：标题→计时器→任务列表
+            Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                this.titleScale = 0.9;
+                this.titleOpacity = 0;
+            });
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.cardScale = 0.9;
+                    this.cardOpacity = 0;
+                    this.timerScale = 0.9;
+                    this.timerOpacity = 0;
+                });
+            }, 100);
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.taskScale = 0.9;
+                    this.taskOpacity = 0;
+                });
+            }, 200);
+            setTimeout(() => {
+                transitionManager.navigateTo(targetUrl).catch((err: Error) => {
+                    console.error('Navigation failed:', err);
+                });
+            }, 350);
+        }
+        else {
+            // 返回首页的退出动画
+            Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                this.titleScale = 0.9;
+                this.titleOpacity = 0;
+            });
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.cardScale = 0.9;
+                    this.cardOpacity = 0;
+                    this.timerScale = 0.9;
+                    this.timerOpacity = 0;
+                });
+            }, 100);
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.taskScale = 0.9;
+                    this.taskOpacity = 0;
+                });
+            }, 200);
+            setTimeout(() => {
+                transitionManager.navigateTo('pages/Index').catch((err: Error) => {
+                    console.error('Navigation failed:', err);
+                });
+            }, 350);
+        }
     }
     private animateIn(): void {
         Context.animateToImmediately({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {

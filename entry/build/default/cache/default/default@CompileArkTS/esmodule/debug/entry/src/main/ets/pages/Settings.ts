@@ -1,9 +1,6 @@
 if (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
-interface Settings_Params {
-    state?: SettingsState;
-}
 interface SettingsPage_Params {
     buttonOpacity?: number;
     buttonScale?: number;
@@ -25,9 +22,8 @@ interface SettingsPage_Params {
     bottomNavOpacity?: number;
     settingsItems?: SettingsItem[];
 }
-import router from "@ohos:router";
-import { NavigationManager, NavigationHelper } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
-import type { PageAnimationState } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import { transitionManager } from "@bundle:com.example.cubetime/entry/ets/utils/PageTransitionManager";
+import type { NavigationManager, PageAnimationState } from '../utils/NavigationManager';
 class OptionItem {
     value: string;
     label: string;
@@ -334,15 +330,18 @@ class SettingsPage extends ViewPU {
         Context.animateToImmediately({
             duration: 400,
             curve: Curve.EaseOut,
-            delay: 100 + this.settingsItems.length * 100 + 200
+            delay: 200
         }, () => {
             this.bottomNavScale = 1;
             this.bottomNavOpacity = 1;
         });
     }
     aboutToAppear(): void {
-        // 首次进入时直接执行动画，不重置状态
-        this.animateIn();
+        // 首次进入时重置状态并执行动画
+        this.resetVisibility();
+        setTimeout(() => {
+            this.animateIn();
+        }, 50);
         // 注册系统返回事件监听
         this.registerBackPressListener();
     }
@@ -352,7 +351,9 @@ class SettingsPage extends ViewPU {
     onPageShow(): void {
         // 页面重新显示时重置可见性和动画
         this.resetVisibility();
-        this.animateIn();
+        setTimeout(() => {
+            this.animateIn();
+        }, 50);
     }
     onBackPress(): boolean | void {
         // 系统返回时执行退出动画
@@ -360,47 +361,75 @@ class SettingsPage extends ViewPU {
         return true; // 阻止默认返回行为，由动画完成后处理
     }
     private animateOut(targetUrl?: string): void {
-        // 反向依次消失动画
-        // 底部导航先消失
-        Context.animateToImmediately({ duration: 200, curve: Curve.Friction }, () => {
-            this.bottomNavOpacity = 0;
-            this.bottomNavScale = 0.7;
-        });
-        // 关于应用卡片消失
-        Context.animateToImmediately({ duration: 200, curve: Curve.Friction, delay: 50 }, () => {
-            this.aboutOpacity = 0;
-            this.aboutScale = 0.7;
-        });
-        // 设置项依次消失（反向顺序）
-        this.settingsItems.forEach((_, index) => {
-            Context.animateToImmediately({
-                duration: 200,
-                curve: Curve.Friction,
-                delay: 100 + (this.settingsItems.length - 1 - index) * 50
-            }, () => {
-                this.itemOpacities[index] = 0;
-                this.itemScales[index] = 0.7;
+        if (targetUrl) {
+            // 分层退出动画：标题→设置项→底部内容→导航栏
+            Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                this.titleScale = 0.9;
+                this.titleOpacity = 0;
             });
-        });
-        // 标题最后消失
-        Context.animateToImmediately({
-            duration: 200,
-            curve: Curve.Friction,
-            delay: 200 + this.settingsItems.length * 50,
-            onFinish: () => {
-                if (targetUrl) {
-                    router.replaceUrl({
-                        url: targetUrl
+            // 设置项逐个消失（交错动画）
+            this.settingsItems.forEach((_, index) => {
+                setTimeout(() => {
+                    Context.animateToImmediately({ duration: 150, curve: Curve.EaseIn }, () => {
+                        this.itemScales[index] = 0.85;
+                        this.itemOpacities[index] = 0;
                     });
-                }
-                else {
-                    router.back();
-                }
-            }
-        }, () => {
-            this.titleOpacity = 0;
-            this.titleScale = 0.7;
-        });
+                }, 30 * index); // 更密集的延迟
+            });
+            // 关于应用卡片消失
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.aboutScale = 0.85;
+                    this.aboutOpacity = 0;
+                });
+            }, 150);
+            // 底部导航栏最后消失（模拟边框下沉）
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 250, curve: Curve.EaseIn }, () => {
+                    this.bottomNavScale = 0.8;
+                    this.bottomNavOpacity = 0;
+                });
+            }, 50);
+            setTimeout(() => {
+                transitionManager.navigateTo(targetUrl).catch((err: Error) => {
+                    console.error('Navigation failed:', err);
+                });
+            }, 350);
+        }
+        else {
+            // 返回首页的退出动画
+            Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                this.titleScale = 0.9;
+                this.titleOpacity = 0;
+            });
+            // 设置项逐个消失
+            this.settingsItems.forEach((_, index) => {
+                setTimeout(() => {
+                    Context.animateToImmediately({ duration: 150, curve: Curve.EaseIn }, () => {
+                        this.itemScales[index] = 0.85;
+                        this.itemOpacities[index] = 0;
+                    });
+                }, 30 * index);
+            });
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.aboutScale = 0.85;
+                    this.aboutOpacity = 0;
+                });
+            }, 150);
+            // 底部导航栏消失
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 250, curve: Curve.EaseIn }, () => {
+                    this.bottomNavScale = 0.8;
+                    this.bottomNavOpacity = 0;
+                });
+            }, 50);
+            setTimeout(() => {
+                transitionManager.navigateTo('pages/Index').catch((err: Error) => {
+                    console.error('Navigation failed:', err);
+                });
+            }, 350);
+        }
     }
     private registerBackPressListener(): void {
         // 注册系统返回事件
@@ -834,390 +863,5 @@ interface SettingsState {
     breakDuration: number;
     navigationManager?: NavigationManager;
     animationState: PageAnimationState;
-}
-class Settings extends ViewPU {
-    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
-        super(parent, __localStorage, elmtId, extraInfo);
-        if (typeof paramsLambda === "function") {
-            this.paramsGenerator_ = paramsLambda;
-        }
-        this.__state = new ObservedPropertyObjectPU({
-            notificationsEnabled: true,
-            soundEnabled: true,
-            vibrationEnabled: true,
-            workDuration: 25,
-            breakDuration: 5,
-            animationState: {
-                contentScale: 0.9,
-                contentOpacity: 0,
-                titleTranslateY: -20,
-                titleOpacity: 0,
-                buttonScale: 0.8,
-                buttonOpacity: 0,
-                listOpacity: 0,
-                calendarOpacity: 0,
-                sectionOpacity: 0
-            }
-        }, this, "state");
-        this.setInitiallyProvidedValue(params);
-        this.finalizeConstruction();
-    }
-    setInitiallyProvidedValue(params: Settings_Params) {
-        if (params.state !== undefined) {
-            this.state = params.state;
-        }
-    }
-    updateStateVars(params: Settings_Params) {
-    }
-    purgeVariableDependenciesOnElmtId(rmElmtId) {
-        this.__state.purgeDependencyOnElmtId(rmElmtId);
-    }
-    aboutToBeDeleted() {
-        this.__state.aboutToBeDeleted();
-        SubscriberManager.Get().delete(this.id__());
-        this.aboutToBeDeletedInternal();
-    }
-    private __state: ObservedPropertyObjectPU<SettingsState>;
-    get state() {
-        return this.__state.get();
-    }
-    set state(newValue: SettingsState) {
-        this.__state.set(newValue);
-    }
-    aboutToAppear() {
-        const navigationManager = NavigationManager.getInstance();
-        this.state.navigationManager = navigationManager;
-        this.state.animationState = navigationManager.getInitialState();
-        // 页面进入动画
-        setTimeout(() => {
-            navigationManager.animateIn();
-        }, 100);
-    }
-    initialRender() {
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.width('100%');
-            Column.height('100%');
-            Column.backgroundColor('#F5F7FA');
-            Column.scale({ x: this.state.animationState.contentScale, y: this.state.animationState.contentScale });
-            Column.opacity(this.state.animationState.contentOpacity);
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 标题区域
-            Row.create();
-            // 标题区域
-            Row.width('100%');
-            // 标题区域
-            Row.padding({ left: 20, right: 20, top: 60, bottom: 20 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('设置');
-            Text.fontSize(28);
-            Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#2C3E50');
-            Text.scale({ x: this.state.animationState.titleOpacity, y: this.state.animationState.titleOpacity });
-            Text.opacity(this.state.animationState.titleOpacity);
-            Text.translate({ y: this.state.animationState.titleTranslateY });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Blank.create();
-        }, Blank);
-        Blank.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.width(24);
-            Image.height(24);
-            Image.onClick(() => {
-                NavigationHelper.navigateBack(this.state.navigationManager);
-            });
-        }, Image);
-        // 标题区域
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 设置内容区域
-            Scroll.create();
-            // 设置内容区域
-            Scroll.layoutWeight(1);
-        }, Scroll);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.width('100%');
-            Column.padding({ bottom: 20 });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 通知设置
-            Column.create();
-            // 通知设置
-            Column.width('100%');
-            // 通知设置
-            Column.padding(20);
-            // 通知设置
-            Column.backgroundColor('#FFFFFF');
-            // 通知设置
-            Column.borderRadius(16);
-            // 通知设置
-            Column.margin({ left: 20, right: 20, bottom: 16 });
-            // 通知设置
-            Column.scale({ x: this.state.animationState.sectionScale, y: this.state.animationState.sectionScale });
-            // 通知设置
-            Column.opacity(this.state.animationState.sectionOpacity);
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('通知设置');
-            Text.fontSize(18);
-            Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#2C3E50');
-            Text.margin({ bottom: 16 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.width('100%');
-            Row.padding({ bottom: 12 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('启用通知');
-            Text.fontSize(16);
-            Text.fontColor('#2C3E50');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Toggle.create({ type: ToggleType.Switch, isOn: this.state.notificationsEnabled });
-            Toggle.onChange((value: boolean) => {
-                this.state.notificationsEnabled = value;
-            });
-        }, Toggle);
-        Toggle.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.width('100%');
-            Row.padding({ bottom: 12 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('声音提醒');
-            Text.fontSize(16);
-            Text.fontColor('#2C3E50');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Toggle.create({ type: ToggleType.Switch, isOn: this.state.soundEnabled });
-            Toggle.onChange((value: boolean) => {
-                this.state.soundEnabled = value;
-            });
-        }, Toggle);
-        Toggle.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.width('100%');
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('振动提醒');
-            Text.fontSize(16);
-            Text.fontColor('#2C3E50');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Toggle.create({ type: ToggleType.Switch, isOn: this.state.vibrationEnabled });
-            Toggle.onChange((value: boolean) => {
-                this.state.vibrationEnabled = value;
-            });
-        }, Toggle);
-        Toggle.pop();
-        Row.pop();
-        // 通知设置
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 时间设置
-            Column.create();
-            // 时间设置
-            Column.width('100%');
-            // 时间设置
-            Column.padding(20);
-            // 时间设置
-            Column.backgroundColor('#FFFFFF');
-            // 时间设置
-            Column.borderRadius(16);
-            // 时间设置
-            Column.margin({ left: 20, right: 20, bottom: 16 });
-            // 时间设置
-            Column.scale({ x: this.state.animationState.sectionScale, y: this.state.animationState.sectionScale });
-            // 时间设置
-            Column.opacity(this.state.animationState.sectionOpacity);
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('时间设置');
-            Text.fontSize(18);
-            Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#2C3E50');
-            Text.margin({ bottom: 16 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.width('100%');
-            Row.padding({ bottom: 12 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('工作时间（分钟）');
-            Text.fontSize(16);
-            Text.fontColor('#2C3E50');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(this.state.workDuration.toString());
-            Text.fontSize(16);
-            Text.fontColor('#7F8C8D');
-        }, Text);
-        Text.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.width('100%');
-            Row.padding({ bottom: 12 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('休息时间（分钟）');
-            Text.fontSize(16);
-            Text.fontColor('#2C3E50');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(this.state.breakDuration.toString());
-            Text.fontSize(16);
-            Text.fontColor('#7F8C8D');
-        }, Text);
-        Text.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Slider.create({
-                value: this.state.workDuration,
-                min: 15,
-                max: 60,
-                step: 5
-            });
-            Slider.width('100%');
-            Slider.onChange((value: number) => {
-                this.state.workDuration = value;
-            });
-        }, Slider);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Slider.create({
-                value: this.state.breakDuration,
-                min: 5,
-                max: 30,
-                step: 5
-            });
-            Slider.width('100%');
-            Slider.onChange((value: number) => {
-                this.state.breakDuration = value;
-            });
-        }, Slider);
-        // 时间设置
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 关于应用
-            Column.create();
-            // 关于应用
-            Column.width('100%');
-            // 关于应用
-            Column.padding(20);
-            // 关于应用
-            Column.backgroundColor('#FFFFFF');
-            // 关于应用
-            Column.borderRadius(16);
-            // 关于应用
-            Column.margin({ left: 20, right: 20 });
-            // 关于应用
-            Column.scale({ x: this.state.animationState.sectionScale, y: this.state.animationState.sectionScale });
-            // 关于应用
-            Column.opacity(this.state.animationState.sectionOpacity);
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('关于应用');
-            Text.fontSize(18);
-            Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#2C3E50');
-            Text.margin({ bottom: 16 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.width('100%');
-            Row.padding({ bottom: 12 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('版本');
-            Text.fontSize(16);
-            Text.fontColor('#2C3E50');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('1.0.0');
-            Text.fontSize(16);
-            Text.fontColor('#7F8C8D');
-        }, Text);
-        Text.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.width('100%');
-            Row.padding({ bottom: 12 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('开发者');
-            Text.fontSize(16);
-            Text.fontColor('#2C3E50');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('鸿蒙团队');
-            Text.fontSize(16);
-            Text.fontColor('#7F8C8D');
-        }, Text);
-        Text.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Button.createWithLabel('重置所有设置');
-            Button.width('100%');
-            Button.height(48);
-            Button.backgroundColor('#E74C3C');
-            Button.fontColor('#FFFFFF');
-            Button.fontSize(16);
-            Button.fontWeight(FontWeight.Medium);
-            Button.borderRadius(24);
-            Button.onClick(() => {
-                this.resetSettings();
-            });
-            Button.scale({ x: this.state.animationState.buttonScale, y: this.state.animationState.buttonScale });
-            Button.opacity(this.state.animationState.buttonOpacity);
-        }, Button);
-        Button.pop();
-        // 关于应用
-        Column.pop();
-        Column.pop();
-        // 设置内容区域
-        Scroll.pop();
-        Column.pop();
-    }
-    private resetSettings() {
-        this.state.notificationsEnabled = true;
-        this.state.soundEnabled = true;
-        this.state.vibrationEnabled = true;
-        this.state.workDuration = 25;
-        this.state.breakDuration = 5;
-    }
-    rerender() {
-        this.updateDirtyElements();
-    }
 }
 registerNamedRoute(() => new SettingsPage(undefined, {}), "", { bundleName: "com.example.cubetime", moduleName: "entry", pagePath: "pages/Settings", pageFullPath: "entry/src/main/ets/pages/Settings", integratedHsp: "false", moduleType: "followWithHap" });

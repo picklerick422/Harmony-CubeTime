@@ -21,7 +21,7 @@ interface CubeDetail_Params {
     accelerometerData?: Array<number>;
     gyroscopeData?: Array<number>;
 }
-import { NavigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import { transitionManager } from "@bundle:com.example.cubetime/entry/ets/utils/PageTransitionManager";
 import CubeStateManager from "@bundle:com.example.cubetime/entry/ets/services/CubeStateManager";
 import NotificationService from "@bundle:com.example.cubetime/entry/ets/services/NotificationService";
 import { Cube3DView } from "@bundle:com.example.cubetime/entry/ets/components/Cube3DView";
@@ -279,7 +279,7 @@ class CubeDetail extends ViewPU {
     }
     onPageShow() {
         // 页面重新显示时重置可见性和动画
-        this.resetVisibility();
+        //this.resetVisibility()
         this.animateIn();
     }
     aboutToDisappear() {
@@ -396,7 +396,9 @@ class CubeDetail extends ViewPU {
             Image.height(24);
             Image.fillColor(Color.White);
             Image.onClick(() => {
-                NavigationManager.getInstance().navigateBack();
+                transitionManager.navigateTo('').catch((err: Error) => {
+                    console.error('Navigation failed:', err);
+                });
             });
         }, Image);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -453,7 +455,7 @@ class CubeDetail extends ViewPU {
                         autoRotate: this.autoRotate,
                         cubeSize: 120,
                         showLabels: true
-                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/CubeDetail.ets", line: 194, col: 13 });
+                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/CubeDetail.ets", line: 196, col: 13 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {

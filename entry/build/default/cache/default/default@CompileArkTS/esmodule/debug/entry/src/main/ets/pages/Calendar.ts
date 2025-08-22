@@ -12,7 +12,7 @@ interface CalendarPage_Params {
     eventsOpacity?: number;
     eventsScale?: number;
 }
-import router from "@ohos:router";
+import { transitionManager } from "@bundle:com.example.cubetime/entry/ets/utils/PageTransitionManager";
 interface CalendarEvent {
     id: string;
     title: string;
@@ -31,13 +31,15 @@ class CalendarPage extends ViewPU {
             { id: '3', title: '产品演示', date: new Date(Date.now() + 172800000), completed: false }
         ], this, "events");
         this.__selectedDate = new ObservedPropertyObjectPU(new Date(), this, "selectedDate");
-        this.__currentMonth = new ObservedPropertyObjectPU(new Date(), this, "currentMonth");
-        this.__titleOpacity = new ObservedPropertySimplePU(1, this, "titleOpacity");
-        this.__titleScale = new ObservedPropertySimplePU(1, this, "titleScale");
-        this.__calendarOpacity = new ObservedPropertySimplePU(1, this, "calendarOpacity");
-        this.__calendarScale = new ObservedPropertySimplePU(1, this, "calendarScale");
-        this.__eventsOpacity = new ObservedPropertySimplePU(1, this, "eventsOpacity");
-        this.__eventsScale = new ObservedPropertySimplePU(1, this, "eventsScale");
+        this.__currentMonth = new ObservedPropertyObjectPU(new Date()
+        // 与设置界面一致的动画状态变量
+        , this, "currentMonth");
+        this.__titleOpacity = new ObservedPropertySimplePU(0, this, "titleOpacity");
+        this.__titleScale = new ObservedPropertySimplePU(0.8, this, "titleScale");
+        this.__calendarOpacity = new ObservedPropertySimplePU(0, this, "calendarOpacity");
+        this.__calendarScale = new ObservedPropertySimplePU(0.8, this, "calendarScale");
+        this.__eventsOpacity = new ObservedPropertySimplePU(0, this, "eventsOpacity");
+        this.__eventsScale = new ObservedPropertySimplePU(0.8, this, "eventsScale");
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
     }
@@ -117,6 +119,7 @@ class CalendarPage extends ViewPU {
     set currentMonth(newValue: Date) {
         this.__currentMonth.set(newValue);
     }
+    // 与设置界面一致的动画状态变量
     private __titleOpacity: ObservedPropertySimplePU<number>;
     get titleOpacity() {
         return this.__titleOpacity.get();
@@ -160,7 +163,115 @@ class CalendarPage extends ViewPU {
         this.__eventsScale.set(newValue);
     }
     aboutToAppear() {
-        // 页面初始化
+        // 首次进入时重置状态
+        this.resetVisibility();
+        // 执行入场动画，添加延迟确保状态重置完成
+        setTimeout(() => {
+            this.animateIn();
+        }, 50);
+        // 注册系统返回事件监听
+        this.registerBackPressListener();
+    }
+    onPageShow(): void {
+        // 页面重新显示时重置可见性和动画
+        //this.resetVisibility();
+        this.animateIn();
+    }
+    onBackPress(): boolean | void {
+        // 系统返回时执行退出动画
+        this.animateOut();
+        return true; // 阻止默认返回行为，由动画完成后处理
+    }
+    private registerBackPressListener(): void {
+        // HarmonyOS会自动调用onBackPress方法
+    }
+    private resetVisibility(): void {
+        // 重置为初始隐藏状态，用于入场动画
+        this.titleScale = 0.8;
+        this.titleOpacity = 0;
+        this.calendarScale = 0.8;
+        this.calendarOpacity = 0;
+        this.eventsScale = 0.8;
+        this.eventsOpacity = 0;
+    }
+    private animateIn(): void {
+        // 标题动画 - 第一个出现
+        Context.animateToImmediately({
+            duration: 400,
+            curve: Curve.EaseOut,
+            delay: 100
+        }, () => {
+            this.titleScale = 1;
+            this.titleOpacity = 1;
+        });
+        // 日历网格动画 - 第二个出现
+        Context.animateToImmediately({
+            duration: 400,
+            curve: Curve.EaseOut,
+            delay: 200
+        }, () => {
+            this.calendarScale = 1;
+            this.calendarOpacity = 1;
+        });
+        // 事件列表动画 - 最后一个出现
+        Context.animateToImmediately({
+            duration: 400,
+            curve: Curve.EaseOut,
+            delay: 300
+        }, () => {
+            this.eventsScale = 1;
+            this.eventsOpacity = 1;
+        });
+    }
+    private animateOut(targetUrl?: string): void {
+        if (targetUrl) {
+            // 分层退出动画：标题→日历网格→事件列表
+            Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                this.titleScale = 0.9;
+                this.titleOpacity = 0;
+            });
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.calendarScale = 0.9;
+                    this.calendarOpacity = 0;
+                });
+            }, 100);
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.eventsScale = 0.9;
+                    this.eventsOpacity = 0;
+                });
+            }, 200);
+            setTimeout(() => {
+                transitionManager.navigateTo(targetUrl).catch((err: Error) => {
+                    console.error('Navigation failed:', err);
+                });
+            }, 350);
+        }
+        else {
+            // 返回首页的退出动画
+            Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                this.titleScale = 0.9;
+                this.titleOpacity = 0;
+            });
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.calendarScale = 0.9;
+                    this.calendarOpacity = 0;
+                });
+            }, 100);
+            setTimeout(() => {
+                Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                    this.eventsScale = 0.9;
+                    this.eventsOpacity = 0;
+                });
+            }, 200);
+            setTimeout(() => {
+                transitionManager.navigateTo('pages/Index').catch((err: Error) => {
+                    console.error('Navigation failed:', err);
+                });
+            }, 350);
+        }
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
@@ -170,22 +281,22 @@ class CalendarPage extends ViewPU {
             Column.backgroundColor('#F3F4F6');
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 统一标题栏设计
+            // 顶部标题栏 - 与状态栏融合
+            Column.create();
+            // 顶部标题栏 - 与状态栏融合
+            Column.width('100%');
+            // 顶部标题栏 - 与状态栏融合
+            Column.backgroundColor('#6366F1');
+            // 顶部标题栏 - 与状态栏融合
+            Column.expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP]);
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            // 统一标题栏设计
             Row.width('100%');
-            // 统一标题栏设计
             Row.height(56);
-            // 统一标题栏设计
             Row.padding({ left: 16, right: 16 });
-            // 统一标题栏设计
-            Row.backgroundColor('#6366F1');
-            // 统一标题栏设计
             Row.justifyContent(FlexAlign.SpaceBetween);
-            // 统一标题栏设计
             Row.alignItems(VerticalAlign.Center);
-            // 统一标题栏设计
-            Row.expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP]);
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('日历');
@@ -193,19 +304,22 @@ class CalendarPage extends ViewPU {
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor(Color.White);
             Text.layoutWeight(1);
+            Text.scale({ x: this.titleScale, y: this.titleScale });
+            Text.opacity(this.titleOpacity);
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('←');
-            Text.fontSize(24);
-            Text.fontColor(Color.White);
-            Text.onClick(() => {
-                router.back();
+            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
+            Image.width(24);
+            Image.height(24);
+            Image.fillColor(Color.White);
+            Image.onClick(() => {
+                this.animateOut();
             });
-        }, Text);
-        Text.pop();
-        // 统一标题栏设计
+        }, Image);
         Row.pop();
+        // 顶部标题栏 - 与状态栏融合
+        Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 日历头部
             Row.create();
@@ -263,6 +377,10 @@ class CalendarPage extends ViewPU {
             Column.borderRadius(12);
             // 日历网格
             Column.margin({ left: 16, right: 16, bottom: 16 });
+            // 日历网格
+            Column.scale({ x: this.calendarScale, y: this.calendarScale });
+            // 日历网格
+            Column.opacity(this.calendarOpacity);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 星期标题
@@ -345,6 +463,10 @@ class CalendarPage extends ViewPU {
             Column.width('100%');
             // 事件列表
             Column.padding({ left: 16, right: 16 });
+            // 事件列表
+            Column.scale({ x: this.eventsScale, y: this.eventsScale });
+            // 事件列表
+            Column.opacity(this.eventsOpacity);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('今日事件');

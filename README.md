@@ -33,7 +33,7 @@ entry/src/main/
 │   │   └── EntryAbility.ts          # 应用入口
 │   ├── pages/                     # 页面组件
 │   │   ├── Index.ets              # 主页面
-│   │   ├── Dashboard.ets          # 仪表板
+│   │   ├── Pomodoro.ets           # 番茄时钟
 │   │   ├── Pomodoro.ets          # 番茄时钟
 │   │   ├── Tasks.ets             # 任务管理
 │   │   ├── Calendar.ets          # 日历视图

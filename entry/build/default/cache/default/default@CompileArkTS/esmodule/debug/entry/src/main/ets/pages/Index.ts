@@ -26,8 +26,8 @@ interface Index_Params {
     selectedTab?: number;
     timer?: number;
 }
-import { NavigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
-import type { PageAnimationState } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import type { NavigationManager, PageAnimationState } from '../utils/NavigationManager';
+import { transitionManager } from "@bundle:com.example.cubetime/entry/ets/utils/PageTransitionManager";
 interface CubeState {
     isSolved: boolean;
     currentTime: string;
@@ -450,34 +450,47 @@ class Index extends ViewPU {
             return `${seconds}.${milliseconds.toString().padStart(2, '0')}`;
         }
     }
-    // 使用自定义动画序列的页面切换
-    private navigateTo(page: string) {
-        this.animateTransition(() => {
-            NavigationManager.getInstance().navigateTo(page);
-        });
-    }
-    // 页面切换动画 - 底部导航条保持不动
-    private animateTransition(callback: () => void) {
-        Context.animateToImmediately({
-            duration: 300,
-            curve: Curve.Friction,
-            onFinish: callback
-        }, () => {
-            // 导航条保持不动，只隐藏其他元素
+    // 统一的页面退出动画
+    private animateOut(targetPage: string): void {
+        // 分层退出动画：内容→导航栏→边框
+        // 1. 内容区域先消失
+        Context.animateToImmediately({ duration: 250, curve: Curve.EaseIn }, () => {
+            this.titleScale = 0.8;
             this.titleOpacity = 0;
-            this.titleScale = 0.3;
-            this.cardOpacity = 0;
             this.cardScale = 0.3;
-            this.timerOpacity = 0;
+            this.cardOpacity = 0;
             this.timerScale = 0.3;
+            this.timerOpacity = 0;
+            this.buttonScale = 0.2;
             this.buttonOpacity = 0;
-            this.buttonScale = 0.3;
-            // 导航条保持可见和原始大小
-            this.navOpacity = 1;
-            this.navScale = 1;
-            this.iconOpacity = 0;
-            this.iconScale = 0.3;
         });
+        // 2. 导航栏图标逐个消失（交错动画）
+        setTimeout(() => {
+            Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                this.navScale = 0.3;
+                this.navOpacity = 0;
+                this.iconScale = 0.2;
+                this.iconOpacity = 0;
+            });
+        }, 100);
+        // 3. 导航栏边框高度变化（模拟下沉效果）
+        setTimeout(() => {
+            // 这里通过scaleY模拟边框高度变化
+            Context.animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+                // 导航栏整体缩小，模拟边框下沉
+                this.navScale = 0.3;
+                this.navOpacity = 0;
+            });
+        }, 250);
+        setTimeout(() => {
+            const pagePath = `pages/${targetPage}`;
+            transitionManager.navigateTo(pagePath).catch((err: Error) => {
+                console.error('Navigation failed:', err);
+            });
+        }, 350);
+    }
+    private navigateTo(page: string): void {
+        this.animateOut(page);
     }
     // 重置页面可见性（解决返回空白问题）
     private resetVisibility(): void {
@@ -522,7 +535,7 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('  CubeTime');
             Context.animation({
-                duration: 500,
+                duration: 300,
                 curve: Curve.Friction
             });
             Text.width('25%');
@@ -546,7 +559,7 @@ class Index extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('      一个智能时间管理app');
             Context.animation({
-                duration: 500,
+                duration: 300,
                 curve: Curve.Friction
             });
             Text.width('20%');
@@ -556,7 +569,7 @@ class Index extends ViewPU {
             Text.layoutWeight(1);
             Text.textAlign(TextAlign.Start);
             Text.scale({ x: this.titleScale, y: this.titleScale });
-            Text.opacity(0.6);
+            Text.opacity(this.titleOpacity);
             Context.animation(null);
         }, Text);
         Text.pop();

@@ -18,21 +18,21 @@
     "IS_HVIGORFILE_TYPE_CHECK": false,
     "TASK_TIME": {
       "1043bfc77febe75fafec0c4309faccf1": {
-        "CreateModuleInfo": 1585400,
-        "ConfigureCmake": 212200,
-        "PreCheckSyscap": 683500,
-        "GeneratePkgContextInfo": 2023500,
-        "ProcessIntegratedHsp": 1636100,
-        "BuildNativeWithCmake": 260900,
-        "SyscapTransform": 1823400,
-        "ProcessStartupConfig": 2167400,
-        "BuildNativeWithNinja": 1139900,
-        "BuildJS": 2241000,
-        "CompileArkTS": 990243800,
-        "PackageHap": 35850500,
-        "SignHap": 144270800,
-        "CollectDebugSymbol": 3965800,
-        "assembleHap": 162700
+        "CreateModuleInfo": 1492200,
+        "ConfigureCmake": 218100,
+        "PreCheckSyscap": 266300,
+        "GeneratePkgContextInfo": 2643300,
+        "ProcessIntegratedHsp": 2032300,
+        "BuildNativeWithCmake": 224400,
+        "SyscapTransform": 2038400,
+        "ProcessStartupConfig": 6937800,
+        "BuildNativeWithNinja": 1421900,
+        "BuildJS": 2782500,
+        "CompileArkTS": 1180295500,
+        "PackageHap": 40131700,
+        "SignHap": 191284900,
+        "CollectDebugSymbol": 3551100,
+        "assembleHap": 242900
       }
     },
     "CONFIG_PROPERTIES": {
@@ -44,7 +44,7 @@
       "nodejsPath": "E:\\DevEco Studio\\tools\\node",
       "ohpmPath": "E:\\DevEco Studio\\tools\\ohpm"
     },
-    "TOTAL_TIME": 1458311500,
-    "BUILD_ID": "202508221138034970"
+    "TOTAL_TIME": 1836164300,
+    "BUILD_ID": "202508221609126960"
   }
 }

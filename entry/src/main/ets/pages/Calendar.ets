@@ -1,4 +1,6 @@
 import { router } from '@kit.ArkUI'
+import { transitionManager } from '../utils/PageTransitionManager'
+
 
 interface CalendarEvent {
   id: string
@@ -17,40 +19,169 @@ struct CalendarPage {
   ]
   @State selectedDate: Date = new Date()
   @State currentMonth: Date = new Date()
-  @State titleOpacity: number = 1
-  @State titleScale: number = 1
-  @State calendarOpacity: number = 1
-  @State calendarScale: number = 1
-  @State eventsOpacity: number = 1
-  @State eventsScale: number = 1
+
+  // 与设置界面一致的动画状态变量
+  @State titleOpacity: number = 0
+  @State titleScale: number = 0.8
+  @State calendarOpacity: number = 0
+  @State calendarScale: number = 0.8
+  @State eventsOpacity: number = 0
+  @State eventsScale: number = 0.8
 
   aboutToAppear() {
-    // 页面初始化
+    // 首次进入时重置状态
+    this.resetVisibility();
+    // 执行入场动画，添加延迟确保状态重置完成
+    setTimeout(() => {
+      this.animateIn();
+    }, 50);
+    // 注册系统返回事件监听
+    this.registerBackPressListener();
+  }
+
+  onPageShow(): void {
+    // 页面重新显示时重置可见性和动画
+    //this.resetVisibility();
+    this.animateIn();
+  }
+
+  onBackPress(): boolean | void {
+    // 系统返回时执行退出动画
+    this.animateOut();
+    return true; // 阻止默认返回行为，由动画完成后处理
+  }
+
+  private registerBackPressListener(): void {
+    // HarmonyOS会自动调用onBackPress方法
+  }
+
+  private resetVisibility(): void {
+    // 重置为初始隐藏状态，用于入场动画
+    this.titleScale = 0.8
+    this.titleOpacity = 0
+    this.calendarScale = 0.8
+    this.calendarOpacity = 0
+    this.eventsScale = 0.8
+    this.eventsOpacity = 0
+  }
+
+  private animateIn(): void {
+    // 标题动画 - 第一个出现
+    animateToImmediately({ 
+      duration: 400, 
+      curve: Curve.EaseOut, 
+      delay: 100
+    }, () => {
+      this.titleScale = 1
+      this.titleOpacity = 1
+    })
+
+    // 日历网格动画 - 第二个出现
+    animateToImmediately({ 
+      duration: 400, 
+      curve: Curve.EaseOut, 
+      delay: 200
+    }, () => {
+      this.calendarScale = 1
+      this.calendarOpacity = 1
+    })
+
+    // 事件列表动画 - 最后一个出现
+    animateToImmediately({ 
+      duration: 400, 
+      curve: Curve.EaseOut, 
+      delay: 300
+    }, () => {
+      this.eventsScale = 1
+      this.eventsOpacity = 1
+    })
+  }
+
+  private animateOut(targetUrl?: string): void {
+    if (targetUrl) {
+      // 分层退出动画：标题→日历网格→事件列表
+      animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+        this.titleScale = 0.9
+        this.titleOpacity = 0
+      })
+
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.calendarScale = 0.9
+          this.calendarOpacity = 0
+        })
+      }, 100)
+
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.eventsScale = 0.9
+          this.eventsOpacity = 0
+        })
+      }, 200)
+      
+      setTimeout(() => {
+        transitionManager.navigateTo(targetUrl).catch((err: Error) => {
+          console.error('Navigation failed:', err)
+        })
+      }, 350)
+    } else {
+      // 返回首页的退出动画
+      animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+        this.titleScale = 0.9
+        this.titleOpacity = 0
+      })
+
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.calendarScale = 0.9
+          this.calendarOpacity = 0
+        })
+      }, 100)
+
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.eventsScale = 0.9
+          this.eventsOpacity = 0
+        })
+      }, 200)
+      
+      setTimeout(() => {
+        transitionManager.navigateTo('pages/Index').catch((err: Error) => {
+          console.error('Navigation failed:', err)
+        })
+      }, 350)
+    }
   }
 
   build() {
     Column() {
-      // 统一标题栏设计
-      Row() {
-        Text('日历')
-          .fontSize(24)
-          .fontWeight(FontWeight.Bold)
-          .fontColor(Color.White)
-          .layoutWeight(1)
+      // 顶部标题栏 - 与状态栏融合
+      Column() {
+        Row() {
+          Text('日历')
+            .fontSize(24)
+            .fontWeight(FontWeight.Bold)
+            .fontColor(Color.White)
+            .layoutWeight(1)
+            .scale({ x: this.titleScale, y: this.titleScale })
+            .opacity(this.titleOpacity)
 
-        Text('←')
-          .fontSize(24)
-          .fontColor(Color.White)
-          .onClick(() => {
-            router.back()
-          })
+          Image($r('app.media.ic_back'))
+            .width(24)
+            .height(24)
+            .fillColor(Color.White)
+            .onClick(() => {
+              this.animateOut();
+            })
+        }
+        .width('100%')
+        .height(56)
+        .padding({ left: 16, right: 16 })
+        .justifyContent(FlexAlign.SpaceBetween)
+        .alignItems(VerticalAlign.Center)
       }
       .width('100%')
-      .height(56)
-      .padding({ left: 16, right: 16 })
       .backgroundColor('#6366F1')
-      .justifyContent(FlexAlign.SpaceBetween)
-      .alignItems(VerticalAlign.Center)
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
 
       // 日历头部
@@ -129,6 +260,8 @@ struct CalendarPage {
       .backgroundColor('#FFFFFF')
       .borderRadius(12)
       .margin({ left: 16, right: 16, bottom: 16 })
+      .scale({ x: this.calendarScale, y: this.calendarScale })
+      .opacity(this.calendarOpacity)
 
       // 事件列表
       Column() {
@@ -172,6 +305,8 @@ struct CalendarPage {
       }
       .width('100%')
       .padding({ left: 16, right: 16 })
+      .scale({ x: this.eventsScale, y: this.eventsScale })
+      .opacity(this.eventsOpacity)
     }
     .width('100%')
     .height('100%')

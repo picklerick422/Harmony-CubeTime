@@ -2,7 +2,6 @@
   "src": [
     "pages/Splash",
     "pages/Index",
-    "pages/Dashboard",
     "pages/Pomodoro",
     "pages/Tasks",
     "pages/Calendar",

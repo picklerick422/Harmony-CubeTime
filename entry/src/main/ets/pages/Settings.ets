@@ -1,5 +1,7 @@
 import { router } from '@kit.ArkUI'
+import { transitionManager } from '../utils/PageTransitionManager'
 import { NavigationManager, NavigationHelper, PageAnimationState } from '../utils/NavigationManager'
+
 
 class OptionItem {
   value: string;
@@ -172,7 +174,7 @@ struct SettingsPage {
     animateToImmediately({ 
       duration: 400, 
       curve: Curve.EaseOut, 
-      delay: 100 + this.settingsItems.length * 100 + 200
+      delay: 200
     }, () => {
       this.bottomNavScale = 1
       this.bottomNavOpacity = 1
@@ -180,8 +182,11 @@ struct SettingsPage {
   }
 
   aboutToAppear(): void {
-    // 首次进入时直接执行动画，不重置状态
-    this.animateIn();
+    // 首次进入时重置状态并执行动画
+    this.resetVisibility();
+    setTimeout(() => {
+      this.animateIn();
+    }, 50);
     // 注册系统返回事件监听
     this.registerBackPressListener();
   }
@@ -193,7 +198,9 @@ struct SettingsPage {
   onPageShow(): void {
     // 页面重新显示时重置可见性和动画
     this.resetVisibility();
-    this.animateIn();
+    setTimeout(() => {
+      this.animateIn();
+    }, 50);
   }
 
   onBackPress(): boolean | void {
@@ -203,50 +210,82 @@ struct SettingsPage {
   }
 
   private animateOut(targetUrl?: string): void {
-    // 反向依次消失动画
-    
-    // 底部导航先消失
-    animateToImmediately({ duration: 200, curve: Curve.Friction }, () => {
-      this.bottomNavOpacity = 0;
-      this.bottomNavScale = 0.7;
-    });
-    
-    // 关于应用卡片消失
-    animateToImmediately({ duration: 200, curve: Curve.Friction, delay: 50 }, () => {
-      this.aboutOpacity = 0;
-      this.aboutScale = 0.7;
-    });
-    
-    // 设置项依次消失（反向顺序）
-    this.settingsItems.forEach((_, index) => {
-      animateToImmediately({ 
-        duration: 200, 
-        curve: Curve.Friction, 
-        delay: 100 + (this.settingsItems.length - 1 - index) * 50 
-      }, () => {
-        this.itemOpacities[index] = 0;
-        this.itemScales[index] = 0.7;
-      });
-    });
-    
-    // 标题最后消失
-    animateToImmediately({ 
-      duration: 200, 
-      curve: Curve.Friction,
-      delay: 200 + this.settingsItems.length * 50,
-      onFinish: () => {
-        if (targetUrl) {
-          router.replaceUrl({
-            url: targetUrl
-          });
-        } else {
-          router.back();
-        }
-      }
-    }, () => {
-      this.titleOpacity = 0;
-      this.titleScale = 0.7;
-    });
+    if (targetUrl) {
+      // 分层退出动画：标题→设置项→底部内容→导航栏
+      animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+        this.titleScale = 0.9
+        this.titleOpacity = 0
+      })
+
+      // 设置项逐个消失（交错动画）
+      this.settingsItems.forEach((_, index) => {
+        setTimeout(() => {
+          animateToImmediately({ duration: 150, curve: Curve.EaseIn }, () => {
+            this.itemScales[index] = 0.85
+            this.itemOpacities[index] = 0
+          })
+        }, 30 * index) // 更密集的延迟
+      })
+
+      // 关于应用卡片消失
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.aboutScale = 0.85
+          this.aboutOpacity = 0
+        })
+      }, 150)
+
+      // 底部导航栏最后消失（模拟边框下沉）
+      setTimeout(() => {
+        animateToImmediately({ duration: 250, curve: Curve.EaseIn }, () => {
+          this.bottomNavScale = 0.8
+          this.bottomNavOpacity = 0
+        })
+      }, 50)
+      
+      setTimeout(() => {
+        transitionManager.navigateTo(targetUrl).catch((err: Error) => {
+          console.error('Navigation failed:', err)
+        })
+      }, 350)
+    } else {
+      // 返回首页的退出动画
+      animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+        this.titleScale = 0.9
+        this.titleOpacity = 0
+      })
+
+      // 设置项逐个消失
+      this.settingsItems.forEach((_, index) => {
+        setTimeout(() => {
+          animateToImmediately({ duration: 150, curve: Curve.EaseIn }, () => {
+            this.itemScales[index] = 0.85
+            this.itemOpacities[index] = 0
+          })
+        }, 30 * index)
+      })
+
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.aboutScale = 0.85
+          this.aboutOpacity = 0
+        })
+      }, 150)
+
+      // 底部导航栏消失
+      setTimeout(() => {
+        animateToImmediately({ duration: 250, curve: Curve.EaseIn }, () => {
+          this.bottomNavScale = 0.8
+          this.bottomNavOpacity = 0
+        })
+      }, 50)
+      
+      setTimeout(() => {
+        transitionManager.navigateTo('pages/Index').catch((err: Error) => {
+          console.error('Navigation failed:', err)
+        })
+      }, 350)
+    }
   }
 
   private registerBackPressListener(): void {
@@ -544,6 +583,7 @@ interface SettingsState {
   animationState: PageAnimationState
 }
 
+/*
 @Component
 struct Settings {
   @State state: SettingsState = {
@@ -576,6 +616,7 @@ struct Settings {
     }, 100)
   }
 
+
   build() {
     Column() {
       // 标题区域
@@ -594,7 +635,7 @@ struct Settings {
           .width(24)
           .height(24)
           .onClick(() => {
-            NavigationHelper.navigateBack(this.state.navigationManager)
+            transitionManager.navigateTo('pages/Index')
           })
       }
       .width('100%')
@@ -800,3 +841,4 @@ struct Settings {
     this.state.breakDuration = 5
   }
 }
+* */

@@ -1,5 +1,6 @@
-import router from '@ohos.router'
+import { router } from '@kit.ArkUI'
 import { NavigationManager, NavigationHelper, PageAnimationState } from '../utils/NavigationManager'
+import { transitionManager } from '../utils/PageTransitionManager'
 
 interface Task {
   id: string
@@ -69,7 +70,22 @@ struct Tasks {
           .width(24)
           .height(24)
           .onClick(() => {
-            NavigationHelper.navigateBack(this.state.navigationManager)
+            // 返回首页的退出动画
+            animateToImmediately({ duration: 300, curve: Curve.EaseIn }, () => {
+              this.state.animationState.contentScale = 0.95
+              this.state.animationState.contentOpacity = 0
+              this.state.animationState.titleTranslateY = -20
+              this.state.animationState.titleOpacity = 0
+              this.state.animationState.buttonScale = 0.8
+              this.state.animationState.buttonOpacity = 0
+              this.state.animationState.listOpacity = 0
+            })
+            
+            setTimeout(() => {
+              transitionManager.navigateTo('pages/Index').catch((err: Error) => {
+                console.error('Navigation failed:', err)
+              })
+            }, 300)
           })
       }
       .width('100%')

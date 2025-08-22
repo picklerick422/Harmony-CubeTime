@@ -1,4 +1,6 @@
-import router from '@ohos.router'
+import { router } from '@kit.ArkUI'
+import { transitionManager } from '../utils/PageTransitionManager'
+
 
 class OptionItem {
   value: string;
@@ -61,12 +63,14 @@ struct PomodoroPage {
 
   aboutToAppear() {
     this.resetVisibility();
-    this.animateIn();
+    setTimeout(() => {
+      this.animateIn();
+    }, 50);
     this.startTimer();
   }
 
   onPageShow() {
-    this.resetVisibility();
+    //this.resetVisibility();
     this.animateIn();
   }
 
@@ -203,23 +207,64 @@ struct PomodoroPage {
     }
   }
 
-  private animateOut(): void {
-    animateToImmediately({
-      duration: 300,
-      curve: Curve.Friction,
-      onFinish: () => {
-        router.back();
-      }
-    }, () => {
-      this.titleOpacity = 0;
-      this.titleScale = 0.3;
-      this.cardOpacity = 0;
-      this.cardScale = 0.3;
-      this.timerOpacity = 0;
-      this.timerScale = 0.3;
-      this.taskOpacity = 0;
-      this.taskScale = 0.3;
-    });
+  private animateOut(targetUrl?: string): void {
+    if (targetUrl) {
+      // 分层退出动画：标题→计时器→任务列表
+      animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+        this.titleScale = 0.9
+        this.titleOpacity = 0
+      })
+
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.cardScale = 0.9
+          this.cardOpacity = 0
+          this.timerScale = 0.9
+          this.timerOpacity = 0
+        })
+      }, 100)
+
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.taskScale = 0.9
+          this.taskOpacity = 0
+        })
+      }, 200)
+      
+      setTimeout(() => {
+        transitionManager.navigateTo(targetUrl).catch((err: Error) => {
+          console.error('Navigation failed:', err)
+        })
+      }, 350)
+    } else {
+      // 返回首页的退出动画
+      animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+        this.titleScale = 0.9
+        this.titleOpacity = 0
+      })
+
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.cardScale = 0.9
+          this.cardOpacity = 0
+          this.timerScale = 0.9
+          this.timerOpacity = 0
+        })
+      }, 100)
+
+      setTimeout(() => {
+        animateToImmediately({ duration: 200, curve: Curve.EaseIn }, () => {
+          this.taskScale = 0.9
+          this.taskOpacity = 0
+        })
+      }, 200)
+      
+      setTimeout(() => {
+        transitionManager.navigateTo('pages/Index').catch((err: Error) => {
+          console.error('Navigation failed:', err)
+        })
+      }, 350)
+    }
   }
 
   private animateIn(): void {
