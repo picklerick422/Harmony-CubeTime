@@ -21,7 +21,7 @@ interface CubeDetail_Params {
     accelerometerData?: Array<number>;
     gyroscopeData?: Array<number>;
 }
-import router from "@ohos:router";
+import { NavigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 import CubeStateManager from "@bundle:com.example.cubetime/entry/ets/services/CubeStateManager";
 import NotificationService from "@bundle:com.example.cubetime/entry/ets/services/NotificationService";
 import { Cube3DView } from "@bundle:com.example.cubetime/entry/ets/components/Cube3DView";
@@ -277,9 +277,22 @@ class CubeDetail extends ViewPU {
         this.startAutoRotation();
         this.startSensorUpdates();
     }
+    onPageShow() {
+        // 页面重新显示时重置可见性和动画
+        this.resetVisibility();
+        this.animateIn();
+    }
     aboutToDisappear() {
         this.stopAutoRotation();
         this.stopSensorUpdates();
+    }
+    private resetVisibility() {
+        // 重置页面可见性状态
+        // 这里可以添加重置动画状态或可见性相关的逻辑
+    }
+    private animateIn() {
+        // 页面进入动画
+        // 这里可以添加页面进入时的动画效果
     }
     private loadCubeData() {
         // 加载魔方状态数据
@@ -357,7 +370,7 @@ class CubeDetail extends ViewPU {
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(136:5)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(152:5)", "entry");
             Column.width('100%');
             Column.height('100%');
             Column.backgroundColor('#F5F5F5');
@@ -365,7 +378,7 @@ class CubeDetail extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 统一紫色背景，覆盖整个顶部包括状态栏
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(138:7)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(154:7)", "entry");
             // 统一紫色背景，覆盖整个顶部包括状态栏
             Column.width('100%');
             // 统一紫色背景，覆盖整个顶部包括状态栏
@@ -375,24 +388,24 @@ class CubeDetail extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(139:9)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(155:9)", "entry");
             Row.width('100%');
             Row.height(56);
             Row.padding({ left: 16, right: 16 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/CubeDetail.ets(140:11)", "entry");
+            Image.debugLine("entry/src/main/ets/pages/CubeDetail.ets(156:11)", "entry");
             Image.width(24);
             Image.height(24);
             Image.fillColor(Color.White);
             Image.onClick(() => {
-                router.back();
+                NavigationManager.getInstance().navigateBack();
             });
         }, Image);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('魔方详情');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(148:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(164:11)", "entry");
             Text.fontSize(20);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor(Color.White);
@@ -402,7 +415,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('刷新');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(155:11)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(171:11)", "entry");
             Text.fontSize(16);
             Text.fontColor('#6366F1');
             Text.fontWeight(FontWeight.Medium);
@@ -419,7 +432,7 @@ class CubeDetail extends ViewPU {
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Scroll.create();
-            Scroll.debugLine("entry/src/main/ets/pages/CubeDetail.ets(174:7)", "entry");
+            Scroll.debugLine("entry/src/main/ets/pages/CubeDetail.ets(190:7)", "entry");
             Scroll.width('100%');
             Scroll.layoutWeight(1);
             Scroll.backgroundColor('#F5F5F5');
@@ -427,13 +440,13 @@ class CubeDetail extends ViewPU {
         }, Scroll);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(175:9)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(191:9)", "entry");
             Column.padding(16);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 3D魔方展示区域 - 现代化设计
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(177:11)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(193:11)", "entry");
             // 3D魔方展示区域 - 现代化设计
             Column.width('100%');
             // 3D魔方展示区域 - 现代化设计
@@ -449,7 +462,7 @@ class CubeDetail extends ViewPU {
                         autoRotate: this.autoRotate,
                         cubeSize: 120,
                         showLabels: true
-                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/CubeDetail.ets", line: 178, col: 13 });
+                    }, undefined, elmtId, () => { }, { page: "entry/src/main/ets/pages/CubeDetail.ets", line: 194, col: 13 });
                     ViewPU.create(componentCall);
                     let paramsLambda = () => {
                         return {
@@ -480,7 +493,7 @@ class CubeDetail extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 控制按钮 - 现代化设计
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(191:11)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(207:11)", "entry");
             // 控制按钮 - 现代化设计
             Row.width('100%');
             // 控制按钮 - 现代化设计
@@ -490,7 +503,7 @@ class CubeDetail extends ViewPU {
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Button.createWithLabel('重置旋转');
-            Button.debugLine("entry/src/main/ets/pages/CubeDetail.ets(192:13)", "entry");
+            Button.debugLine("entry/src/main/ets/pages/CubeDetail.ets(208:13)", "entry");
             Button.onClick(() => {
                 this.resetRotation();
             });
@@ -503,7 +516,7 @@ class CubeDetail extends ViewPU {
         Button.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Button.createWithLabel(this.autoRotate ? '停止旋转' : '开始旋转');
-            Button.debugLine("entry/src/main/ets/pages/CubeDetail.ets(202:13)", "entry");
+            Button.debugLine("entry/src/main/ets/pages/CubeDetail.ets(218:13)", "entry");
             Button.onClick(() => {
                 this.toggleAutoRotation();
             });
@@ -518,7 +531,7 @@ class CubeDetail extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 魔方状态卡片 - 现代化设计
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(216:11)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(232:11)", "entry");
             // 魔方状态卡片 - 现代化设计
             Column.width('100%');
             // 魔方状态卡片 - 现代化设计
@@ -539,7 +552,7 @@ class CubeDetail extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('魔方状态');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(217:13)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(233:13)", "entry");
             Text.fontSize(20);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#1F2937');
@@ -548,13 +561,13 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(223:13)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(239:13)", "entry");
             Row.width('100%');
             Row.margin({ bottom: 12 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('连接状态');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(224:15)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(240:15)", "entry");
             Text.fontSize(16);
             Text.fontColor('#6B7280');
             Text.fontWeight(FontWeight.Medium);
@@ -562,12 +575,12 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Blank.create();
-            Blank.debugLine("entry/src/main/ets/pages/CubeDetail.ets(229:15)", "entry");
+            Blank.debugLine("entry/src/main/ets/pages/CubeDetail.ets(245:15)", "entry");
         }, Blank);
         Blank.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.cubeConnected ? '已连接' : '未连接');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(231:15)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(247:15)", "entry");
             Text.fontSize(16);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor(this.cubeConnected ? '#10B981' : '#EF4444');
@@ -576,13 +589,13 @@ class CubeDetail extends ViewPU {
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(239:13)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(255:13)", "entry");
             Row.width('100%');
             Row.margin({ bottom: 12 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('电池电量');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(240:19)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(256:19)", "entry");
             Text.fontSize(16);
             Text.fontColor('#6B7280');
             Text.fontWeight(FontWeight.Medium);
@@ -590,16 +603,16 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Blank.create();
-            Blank.debugLine("entry/src/main/ets/pages/CubeDetail.ets(245:19)", "entry");
+            Blank.debugLine("entry/src/main/ets/pages/CubeDetail.ets(261:19)", "entry");
         }, Blank);
         Blank.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(247:19)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(263:19)", "entry");
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.batteryLevel + '%');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(248:21)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(264:21)", "entry");
             Text.fontSize(16);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor(this.batteryLevel > 20 ? '#10B981' : '#EF4444');
@@ -607,12 +620,12 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Stack.create();
-            Stack.debugLine("entry/src/main/ets/pages/CubeDetail.ets(253:21)", "entry");
+            Stack.debugLine("entry/src/main/ets/pages/CubeDetail.ets(269:21)", "entry");
             Stack.margin({ left: 8 });
         }, Stack);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(254:23)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(270:23)", "entry");
             Column.width(40);
             Column.height(8);
             Column.backgroundColor('#E5E7EB');
@@ -622,7 +635,7 @@ class CubeDetail extends ViewPU {
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(261:23)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(277:23)", "entry");
             Column.width(this.batteryLevel * 0.4);
             Column.height(8);
             Column.backgroundColor(this.batteryLevel > 20 ? '#10B981' : '#EF4444');
@@ -635,39 +648,12 @@ class CubeDetail extends ViewPU {
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(274:13)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(290:13)", "entry");
             Row.width('100%');
             Row.margin({ bottom: 12 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('当前面');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(275:15)", "entry");
-            Text.fontSize(16);
-            Text.fontColor('#6B7280');
-            Text.fontWeight(FontWeight.Medium);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Blank.create();
-            Blank.debugLine("entry/src/main/ets/pages/CubeDetail.ets(280:15)", "entry");
-        }, Blank);
-        Blank.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(this.currentFace);
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(282:15)", "entry");
-            Text.fontSize(16);
-            Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#6366F1');
-        }, Text);
-        Text.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(290:13)", "entry");
-            Row.width('100%');
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('当前模式');
             Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(291:15)", "entry");
             Text.fontSize(16);
             Text.fontColor('#6B7280');
@@ -680,8 +666,35 @@ class CubeDetail extends ViewPU {
         }, Blank);
         Blank.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(this.currentMode);
+            Text.create(this.currentFace);
             Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(298:15)", "entry");
+            Text.fontSize(16);
+            Text.fontWeight(FontWeight.Bold);
+            Text.fontColor('#6366F1');
+        }, Text);
+        Text.pop();
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Row.create();
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(306:13)", "entry");
+            Row.width('100%');
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create('当前模式');
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(307:15)", "entry");
+            Text.fontSize(16);
+            Text.fontColor('#6B7280');
+            Text.fontWeight(FontWeight.Medium);
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Blank.create();
+            Blank.debugLine("entry/src/main/ets/pages/CubeDetail.ets(312:15)", "entry");
+        }, Blank);
+        Blank.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create(this.currentMode);
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(314:15)", "entry");
             Text.fontSize(16);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#F59E0B');
@@ -693,7 +706,7 @@ class CubeDetail extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 统计数据卡片 - 现代化设计
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(320:11)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(336:11)", "entry");
             // 统计数据卡片 - 现代化设计
             Column.width('100%');
             // 统计数据卡片 - 现代化设计
@@ -714,7 +727,7 @@ class CubeDetail extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('使用统计');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(321:13)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(337:13)", "entry");
             Text.fontSize(20);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#1F2937');
@@ -723,19 +736,19 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(327:13)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(343:13)", "entry");
             Row.width('100%');
             Row.margin({ bottom: 12 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(328:15)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(344:15)", "entry");
             Column.layoutWeight(1);
             Column.alignItems(HorizontalAlign.Start);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.formatDuration(this.totalUsageTime));
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(329:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(345:17)", "entry");
             Text.fontSize(28);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#6366F1');
@@ -744,7 +757,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('总使用时间');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(335:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(351:17)", "entry");
             Text.fontSize(14);
             Text.fontColor('#6B7280');
         }, Text);
@@ -752,13 +765,13 @@ class CubeDetail extends ViewPU {
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(342:15)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(358:15)", "entry");
             Column.layoutWeight(1);
             Column.alignItems(HorizontalAlign.Center);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.formatDuration(this.todayUsageTime));
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(343:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(359:17)", "entry");
             Text.fontSize(28);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#10B981');
@@ -767,7 +780,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('今日使用');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(349:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(365:17)", "entry");
             Text.fontSize(14);
             Text.fontColor('#6B7280');
         }, Text);
@@ -775,13 +788,13 @@ class CubeDetail extends ViewPU {
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(356:15)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(372:15)", "entry");
             Column.layoutWeight(1);
             Column.alignItems(HorizontalAlign.End);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.sessionCount.toString());
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(357:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(373:17)", "entry");
             Text.fontSize(28);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#F59E0B');
@@ -790,7 +803,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('会话次数');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(363:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(379:17)", "entry");
             Text.fontSize(14);
             Text.fontColor('#6B7280');
         }, Text);
@@ -799,12 +812,12 @@ class CubeDetail extends ViewPU {
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(373:13)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(389:13)", "entry");
             Row.width('100%');
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('最后同步');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(374:15)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(390:15)", "entry");
             Text.fontSize(14);
             Text.fontColor('#6B7280');
             Text.fontWeight(FontWeight.Medium);
@@ -812,12 +825,12 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Blank.create();
-            Blank.debugLine("entry/src/main/ets/pages/CubeDetail.ets(379:15)", "entry");
+            Blank.debugLine("entry/src/main/ets/pages/CubeDetail.ets(395:15)", "entry");
         }, Blank);
         Blank.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(this.lastSyncTime);
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(381:15)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(397:15)", "entry");
             Text.fontSize(14);
             Text.fontColor('#9CA3AF');
             Text.fontWeight(FontWeight.Medium);
@@ -829,7 +842,7 @@ class CubeDetail extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 传感器数据卡片 - 现代化设计
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(401:11)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(417:11)", "entry");
             // 传感器数据卡片 - 现代化设计
             Column.width('100%');
             // 传感器数据卡片 - 现代化设计
@@ -850,7 +863,7 @@ class CubeDetail extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('传感器数据');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(402:13)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(418:13)", "entry");
             Text.fontSize(20);
             Text.fontWeight(FontWeight.Bold);
             Text.fontColor('#1F2937');
@@ -859,20 +872,20 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(408:13)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/CubeDetail.ets(424:13)", "entry");
             Column.padding(16);
             Column.backgroundColor('#F9FAFB');
             Column.borderRadius(12);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(409:15)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(425:15)", "entry");
             Row.width('100%');
             Row.margin({ bottom: 12 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('加速度计');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(410:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(426:17)", "entry");
             Text.fontSize(16);
             Text.fontColor('#6B7280');
             Text.fontWeight(FontWeight.Medium);
@@ -881,7 +894,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(`X: ${this.accelerometerData[0].toFixed(2)}`);
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(416:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(432:17)", "entry");
             Text.fontSize(14);
             Text.fontColor('#6366F1');
             Text.fontWeight(FontWeight.Bold);
@@ -891,7 +904,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(`Y: ${this.accelerometerData[1].toFixed(2)}`);
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(423:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(439:17)", "entry");
             Text.fontSize(14);
             Text.fontColor('#10B981');
             Text.fontWeight(FontWeight.Bold);
@@ -901,7 +914,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(`Z: ${this.accelerometerData[2].toFixed(2)}`);
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(430:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(446:17)", "entry");
             Text.fontSize(14);
             Text.fontColor('#F59E0B');
             Text.fontWeight(FontWeight.Bold);
@@ -912,12 +925,12 @@ class CubeDetail extends ViewPU {
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(440:15)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/CubeDetail.ets(456:15)", "entry");
             Row.width('100%');
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('陀螺仪');
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(441:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(457:17)", "entry");
             Text.fontSize(16);
             Text.fontColor('#6B7280');
             Text.fontWeight(FontWeight.Medium);
@@ -926,7 +939,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(`X: ${this.gyroscopeData[0].toFixed(2)}`);
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(447:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(463:17)", "entry");
             Text.fontSize(14);
             Text.fontColor('#6366F1');
             Text.fontWeight(FontWeight.Bold);
@@ -936,7 +949,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(`Y: ${this.gyroscopeData[1].toFixed(2)}`);
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(454:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(470:17)", "entry");
             Text.fontSize(14);
             Text.fontColor('#10B981');
             Text.fontWeight(FontWeight.Bold);
@@ -946,7 +959,7 @@ class CubeDetail extends ViewPU {
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create(`Z: ${this.gyroscopeData[2].toFixed(2)}`);
-            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(461:17)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/CubeDetail.ets(477:17)", "entry");
             Text.fontSize(14);
             Text.fontColor('#F59E0B');
             Text.fontWeight(FontWeight.Bold);

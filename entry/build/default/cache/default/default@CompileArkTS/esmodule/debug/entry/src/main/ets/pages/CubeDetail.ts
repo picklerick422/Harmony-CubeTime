@@ -21,7 +21,7 @@ interface CubeDetail_Params {
     accelerometerData?: Array<number>;
     gyroscopeData?: Array<number>;
 }
-import { navigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import { NavigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 import CubeStateManager from "@bundle:com.example.cubetime/entry/ets/services/CubeStateManager";
 import NotificationService from "@bundle:com.example.cubetime/entry/ets/services/NotificationService";
 import { Cube3DView } from "@bundle:com.example.cubetime/entry/ets/components/Cube3DView";
@@ -396,7 +396,7 @@ class CubeDetail extends ViewPU {
             Image.height(24);
             Image.fillColor(Color.White);
             Image.onClick(() => {
-                navigationManager.navigateBack();
+                NavigationManager.getInstance().navigateBack();
             });
         }, Image);
         this.observeComponentCreation2((elmtId, isInitialRender) => {

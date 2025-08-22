@@ -1,4 +1,4 @@
-import { navigationManager, TransitionType } from '../utils/NavigationManager';
+import { NavigationManager } from '../utils/NavigationManager';
 import CubeStateManager from '../services/CubeStateManager';
 import NotificationService from '../services/NotificationService';
 import { Cube3DView } from '../components/Cube3DView';
@@ -158,7 +158,7 @@ struct CubeDetail {
             .height(24)
             .fillColor(Color.White)
             .onClick(() => {
-              navigationManager.navigateBack();
+              NavigationManager.getInstance().navigateBack();
             })
           
           Text('魔方详情')

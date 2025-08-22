@@ -1,5 +1,4 @@
-import notification from "@ohos:notification";
-import vibrator from "@ohos:vibrator";
+import { notificationManager } from "@ohos:notificationManager";
 import hilog from "@ohos:hilog";
 export interface LiveWindowContent {
     mode: string;
@@ -22,9 +21,9 @@ export default class NotificationService {
         try {
             const notificationRequest = {
                 id: this.notificationId,
-                slotType: notification.SlotType.SOCIAL_COMMUNICATION,
+                slotType: notificationManager.SlotType.SOCIAL_COMMUNICATION,
                 content: {
-                    contentType: notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
+                    contentType: notificationManager.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
                     normal: {
                         title: 'CubeTime 智能时间管理',
                         text: '正在连接魔方...',
@@ -70,7 +69,7 @@ export default class NotificationService {
                     }
                 ]
             };
-            await notification.publish(notificationRequest);
+            await notificationManager.publish(notificationRequest);
             hilog.info(0x0000, 'NotificationService', 'Live window shown');
         }
         catch (error) {
@@ -83,9 +82,9 @@ export default class NotificationService {
             const statusText = content.isTiming ? '计时中' : '已暂停';
             const notificationRequest = {
                 id: this.notificationId,
-                slotType: notification.SlotType.SOCIAL_COMMUNICATION,
+                slotType: notificationManager.SlotType.SOCIAL_COMMUNICATION,
                 content: {
-                    contentType: notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
+                    contentType: notificationManager.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
                     normal: {
                         title: `当前模式: ${content.mode}`,
                         text: `持续时间: ${formattedDuration} | ${statusText}`,
@@ -131,7 +130,7 @@ export default class NotificationService {
                     }
                 ]
             };
-            await notification.publish(notificationRequest);
+            await notificationManager.publish(notificationRequest);
             hilog.info(0x0000, 'NotificationService', 'Live window updated');
         }
         catch (error) {
@@ -140,7 +139,7 @@ export default class NotificationService {
     }
     async hideLiveWindow() {
         try {
-            await notification.cancel(this.notificationId);
+            await notificationManager.cancel(this.notificationId);
             hilog.info(0x0000, 'NotificationService', 'Live window hidden');
         }
         catch (error) {
@@ -179,9 +178,9 @@ export default class NotificationService {
         try {
             const notificationRequest = {
                 id: Date.now(),
-                slotType: notification.SlotType.SOCIAL_COMMUNICATION,
+                slotType: notificationManager.SlotType.SOCIAL_COMMUNICATION,
                 content: {
-                    contentType: notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
+                    contentType: notificationManager.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
                     normal: {
                         title: title,
                         text: content,
@@ -189,7 +188,7 @@ export default class NotificationService {
                     }
                 }
             };
-            await notification.publish(notificationRequest);
+            await notificationManager.publish(notificationRequest);
         }
         catch (error) {
             hilog.error(0x0000, 'NotificationService', `Show notification error: ${JSON.stringify(error)}`);

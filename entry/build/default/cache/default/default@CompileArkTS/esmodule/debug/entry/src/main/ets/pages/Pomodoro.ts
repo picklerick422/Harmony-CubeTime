@@ -22,7 +22,7 @@ interface PomodoroPage_Params {
     taskOpacity?: number;
     timer?: number;
 }
-import { navigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import router from "@ohos:router";
 class OptionItem {
     value: string;
     label: string;
@@ -308,15 +308,17 @@ class PomodoroPage extends ViewPU {
     }
     private timer: number;
     aboutToAppear() {
-        // 确保页面返回时重置为可见状态
         this.resetVisibility();
         this.animateIn();
         this.startTimer();
     }
     onPageShow() {
-        // 页面重新显示时重置可见性和动画
         this.resetVisibility();
         this.animateIn();
+    }
+    onBackPress(): boolean | void {
+        this.animateOut();
+        return true;
     }
     aboutToDisappear() {
         this.clearTimer();
@@ -363,11 +365,22 @@ class PomodoroPage extends ViewPU {
         this.isRunning = !this.isRunning;
         if (this.isRunning) {
             this.startTimer();
+            Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                this.timerScale = 1.05;
+            });
+        }
+        else {
+            Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                this.timerScale = 1;
+            });
         }
     }
     private resetTimer() {
         this.isRunning = false;
         this.timeLeft = this.isWorkTime ? this.workDuration : this.breakDuration;
+        Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+            this.timerScale = 1;
+        });
     }
     private skipTimer() {
         this.isRunning = false;
@@ -379,6 +392,9 @@ class PomodoroPage extends ViewPU {
             this.timeLeft = this.workDuration;
             this.isWorkTime = true;
         }
+        Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+            this.timerScale = 1;
+        });
     }
     private formatTime(seconds: number): string {
         const mins = Math.floor(seconds / 60);
@@ -415,14 +431,14 @@ class PomodoroPage extends ViewPU {
             }
         }
     }
-    // 页面切换动画 - 从小放大的缩放效果
-    private animateTransition(callback: () => void) {
-        Context.animateTo({
-            duration: 400,
+    private animateOut(): void {
+        Context.animateToImmediately({
+            duration: 300,
             curve: Curve.Friction,
-            onFinish: callback
+            onFinish: () => {
+                router.back();
+            }
         }, () => {
-            // 页面缩小消失效果
             this.titleOpacity = 0;
             this.titleScale = 0.3;
             this.cardOpacity = 0;
@@ -433,267 +449,323 @@ class PomodoroPage extends ViewPU {
             this.taskScale = 0.3;
         });
     }
-    private animateIn() {
-        Context.animateTo({
-            duration: 600,
-            curve: Curve.EaseOut
-        }, () => {
+    private animateIn(): void {
+        Context.animateToImmediately({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
             this.titleScale = 1;
             this.titleOpacity = 1;
+        });
+        Context.animateToImmediately({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
             this.cardScale = 1;
             this.cardOpacity = 1;
+        });
+        Context.animateToImmediately({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
             this.timerScale = 1;
             this.timerOpacity = 1;
+        });
+        Context.animateToImmediately({ duration: 600, curve: Curve.EaseOut, delay: 400 }, () => {
             this.taskScale = 1;
             this.taskOpacity = 1;
         });
     }
-    private resetVisibility() {
-        this.titleScale = 1;
-        this.titleOpacity = 1;
-        this.cardScale = 1;
-        this.cardOpacity = 1;
-        this.timerScale = 1;
-        this.timerOpacity = 1;
-        this.taskScale = 1;
-        this.taskOpacity = 1;
+    private resetVisibility(): void {
+        this.titleScale = 0.8;
+        this.titleOpacity = 0;
+        this.cardScale = 0.8;
+        this.cardOpacity = 0;
+        this.timerScale = 0.8;
+        this.timerOpacity = 0;
+        this.taskScale = 0.8;
+        this.taskOpacity = 0;
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
             Column.width('100%');
             Column.height('100%');
-            Column.backgroundColor('#F9FAFB');
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 顶部标题
+            Column.create();
+            Column.width('100%');
+            Column.backgroundColor('#6366F1');
+            Column.expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP]);
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            // 顶部标题
             Row.width('100%');
-            // 顶部标题
-            Row.padding(16);
+            Row.height(56);
+            Row.padding({ left: 16, right: 16 });
+            Row.justifyContent(FlexAlign.SpaceBetween);
+            Row.alignItems(VerticalAlign.Center);
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Text.create('番茄时钟');
             Text.fontSize(24);
             Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#1F2937');
+            Text.fontColor(Color.White);
             Text.layoutWeight(1);
-            Text.opacity(this.titleOpacity);
             Text.scale({ x: this.titleScale, y: this.titleScale });
+            Text.opacity(this.titleOpacity);
         }, Text);
         Text.pop();
-        // 顶部标题
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
+            Image.width(24);
+            Image.height(24);
+            Image.fillColor(Color.White);
+            Image.onClick(() => {
+                this.animateOut();
+            });
+        }, Image);
         Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 计时器显示
-            Column.create();
-            // 计时器显示
-            Column.width('100%');
-            // 计时器显示
-            Column.padding(32);
-            // 计时器显示
-            Column.alignItems(HorizontalAlign.Center);
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(this.isWorkTime ? '工作时间' : '休息时间');
-            Text.fontSize(20);
-            Text.fontWeight(FontWeight.Medium);
-            Text.fontColor(this.isWorkTime ? '#10B981' : '#F59E0B');
-            Text.margin({ bottom: 16 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Stack.create();
-            Stack.width(200);
-            Stack.height(200);
-            Stack.margin({ bottom: 32 });
-            Stack.opacity(this.timerOpacity);
-            Stack.scale({ x: this.timerScale, y: this.timerScale });
-        }, Stack);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Circle.create();
-            Circle.width(200);
-            Circle.height(200);
-            Circle.fill('#F3F4F6');
-        }, Circle);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Circle.create();
-            Circle.width(200);
-            Circle.height(200);
-            Circle.fill('#10B981');
-            Circle.fillOpacity(0.1);
-            Circle.clipShape(new Rect());
-            Circle.rotate({ angle: this.getProgress() * 3.6 });
-        }, Circle);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(this.formatTime(this.timeLeft));
-            Text.fontSize(48);
-            Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#1F2937');
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            If.create();
-            if (this.currentTask) {
-                this.ifElseBranchUpdateFunction(0, () => {
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Text.create(this.currentTask.title);
-                        Text.fontSize(16);
-                        Text.fontColor('#6B7280');
-                        Text.margin({ top: 8 });
-                    }, Text);
-                    Text.pop();
-                });
-            }
-            else {
-                this.ifElseBranchUpdateFunction(1, () => {
-                });
-            }
-        }, If);
-        If.pop();
-        Column.pop();
-        Stack.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create({ space: 16 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Button.createWithLabel(this.isRunning ? '暂停' : '开始');
-            Button.width(100);
-            Button.height(44);
-            Button.backgroundColor('#10B981');
-            Button.fontColor('#FFFFFF');
-            Button.borderRadius(22);
-            Button.onClick(() => this.toggleTimer());
-        }, Button);
-        Button.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Button.createWithLabel('跳过');
-            Button.width(100);
-            Button.height(44);
-            Button.backgroundColor('#6B7280');
-            Button.fontColor('#FFFFFF');
-            Button.borderRadius(22);
-            Button.onClick(() => this.skipTimer());
-        }, Button);
-        Button.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Button.createWithLabel('重置');
-            Button.width(100);
-            Button.height(44);
-            Button.backgroundColor('#F59E0B');
-            Button.fontColor('#FFFFFF');
-            Button.borderRadius(22);
-            Button.onClick(() => this.resetTimer());
-        }, Button);
-        Button.pop();
-        Row.pop();
-        // 计时器显示
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            If.create();
-            // 当前任务
-            if (this.currentTask) {
-                this.ifElseBranchUpdateFunction(0, () => {
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Column.create();
-                        Column.width('100%');
-                        Column.padding({ left: 16, right: 16, bottom: 16 });
-                        Column.opacity(this.taskOpacity);
-                        Column.scale({ x: this.taskScale, y: this.taskScale });
-                    }, Column);
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Text.create('当前任务');
-                        Text.fontSize(18);
-                        Text.fontWeight(FontWeight.Medium);
-                        Text.fontColor('#1F2937');
-                        Text.margin({ bottom: 8 });
-                    }, Text);
-                    Text.pop();
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Row.create();
-                        Row.padding(12);
-                        Row.backgroundColor('#FFFFFF');
-                        Row.borderRadius(8);
-                    }, Row);
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Text.create(this.currentTask.title);
-                        Text.fontSize(16);
-                        Text.fontColor('#1F2937');
-                        Text.layoutWeight(1);
-                    }, Text);
-                    Text.pop();
-                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                        Text.create(`${this.currentTask.pomodoros}/${this.currentTask.estimatedPomodoros}`);
-                        Text.fontSize(14);
-                        Text.fontColor('#6B7280');
-                    }, Text);
-                    Text.pop();
-                    Row.pop();
-                    Column.pop();
-                });
-            }
-            // 添加任务
-            else {
-                this.ifElseBranchUpdateFunction(1, () => {
-                });
-            }
-        }, If);
-        If.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 添加任务
-            Row.create({ space: 8 });
-            // 添加任务
-            Row.width('100%');
-            // 添加任务
-            Row.padding({ left: 16, right: 16, top: 8 });
-            // 添加任务
-            Row.opacity(this.taskOpacity);
-            // 添加任务
-            Row.scale({ x: this.taskScale, y: this.taskScale });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            TextInput.create({ placeholder: '添加新任务...', text: this.newTaskTitle });
-            TextInput.layoutWeight(1);
-            TextInput.height(40);
-            TextInput.backgroundColor('#F9FAFB');
-            TextInput.borderRadius(8);
-            TextInput.onChange((value: string) => {
-                this.newTaskTitle = value;
-            });
-            TextInput.onSubmit((enterKey: EnterKeyType) => {
-                this.addTask();
-            });
-        }, TextInput);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Button.createWithLabel('添加');
-            Button.width(60);
-            Button.height(40);
-            Button.backgroundColor('#10B981');
-            Button.fontColor('#FFFFFF');
-            Button.borderRadius(8);
-            Button.onClick(() => {
-                this.addTask();
-            });
-        }, Button);
-        Button.pop();
-        // 添加任务
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 任务列表
-            List.create({ space: 4 });
-            // 任务列表
-            List.height(200);
-            // 任务列表
-            List.padding({ left: 16, right: 16, top: 8 });
-            // 任务列表
-            List.opacity(this.taskOpacity);
-            // 任务列表
-            List.scale({ x: this.taskScale, y: this.taskScale });
+            List.create();
+            List.width('100%');
+            List.layoutWeight(1);
+            List.backgroundColor('#F9FAFB');
+            List.edgeEffect(EdgeEffect.Spring);
         }, List);
+        {
+            const itemCreation = (elmtId, isInitialRender) => {
+                ViewStackProcessor.StartGetAccessRecordingFor(elmtId);
+                itemCreation2(elmtId, isInitialRender);
+                if (!isInitialRender) {
+                    ListItem.pop();
+                }
+                ViewStackProcessor.StopGetAccessRecording();
+            };
+            const itemCreation2 = (elmtId, isInitialRender) => {
+                ListItem.create(deepRenderFunction, true);
+            };
+            const deepRenderFunction = (elmtId, isInitialRender) => {
+                itemCreation(elmtId, isInitialRender);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Column.create();
+                    Column.width('100%');
+                    Column.padding(32);
+                    Column.alignItems(HorizontalAlign.Center);
+                }, Column);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Text.create(this.isWorkTime ? '工作时间' : '休息时间');
+                    Text.fontSize(20);
+                    Text.fontWeight(FontWeight.Medium);
+                    Text.fontColor(this.isWorkTime ? '#10B981' : '#F59E0B');
+                    Text.margin({ bottom: 16 });
+                }, Text);
+                Text.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Stack.create();
+                    Stack.width(200);
+                    Stack.height(200);
+                    Stack.margin({ bottom: 32 });
+                    Stack.opacity(this.timerOpacity);
+                    Stack.scale({ x: this.timerScale, y: this.timerScale });
+                }, Stack);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Circle.create();
+                    Circle.width(200);
+                    Circle.height(200);
+                    Circle.fill('#F3F4F6');
+                }, Circle);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Circle.create();
+                    Circle.width(200);
+                    Circle.height(200);
+                    Circle.fill('#10B981');
+                    Circle.fillOpacity(0.1);
+                    Circle.clipShape(new Rect());
+                    Circle.rotate({ angle: this.getProgress() * 3.6 });
+                }, Circle);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Column.create();
+                }, Column);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Text.create(this.formatTime(this.timeLeft));
+                    Text.fontSize(48);
+                    Text.fontWeight(FontWeight.Bold);
+                    Text.fontColor('#1F2937');
+                }, Text);
+                Text.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    If.create();
+                    if (this.currentTask) {
+                        this.ifElseBranchUpdateFunction(0, () => {
+                            this.observeComponentCreation2((elmtId, isInitialRender) => {
+                                Text.create(this.currentTask.title);
+                                Text.fontSize(16);
+                                Text.fontColor('#6B7280');
+                                Text.margin({ top: 8 });
+                            }, Text);
+                            Text.pop();
+                        });
+                    }
+                    else {
+                        this.ifElseBranchUpdateFunction(1, () => {
+                        });
+                    }
+                }, If);
+                If.pop();
+                Column.pop();
+                Stack.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Row.create({ space: 16 });
+                }, Row);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Button.createWithLabel(this.isRunning ? '暂停' : '开始');
+                    Button.width(100);
+                    Button.height(44);
+                    Button.backgroundColor('#10B981');
+                    Button.fontColor('#FFFFFF');
+                    Button.borderRadius(22);
+                    Button.onClick(() => this.toggleTimer());
+                }, Button);
+                Button.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Button.createWithLabel('跳过');
+                    Button.width(100);
+                    Button.height(44);
+                    Button.backgroundColor('#6B7280');
+                    Button.fontColor('#FFFFFF');
+                    Button.borderRadius(22);
+                    Button.onClick(() => this.skipTimer());
+                }, Button);
+                Button.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Button.createWithLabel('重置');
+                    Button.width(100);
+                    Button.height(44);
+                    Button.backgroundColor('#F59E0B');
+                    Button.fontColor('#FFFFFF');
+                    Button.borderRadius(22);
+                    Button.onClick(() => this.resetTimer());
+                }, Button);
+                Button.pop();
+                Row.pop();
+                Column.pop();
+                ListItem.pop();
+            };
+            this.observeComponentCreation2(itemCreation2, ListItem);
+            ListItem.pop();
+        }
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            If.create();
+            if (this.currentTask) {
+                this.ifElseBranchUpdateFunction(0, () => {
+                    {
+                        const itemCreation = (elmtId, isInitialRender) => {
+                            ViewStackProcessor.StartGetAccessRecordingFor(elmtId);
+                            itemCreation2(elmtId, isInitialRender);
+                            if (!isInitialRender) {
+                                ListItem.pop();
+                            }
+                            ViewStackProcessor.StopGetAccessRecording();
+                        };
+                        const itemCreation2 = (elmtId, isInitialRender) => {
+                            ListItem.create(deepRenderFunction, true);
+                        };
+                        const deepRenderFunction = (elmtId, isInitialRender) => {
+                            itemCreation(elmtId, isInitialRender);
+                            this.observeComponentCreation2((elmtId, isInitialRender) => {
+                                Column.create();
+                                Column.width('100%');
+                                Column.padding({ left: 16, right: 16, bottom: 16 });
+                                Column.opacity(this.taskOpacity);
+                                Column.scale({ x: this.taskScale, y: this.taskScale });
+                            }, Column);
+                            this.observeComponentCreation2((elmtId, isInitialRender) => {
+                                Text.create('当前任务');
+                                Text.fontSize(18);
+                                Text.fontWeight(FontWeight.Medium);
+                                Text.fontColor('#1F2937');
+                                Text.margin({ bottom: 8 });
+                            }, Text);
+                            Text.pop();
+                            this.observeComponentCreation2((elmtId, isInitialRender) => {
+                                Row.create();
+                                Row.padding(12);
+                                Row.backgroundColor('#FFFFFF');
+                                Row.borderRadius(8);
+                            }, Row);
+                            this.observeComponentCreation2((elmtId, isInitialRender) => {
+                                Text.create(this.currentTask.title);
+                                Text.fontSize(16);
+                                Text.fontColor('#1F2937');
+                                Text.layoutWeight(1);
+                            }, Text);
+                            Text.pop();
+                            this.observeComponentCreation2((elmtId, isInitialRender) => {
+                                Text.create(`${this.currentTask.pomodoros}/${this.currentTask.estimatedPomodoros}`);
+                                Text.fontSize(14);
+                                Text.fontColor('#6B7280');
+                            }, Text);
+                            Text.pop();
+                            Row.pop();
+                            Column.pop();
+                            ListItem.pop();
+                        };
+                        this.observeComponentCreation2(itemCreation2, ListItem);
+                        ListItem.pop();
+                    }
+                });
+            }
+            else {
+                this.ifElseBranchUpdateFunction(1, () => {
+                });
+            }
+        }, If);
+        If.pop();
+        {
+            const itemCreation = (elmtId, isInitialRender) => {
+                ViewStackProcessor.StartGetAccessRecordingFor(elmtId);
+                itemCreation2(elmtId, isInitialRender);
+                if (!isInitialRender) {
+                    ListItem.pop();
+                }
+                ViewStackProcessor.StopGetAccessRecording();
+            };
+            const itemCreation2 = (elmtId, isInitialRender) => {
+                ListItem.create(deepRenderFunction, true);
+            };
+            const deepRenderFunction = (elmtId, isInitialRender) => {
+                itemCreation(elmtId, isInitialRender);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Row.create({ space: 8 });
+                    Row.width('100%');
+                    Row.padding({ left: 16, right: 16, top: 8 });
+                    Row.opacity(this.taskOpacity);
+                    Row.scale({ x: this.taskScale, y: this.taskScale });
+                }, Row);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    TextInput.create({ placeholder: '添加新任务...', text: this.newTaskTitle });
+                    TextInput.layoutWeight(1);
+                    TextInput.height(40);
+                    TextInput.backgroundColor('#F9FAFB');
+                    TextInput.borderRadius(8);
+                    TextInput.onChange((value: string) => {
+                        this.newTaskTitle = value;
+                    });
+                    TextInput.onSubmit(() => {
+                        this.addTask();
+                    });
+                }, TextInput);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Button.createWithLabel('添加');
+                    Button.width(60);
+                    Button.height(40);
+                    Button.backgroundColor('#10B981');
+                    Button.fontColor('#FFFFFF');
+                    Button.borderRadius(8);
+                    Button.onClick(() => {
+                        this.addTask();
+                    });
+                }, Button);
+                Button.pop();
+                Row.pop();
+                ListItem.pop();
+            };
+            this.observeComponentCreation2(itemCreation2, ListItem);
+            ListItem.pop();
+        }
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             ForEach.create();
             const forEachItemGenFunction = _item => {
@@ -784,281 +856,113 @@ class PomodoroPage extends ViewPU {
             this.forEachUpdateFunction(elmtId, this.tasks, forEachItemGenFunction, (task: Task) => task.id, false, false);
         }, ForEach);
         ForEach.pop();
-        // 任务列表
+        {
+            const itemCreation = (elmtId, isInitialRender) => {
+                ViewStackProcessor.StartGetAccessRecordingFor(elmtId);
+                itemCreation2(elmtId, isInitialRender);
+                if (!isInitialRender) {
+                    ListItem.pop();
+                }
+                ViewStackProcessor.StopGetAccessRecording();
+            };
+            const itemCreation2 = (elmtId, isInitialRender) => {
+                ListItem.create(deepRenderFunction, true);
+            };
+            const deepRenderFunction = (elmtId, isInitialRender) => {
+                itemCreation(elmtId, isInitialRender);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Column.create();
+                    Column.width('100%');
+                    Column.padding(16);
+                    Column.backgroundColor('#FFFFFF');
+                    Column.borderRadius(12);
+                    Column.margin({ left: 16, right: 16, top: 16 });
+                    Column.opacity(this.cardOpacity);
+                    Column.scale({ x: this.cardScale, y: this.cardScale });
+                }, Column);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Text.create('计时器设置');
+                    Text.fontSize(18);
+                    Text.fontWeight(FontWeight.Medium);
+                    Text.fontColor('#1F2937');
+                    Text.margin({ bottom: 12 });
+                }, Text);
+                Text.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Row.create();
+                    Row.width('100%');
+                    Row.padding({ left: 16, right: 16, top: 8 });
+                }, Row);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Text.create('工作时长:');
+                    Text.fontSize(14);
+                    Text.fontColor('#6B7280');
+                    Text.layoutWeight(1);
+                }, Text);
+                Text.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Select.create([
+                        new OptionItem('15', '15分钟'),
+                        new OptionItem('25', '25分钟'),
+                        new OptionItem('30', '30分钟'),
+                        new OptionItem('45', '45分钟')
+                    ]);
+                    Select.selected(Math.floor(this.workDuration / 60) === 25 ? 1 : (Math.floor(this.workDuration / 60) === 15 ? 0 : (Math.floor(this.workDuration / 60) === 30 ? 2 : 3)));
+                    Select.onSelect((index: number) => {
+                        const durations = [15, 25, 30, 45];
+                        this.workDuration = durations[index] * 60;
+                        if (this.isWorkTime) {
+                            this.resetTimer();
+                        }
+                    });
+                    Select.width(100);
+                    Select.height(32);
+                    Select.backgroundColor('#F3F4F6');
+                    Select.borderRadius(8);
+                }, Select);
+                Select.pop();
+                Row.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Row.create();
+                    Row.width('100%');
+                    Row.padding({ left: 16, right: 16, top: 8 });
+                }, Row);
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Text.create('休息时长:');
+                    Text.fontSize(14);
+                    Text.fontColor('#6B7280');
+                    Text.layoutWeight(1);
+                }, Text);
+                Text.pop();
+                this.observeComponentCreation2((elmtId, isInitialRender) => {
+                    Select.create([
+                        new OptionItem('3', '3分钟'),
+                        new OptionItem('5', '5分钟'),
+                        new OptionItem('10', '10分钟'),
+                        new OptionItem('15', '15分钟')
+                    ]);
+                    Select.selected(Math.floor(this.breakDuration / 60) === 5 ? 1 : (Math.floor(this.breakDuration / 60) === 3 ? 0 : (Math.floor(this.breakDuration / 60) === 10 ? 2 : 3)));
+                    Select.onSelect((index: number) => {
+                        const durations = [3, 5, 10, 15];
+                        this.breakDuration = durations[index] * 60;
+                        if (!this.isWorkTime) {
+                            this.resetTimer();
+                        }
+                    });
+                    Select.width(100);
+                    Select.height(32);
+                    Select.backgroundColor('#F3F4F6');
+                    Select.borderRadius(8);
+                }, Select);
+                Select.pop();
+                Row.pop();
+                Column.pop();
+                ListItem.pop();
+            };
+            this.observeComponentCreation2(itemCreation2, ListItem);
+            ListItem.pop();
+        }
         List.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 设置区域
-            Column.create();
-            // 设置区域
-            Column.width('100%');
-            // 设置区域
-            Column.padding(16);
-            // 设置区域
-            Column.backgroundColor('#FFFFFF');
-            // 设置区域
-            Column.borderRadius(12);
-            // 设置区域
-            Column.margin({ left: 16, right: 16, top: 16 });
-            // 设置区域
-            Column.opacity(this.cardOpacity);
-            // 设置区域
-            Column.scale({ x: this.cardScale, y: this.cardScale });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('计时器设置');
-            Text.fontSize(18);
-            Text.fontWeight(FontWeight.Medium);
-            Text.fontColor('#1F2937');
-            Text.margin({ bottom: 12 });
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.width('100%');
-            Row.padding({ left: 16, right: 16, top: 8 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('工作时长:');
-            Text.fontSize(14);
-            Text.fontColor('#6B7280');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Select.create([
-                new OptionItem('15', '15分钟'),
-                new OptionItem('25', '25分钟'),
-                new OptionItem('30', '30分钟'),
-                new OptionItem('45', '45分钟')
-            ]);
-            Select.selected(Math.floor(this.workDuration / 60) === 25 ? 1 : (Math.floor(this.workDuration / 60) === 15 ? 0 : (Math.floor(this.workDuration / 60) === 30 ? 2 : 3)));
-            Select.onSelect((index: number) => {
-                const durations = [15, 25, 30, 45];
-                this.workDuration = durations[index] * 60;
-                if (this.isWorkTime) {
-                    this.resetTimer();
-                }
-            });
-            Select.width(100);
-            Select.height(32);
-            Select.backgroundColor('#F3F4F6');
-            Select.borderRadius(8);
-        }, Select);
-        Select.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.width('100%');
-            Row.padding({ left: 16, right: 16, top: 8 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('休息时长:');
-            Text.fontSize(14);
-            Text.fontColor('#6B7280');
-            Text.layoutWeight(1);
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Select.create([
-                new OptionItem('3', '3分钟'),
-                new OptionItem('5', '5分钟'),
-                new OptionItem('10', '10分钟'),
-                new OptionItem('15', '15分钟')
-            ]);
-            Select.selected(Math.floor(this.breakDuration / 60) === 5 ? 1 : (Math.floor(this.breakDuration / 60) === 3 ? 0 : (Math.floor(this.breakDuration / 60) === 10 ? 2 : 3)));
-            Select.onSelect((index: number) => {
-                const durations = [3, 5, 10, 15];
-                this.breakDuration = durations[index] * 60;
-                if (!this.isWorkTime) {
-                    this.resetTimer();
-                }
-            });
-            Select.width(100);
-            Select.height(32);
-            Select.backgroundColor('#F3F4F6');
-            Select.borderRadius(8);
-        }, Select);
-        Select.pop();
-        Row.pop();
-        // 设置区域
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 底部导航
-            Row.create();
-            // 底部导航
-            Row.width('100%');
-            // 底部导航
-            Row.padding({ top: 12, bottom: 8 });
-            // 底部导航
-            Row.backgroundColor('#FFFFFF');
-            // 底部导航
-            Row.border({
-                width: { top: 1 },
-                color: '#E5E7EB'
-            });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777242, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#10B981');
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('番茄时钟');
-            Text.fontSize(12);
-            Text.fontColor('#10B981');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-            Column.onClick(() => {
-                // 使用自定义动画序列
-                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
-                    this.titleOpacity = 0;
-                    this.titleScale = 0.3;
-                    this.timerOpacity = 0;
-                    this.timerScale = 0.3;
-                    this.cardOpacity = 0;
-                    this.cardScale = 0.3;
-                    this.taskOpacity = 0;
-                    this.taskScale = 0.3;
-                });
-                setTimeout(() => {
-                    navigationManager.navigateTo('Tasks');
-                }, 300);
-            });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777244, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('待办');
-            Text.fontSize(12);
-            Text.fontColor('#6B7280');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-            Column.onClick(() => {
-                // 使用自定义动画序列
-                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
-                    this.titleOpacity = 0;
-                    this.titleScale = 0.3;
-                    this.timerOpacity = 0;
-                    this.timerScale = 0.3;
-                    this.cardOpacity = 0;
-                    this.cardScale = 0.3;
-                    this.taskOpacity = 0;
-                    this.taskScale = 0.3;
-                });
-                setTimeout(() => {
-                    navigationManager.navigateTo('Calendar');
-                }, 300);
-            });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777241, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('日历');
-            Text.fontSize(12);
-            Text.fontColor('#6B7280');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-            Column.onClick(() => {
-                // 使用自定义动画序列
-                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
-                    this.titleOpacity = 0;
-                    this.titleScale = 0.3;
-                    this.timerOpacity = 0;
-                    this.timerScale = 0.3;
-                    this.cardOpacity = 0;
-                    this.cardScale = 0.3;
-                    this.taskOpacity = 0;
-                    this.taskScale = 0.3;
-                });
-                setTimeout(() => {
-                    navigationManager.navigateTo('Settings');
-                }, 300);
-            });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777243, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('设置');
-            Text.fontSize(12);
-            Text.fontColor('#6B7280');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.width('20%');
-            Column.alignItems(HorizontalAlign.Center);
-            Column.onClick(() => {
-                // 使用自定义返回动画
-                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
-                    this.titleOpacity = 0;
-                    this.titleScale = 0.3;
-                    this.timerOpacity = 0;
-                    this.timerScale = 0.3;
-                    this.cardOpacity = 0;
-                    this.cardScale = 0.3;
-                    this.taskOpacity = 0;
-                    this.taskScale = 0.3;
-                });
-                setTimeout(() => {
-                    navigationManager.navigateBack();
-                }, 300);
-            });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-            Image.rotate({ angle: 180 });
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('返回');
-            Text.fontSize(12);
-            Text.fontColor('#6B7280');
-            Text.margin({ top: 4 });
-        }, Text);
-        Text.pop();
-        Column.pop();
-        // 底部导航
-        Row.pop();
         Column.pop();
     }
     rerender() {

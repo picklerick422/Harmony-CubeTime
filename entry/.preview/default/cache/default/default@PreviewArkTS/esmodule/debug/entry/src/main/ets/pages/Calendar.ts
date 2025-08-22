@@ -2,35 +2,48 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
     Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
 }
 interface CalendarPage_Params {
-    currentDate?: Date;
-    selectedDate?: Date;
-    tasks?: CalendarTask[];
-    events?: CalendarEvent[];
-    showAddTask?: boolean;
-    showAddEvent?: boolean;
-    newTaskTitle?: string;
-    newEventTitle?: string;
-    newEventTime?: string;
+    itemScale?: number;
+    itemOpacity?: number;
+    cardScale?: number;
+    cardOpacity?: number;
+    timerScale?: number;
+    timerOpacity?: number;
+    navScale?: number;
+    navOpacity?: number;
+    state?: CalendarState;
 }
-import router from "@ohos:router";
-interface CalendarTask {
-    id: string;
-    title: string;
-    completed: boolean;
-    date: string;
-}
+import { NavigationManager, NavigationHelper } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 interface CalendarEvent {
     id: string;
     title: string;
-    time: string;
-    date: string;
-}
-interface CalendarDay {
     date: Date;
-    isCurrentMonth: boolean;
-    isToday: boolean;
-    hasTasks: boolean;
-    hasEvents: boolean;
+    completed: boolean;
+}
+interface CalendarState {
+    events: CalendarEvent[];
+    selectedDate: Date;
+    currentMonth: Date;
+    navigationManager?: NavigationManager;
+    animationState: {
+        contentScale: number;
+        contentOpacity: number;
+        titleTranslateY: number;
+        titleOpacity: number;
+        calendarScale: number;
+        calendarOpacity: number;
+        buttonScale: number;
+        buttonOpacity: number;
+        listScale?: number;
+        sectionScale?: number;
+        itemScale?: number;
+        itemOpacity?: number;
+        cardScale?: number;
+        cardOpacity?: number;
+        timerScale?: number;
+        timerOpacity?: number;
+        navScale?: number;
+        navOpacity?: number;
+    };
 }
 class CalendarPage extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
@@ -38,312 +51,329 @@ class CalendarPage extends ViewPU {
         if (typeof paramsLambda === "function") {
             this.paramsGenerator_ = paramsLambda;
         }
-        this.__currentDate = new ObservedPropertyObjectPU(new Date(), this, "currentDate");
-        this.__selectedDate = new ObservedPropertyObjectPU(new Date(), this, "selectedDate");
-        this.__tasks = new ObservedPropertyObjectPU([
-            { id: '1', title: '完成项目报告', date: '2024-01-15', completed: false },
-            { id: '2', title: '团队会议', date: '2024-01-15', completed: true },
-            { id: '3', title: '代码审查', date: '2024-01-16', completed: false },
-        ], this, "tasks");
-        this.__events = new ObservedPropertyObjectPU([
-            { id: '1', title: '产品发布会', date: '2024-01-20', time: '14:00' },
-            { id: '2', title: '客户会议', date: '2024-01-18', time: '10:00' },
-        ], this, "events");
-        this.__showAddTask = new ObservedPropertySimplePU(false, this, "showAddTask");
-        this.__showAddEvent = new ObservedPropertySimplePU(false, this, "showAddEvent");
-        this.__newTaskTitle = new ObservedPropertySimplePU('', this, "newTaskTitle");
-        this.__newEventTitle = new ObservedPropertySimplePU('', this, "newEventTitle");
-        this.__newEventTime = new ObservedPropertySimplePU('', this, "newEventTime");
+        this.__itemScale = new ObservedPropertySimplePU(0.8, this, "itemScale");
+        this.__itemOpacity = new ObservedPropertySimplePU(0, this, "itemOpacity");
+        this.__cardScale = new ObservedPropertySimplePU(0.8, this, "cardScale");
+        this.__cardOpacity = new ObservedPropertySimplePU(0, this, "cardOpacity");
+        this.__timerScale = new ObservedPropertySimplePU(0.8, this, "timerScale");
+        this.__timerOpacity = new ObservedPropertySimplePU(0, this, "timerOpacity");
+        this.__navScale = new ObservedPropertySimplePU(0.8, this, "navScale");
+        this.__navOpacity = new ObservedPropertySimplePU(0, this, "navOpacity");
+        this.__state = new ObservedPropertyObjectPU({
+            events: [
+                { id: '1', title: '项目会议', date: new Date(), completed: false },
+                { id: '2', title: '代码审查', date: new Date(Date.now() + 86400000), completed: true },
+                { id: '3', title: '产品演示', date: new Date(Date.now() + 172800000), completed: false }
+            ],
+            selectedDate: new Date(),
+            currentMonth: new Date(),
+            animationState: {
+                contentScale: 0.9,
+                contentOpacity: 0,
+                titleTranslateY: -20,
+                titleOpacity: 0,
+                calendarScale: 0.8,
+                calendarOpacity: 0,
+                buttonScale: 0.8,
+                buttonOpacity: 0,
+                itemScale: 0.8,
+                itemOpacity: 0,
+                cardScale: 0.8,
+                cardOpacity: 0,
+                timerScale: 0.8,
+                timerOpacity: 0,
+                navScale: 0.8,
+                navOpacity: 0
+            }
+        }, this, "state");
         this.setInitiallyProvidedValue(params);
         this.finalizeConstruction();
     }
     setInitiallyProvidedValue(params: CalendarPage_Params) {
-        if (params.currentDate !== undefined) {
-            this.currentDate = params.currentDate;
+        if (params.itemScale !== undefined) {
+            this.itemScale = params.itemScale;
         }
-        if (params.selectedDate !== undefined) {
-            this.selectedDate = params.selectedDate;
+        if (params.itemOpacity !== undefined) {
+            this.itemOpacity = params.itemOpacity;
         }
-        if (params.tasks !== undefined) {
-            this.tasks = params.tasks;
+        if (params.cardScale !== undefined) {
+            this.cardScale = params.cardScale;
         }
-        if (params.events !== undefined) {
-            this.events = params.events;
+        if (params.cardOpacity !== undefined) {
+            this.cardOpacity = params.cardOpacity;
         }
-        if (params.showAddTask !== undefined) {
-            this.showAddTask = params.showAddTask;
+        if (params.timerScale !== undefined) {
+            this.timerScale = params.timerScale;
         }
-        if (params.showAddEvent !== undefined) {
-            this.showAddEvent = params.showAddEvent;
+        if (params.timerOpacity !== undefined) {
+            this.timerOpacity = params.timerOpacity;
         }
-        if (params.newTaskTitle !== undefined) {
-            this.newTaskTitle = params.newTaskTitle;
+        if (params.navScale !== undefined) {
+            this.navScale = params.navScale;
         }
-        if (params.newEventTitle !== undefined) {
-            this.newEventTitle = params.newEventTitle;
+        if (params.navOpacity !== undefined) {
+            this.navOpacity = params.navOpacity;
         }
-        if (params.newEventTime !== undefined) {
-            this.newEventTime = params.newEventTime;
+        if (params.state !== undefined) {
+            this.state = params.state;
         }
     }
     updateStateVars(params: CalendarPage_Params) {
     }
     purgeVariableDependenciesOnElmtId(rmElmtId) {
-        this.__currentDate.purgeDependencyOnElmtId(rmElmtId);
-        this.__selectedDate.purgeDependencyOnElmtId(rmElmtId);
-        this.__tasks.purgeDependencyOnElmtId(rmElmtId);
-        this.__events.purgeDependencyOnElmtId(rmElmtId);
-        this.__showAddTask.purgeDependencyOnElmtId(rmElmtId);
-        this.__showAddEvent.purgeDependencyOnElmtId(rmElmtId);
-        this.__newTaskTitle.purgeDependencyOnElmtId(rmElmtId);
-        this.__newEventTitle.purgeDependencyOnElmtId(rmElmtId);
-        this.__newEventTime.purgeDependencyOnElmtId(rmElmtId);
+        this.__itemScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__itemOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__cardScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__cardOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__timerScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__timerOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__navScale.purgeDependencyOnElmtId(rmElmtId);
+        this.__navOpacity.purgeDependencyOnElmtId(rmElmtId);
+        this.__state.purgeDependencyOnElmtId(rmElmtId);
     }
     aboutToBeDeleted() {
-        this.__currentDate.aboutToBeDeleted();
-        this.__selectedDate.aboutToBeDeleted();
-        this.__tasks.aboutToBeDeleted();
-        this.__events.aboutToBeDeleted();
-        this.__showAddTask.aboutToBeDeleted();
-        this.__showAddEvent.aboutToBeDeleted();
-        this.__newTaskTitle.aboutToBeDeleted();
-        this.__newEventTitle.aboutToBeDeleted();
-        this.__newEventTime.aboutToBeDeleted();
+        this.__itemScale.aboutToBeDeleted();
+        this.__itemOpacity.aboutToBeDeleted();
+        this.__cardScale.aboutToBeDeleted();
+        this.__cardOpacity.aboutToBeDeleted();
+        this.__timerScale.aboutToBeDeleted();
+        this.__timerOpacity.aboutToBeDeleted();
+        this.__navScale.aboutToBeDeleted();
+        this.__navOpacity.aboutToBeDeleted();
+        this.__state.aboutToBeDeleted();
         SubscriberManager.Get().delete(this.id__());
         this.aboutToBeDeletedInternal();
     }
-    private __currentDate: ObservedPropertyObjectPU<Date>;
-    get currentDate() {
-        return this.__currentDate.get();
+    private __itemScale: ObservedPropertySimplePU<number>;
+    get itemScale() {
+        return this.__itemScale.get();
     }
-    set currentDate(newValue: Date) {
-        this.__currentDate.set(newValue);
+    set itemScale(newValue: number) {
+        this.__itemScale.set(newValue);
     }
-    private __selectedDate: ObservedPropertyObjectPU<Date>;
-    get selectedDate() {
-        return this.__selectedDate.get();
+    private __itemOpacity: ObservedPropertySimplePU<number>;
+    get itemOpacity() {
+        return this.__itemOpacity.get();
     }
-    set selectedDate(newValue: Date) {
-        this.__selectedDate.set(newValue);
+    set itemOpacity(newValue: number) {
+        this.__itemOpacity.set(newValue);
     }
-    private __tasks: ObservedPropertyObjectPU<CalendarTask[]>;
-    get tasks() {
-        return this.__tasks.get();
+    private __cardScale: ObservedPropertySimplePU<number>;
+    get cardScale() {
+        return this.__cardScale.get();
     }
-    set tasks(newValue: CalendarTask[]) {
-        this.__tasks.set(newValue);
+    set cardScale(newValue: number) {
+        this.__cardScale.set(newValue);
     }
-    private __events: ObservedPropertyObjectPU<CalendarEvent[]>;
-    get events() {
-        return this.__events.get();
+    private __cardOpacity: ObservedPropertySimplePU<number>;
+    get cardOpacity() {
+        return this.__cardOpacity.get();
     }
-    set events(newValue: CalendarEvent[]) {
-        this.__events.set(newValue);
+    set cardOpacity(newValue: number) {
+        this.__cardOpacity.set(newValue);
     }
-    private __showAddTask: ObservedPropertySimplePU<boolean>;
-    get showAddTask() {
-        return this.__showAddTask.get();
+    private __timerScale: ObservedPropertySimplePU<number>;
+    get timerScale() {
+        return this.__timerScale.get();
     }
-    set showAddTask(newValue: boolean) {
-        this.__showAddTask.set(newValue);
+    set timerScale(newValue: number) {
+        this.__timerScale.set(newValue);
     }
-    private __showAddEvent: ObservedPropertySimplePU<boolean>;
-    get showAddEvent() {
-        return this.__showAddEvent.get();
+    private __timerOpacity: ObservedPropertySimplePU<number>;
+    get timerOpacity() {
+        return this.__timerOpacity.get();
     }
-    set showAddEvent(newValue: boolean) {
-        this.__showAddEvent.set(newValue);
+    set timerOpacity(newValue: number) {
+        this.__timerOpacity.set(newValue);
     }
-    private __newTaskTitle: ObservedPropertySimplePU<string>;
-    get newTaskTitle() {
-        return this.__newTaskTitle.get();
+    private __navScale: ObservedPropertySimplePU<number>;
+    get navScale() {
+        return this.__navScale.get();
     }
-    set newTaskTitle(newValue: string) {
-        this.__newTaskTitle.set(newValue);
+    set navScale(newValue: number) {
+        this.__navScale.set(newValue);
     }
-    private __newEventTitle: ObservedPropertySimplePU<string>;
-    get newEventTitle() {
-        return this.__newEventTitle.get();
+    private __navOpacity: ObservedPropertySimplePU<number>;
+    get navOpacity() {
+        return this.__navOpacity.get();
     }
-    set newEventTitle(newValue: string) {
-        this.__newEventTitle.set(newValue);
+    set navOpacity(newValue: number) {
+        this.__navOpacity.set(newValue);
     }
-    private __newEventTime: ObservedPropertySimplePU<string>;
-    get newEventTime() {
-        return this.__newEventTime.get();
+    private __state: ObservedPropertyObjectPU<CalendarState>;
+    get state() {
+        return this.__state.get();
     }
-    set newEventTime(newValue: string) {
-        this.__newEventTime.set(newValue);
+    set state(newValue: CalendarState) {
+        this.__state.set(newValue);
     }
-    formatDate(date: Date): string {
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-        return `${year}-${month}-${day}`;
+    aboutToAppear() {
+        const navigationManager = NavigationManager.getInstance();
+        this.state.navigationManager = navigationManager;
+        this.state.animationState = navigationManager.getInitialState();
+        // 页面进入动画
+        setTimeout(() => {
+            navigationManager.animateIn();
+        }, 100);
     }
-    getCalendarDays(): CalendarDay[] {
-        const year = this.currentDate.getFullYear();
-        const month = this.currentDate.getMonth();
-        const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
-        const startDate = new Date(firstDay);
-        startDate.setDate(startDate.getDate() - firstDay.getDay());
-        const days: CalendarDay[] = [];
-        const today = new Date();
-        for (let i = 0; i < 42; i++) {
-            const date = new Date(startDate);
-            date.setDate(startDate.getDate() + i);
-            const dateStr = this.formatDate(date);
-            const hasTasks = this.tasks.some(task => task.date === dateStr);
-            const hasEvents = this.events.some(event => event.date === dateStr);
-            days.push({
-                date: date,
-                isCurrentMonth: date.getMonth() === month,
-                isToday: date.toDateString() === today.toDateString(),
-                hasTasks: hasTasks,
-                hasEvents: hasEvents
-            });
-        }
-        return days;
+    onPageShow() {
+        this.resetVisibility();
+        this.animateIn();
     }
-    getWeeks(): CalendarDay[][] {
-        const weeks: CalendarDay[][] = [];
-        const days = this.getCalendarDays();
-        for (let i = 0; i < 6; i++) {
-            weeks.push(days.slice(i * 7, (i + 1) * 7));
-        }
-        return weeks;
+    private resetVisibility(): void {
+        this.state.animationState = {
+            contentScale: 0.9,
+            contentOpacity: 0,
+            titleTranslateY: -20,
+            titleOpacity: 0,
+            calendarScale: 0.8,
+            calendarOpacity: 0,
+            buttonScale: 0.8,
+            buttonOpacity: 0,
+            listScale: 1,
+            sectionScale: 1,
+            itemScale: 0.8,
+            itemOpacity: 0,
+            cardScale: 0.8,
+            cardOpacity: 0,
+            timerScale: 0.8,
+            timerOpacity: 0,
+            navScale: 0.8,
+            navOpacity: 0
+        };
     }
-    getSelectedDateStr(): string {
-        return this.formatDate(this.selectedDate);
-    }
-    getDayTasks(): CalendarTask[] {
-        const selectedDateStr = this.getSelectedDateStr();
-        return this.tasks.filter(task => task.date === selectedDateStr);
-    }
-    getDayEvents(): CalendarEvent[] {
-        const selectedDateStr = this.getSelectedDateStr();
-        return this.events.filter(event => event.date === selectedDateStr);
-    }
-    getWeekDays(): string[] {
-        return ['日', '一', '二', '三', '四', '五', '六'];
-    }
-    changeMonth(delta: number): void {
-        const newDate = new Date(this.currentDate);
-        newDate.setMonth(newDate.getMonth() + delta);
-        this.currentDate = newDate;
-    }
-    selectDate(date: Date): void {
-        this.selectedDate = date;
-    }
-    toggleTask(taskId: string): void {
-        const index = this.tasks.findIndex(task => task.id === taskId);
-        if (index !== -1) {
-            this.tasks[index].completed = !this.tasks[index].completed;
+    private animateTransition(duration: number = 250): void {
+        if (this.state.navigationManager) {
+            this.state.navigationManager.animateOut();
         }
     }
-    deleteTask(taskId: string): void {
-        const index = this.tasks.findIndex(task => task.id === taskId);
-        if (index !== -1) {
-            this.tasks.splice(index, 1);
-        }
+    private generateScramble(): void {
+        // 日历页面不需要生成打乱，保持空实现
     }
-    deleteEvent(eventId: string): void {
-        const index = this.events.findIndex(event => event.id === eventId);
-        if (index !== -1) {
-            this.events.splice(index, 1);
-        }
+    private loadBestTime(): void {
+        // 日历页面不需要加载最佳时间，保持空实现
     }
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(142:5)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(132:5)", "entry");
             Column.width('100%');
             Column.height('100%');
-            Column.backgroundColor('#F9FAFB');
+            Column.backgroundColor('#F5F7FA');
+            Column.scale({ x: this.state.animationState.contentScale, y: this.state.animationState.contentScale });
+            Column.opacity(this.state.animationState.contentOpacity);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 顶部标题栏
+            // 标题区域
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(144:7)", "entry");
-            // 顶部标题栏
+            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(134:7)", "entry");
+            // 标题区域
             Row.width('100%');
-            // 顶部标题栏
-            Row.padding(16);
-            // 顶部标题栏
-            Row.justifyContent(FlexAlign.SpaceBetween);
+            // 标题区域
+            Row.padding({ left: 20, right: 20, top: 60, bottom: 20 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('日历');
-            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(145:9)", "entry");
-            Text.fontSize(24);
+            Text.create('日历视图');
+            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(135:9)", "entry");
+            Text.fontSize(28);
             Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#1F2937');
+            Text.fontColor('#2C3E50');
+            Text.scale({ x: this.state.animationState.titleOpacity, y: this.state.animationState.titleOpacity });
+            Text.opacity(this.state.animationState.titleOpacity);
+            Text.translate({ y: this.state.animationState.titleTranslateY });
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Blank.create();
-            Blank.debugLine("entry/src/main/ets/pages/Calendar.ets(150:9)", "entry");
+            Blank.debugLine("entry/src/main/ets/pages/Calendar.ets(143:9)", "entry");
         }, Blank);
         Blank.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Calendar.ets(152:9)", "entry");
+            Image.create($r('app.media.ic_public_back'));
+            Image.debugLine("entry/src/main/ets/pages/Calendar.ets(145:9)", "entry");
             Image.width(24);
             Image.height(24);
-            Image.fillColor('#6B7280');
-            Image.onClick(() => router.back());
+            Image.onClick(() => {
+                NavigationHelper.navigateBack(this.state.navigationManager);
+            });
         }, Image);
-        // 顶部标题栏
+        // 标题区域
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 月份导航
+            // 日历头部
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(163:7)", "entry");
-            // 月份导航
+            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(156:7)", "entry");
+            // 日历头部
             Row.width('100%');
-            // 月份导航
-            Row.padding({ left: 16, right: 16, bottom: 12 });
-            // 月份导航
-            Row.justifyContent(FlexAlign.SpaceBetween);
-            // 月份导航
-            Row.alignItems(VerticalAlign.Center);
+            // 日历头部
+            Row.padding({ left: 20, right: 20, bottom: 20 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Calendar.ets(164:9)", "entry");
-            Image.width(24);
-            Image.height(24);
-            Image.fillColor('#6B7280');
-            Image.onClick(() => this.changeMonth(-1));
-        }, Image);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(`${this.currentDate.getFullYear()}年${this.currentDate.getMonth() + 1}月`);
-            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(170:9)", "entry");
-            Text.fontSize(18);
-            Text.fontWeight(FontWeight.Medium);
-            Text.fontColor('#1F2937');
+            Text.create(this.formatMonth(this.state.currentMonth));
+            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(157:9)", "entry");
+            Text.fontSize(20);
+            Text.fontWeight(FontWeight.Bold);
+            Text.fontColor('#2C3E50');
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Image.create({ "id": 16777247, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Calendar.ets(175:9)", "entry");
+            Blank.create();
+            Blank.debugLine("entry/src/main/ets/pages/Calendar.ets(162:9)", "entry");
+        }, Blank);
+        Blank.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Row.create();
+            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(164:9)", "entry");
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Image.create($r('app.media.ic_public_arrow_left'));
+            Image.debugLine("entry/src/main/ets/pages/Calendar.ets(165:11)", "entry");
             Image.width(24);
             Image.height(24);
-            Image.fillColor('#6B7280');
-            Image.rotate({ angle: 180 });
-            Image.onClick(() => this.changeMonth(1));
+            Image.onClick(() => {
+                this.previousMonth();
+            });
         }, Image);
-        // 月份导航
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Image.create($r('app.media.ic_public_arrow_right'));
+            Image.debugLine("entry/src/main/ets/pages/Calendar.ets(172:11)", "entry");
+            Image.width(24);
+            Image.height(24);
+            Image.margin({ left: 20 });
+            Image.onClick(() => {
+                this.nextMonth();
+            });
+        }, Image);
         Row.pop();
+        // 日历头部
+        Row.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 日历网格
+            Column.create();
+            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(185:7)", "entry");
+            // 日历网格
+            Column.width('100%');
+            // 日历网格
+            Column.padding({ left: 20, right: 20 });
+            // 日历网格
+            Column.backgroundColor('#FFFFFF');
+            // 日历网格
+            Column.borderRadius(16);
+            // 日历网格
+            Column.margin({ left: 20, right: 20, bottom: 20 });
+            // 日历网格
+            Column.scale({ x: this.state.animationState.calendarScale, y: this.state.animationState.calendarScale });
+            // 日历网格
+            Column.opacity(this.state.animationState.calendarOpacity);
+        }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 星期标题
             Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(188:7)", "entry");
+            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(187:9)", "entry");
             // 星期标题
             Row.width('100%');
             // 星期标题
-            Row.padding({ left: 16, right: 16, bottom: 8 });
+            Row.padding({ bottom: 10 });
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             ForEach.create();
@@ -351,311 +381,96 @@ class CalendarPage extends ViewPU {
                 const day = _item;
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     Text.create(day);
-                    Text.debugLine("entry/src/main/ets/pages/Calendar.ets(190:11)", "entry");
+                    Text.debugLine("entry/src/main/ets/pages/Calendar.ets(189:13)", "entry");
                     Text.fontSize(14);
-                    Text.fontColor('#6B7280');
-                    Text.layoutWeight(1);
+                    Text.fontColor('#7F8C8D');
+                    Text.width('14%');
                     Text.textAlign(TextAlign.Center);
                 }, Text);
                 Text.pop();
             };
-            this.forEachUpdateFunction(elmtId, this.getWeekDays(), forEachItemGenFunction);
+            this.forEachUpdateFunction(elmtId, ['日', '一', '二', '三', '四', '五', '六'], forEachItemGenFunction);
         }, ForEach);
         ForEach.pop();
         // 星期标题
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 日历网格
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(201:7)", "entry");
-            // 日历网格
-            Column.width('100%');
-            // 日历网格
-            Column.padding({ left: 16, right: 16 });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            // 日期网格
             ForEach.create();
             const forEachItemGenFunction = _item => {
                 const week = _item;
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     Row.create();
-                    Row.debugLine("entry/src/main/ets/pages/Calendar.ets(203:11)", "entry");
+                    Row.debugLine("entry/src/main/ets/pages/Calendar.ets(201:11)", "entry");
+                    Row.width('100%');
                 }, Row);
                 this.observeComponentCreation2((elmtId, isInitialRender) => {
                     ForEach.create();
                     const forEachItemGenFunction = _item => {
-                        const day = _item;
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Stack.create();
-                            Stack.debugLine("entry/src/main/ets/pages/Calendar.ets(205:15)", "entry");
-                            Stack.width(40);
-                            Stack.height(40);
-                            Stack.onClick(() => this.selectDate(day.date));
-                        }, Stack);
+                        const date = _item;
                         this.observeComponentCreation2((elmtId, isInitialRender) => {
                             Column.create();
-                            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(206:17)", "entry");
-                            Column.width(40);
-                            Column.height(40);
-                            Column.borderRadius(20);
-                            Column.backgroundColor(day.isToday ? '#10B981' : 'transparent');
+                            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(203:15)", "entry");
+                            Column.width('14%');
+                            Column.aspectRatio(1);
                             Column.justifyContent(FlexAlign.Center);
-                            Column.alignItems(HorizontalAlign.Center);
+                            Column.onClick(() => {
+                                this.selectDate(date);
+                            });
                         }, Column);
                         this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Text.create(day.date.getDate().toString());
-                            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(207:19)", "entry");
-                            Text.fontSize(14);
-                            Text.fontColor(day.isCurrentMonth ?
-                                (day.isToday ? '#FFFFFF' : '#1F2937') : '#9CA3AF');
-                            Text.fontWeight(day.isToday ? FontWeight.Bold : FontWeight.Normal);
+                            Text.create(date.getDate().toString());
+                            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(204:17)", "entry");
+                            Text.fontSize(16);
+                            Text.fontColor(this.getDateColor(date));
+                            Text.fontWeight(this.isToday(date) ? FontWeight.Bold : FontWeight.Normal);
+                            Text.width(40);
+                            Text.height(40);
+                            Text.textAlign(TextAlign.Center);
+                            Text.backgroundColor(this.isToday(date) ? '#4CAF50' : 'transparent');
+                            Text.borderRadius(20);
+                            Text.padding(4);
                         }, Text);
                         Text.pop();
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            If.create();
-                            if (day.hasTasks || day.hasEvents) {
-                                this.ifElseBranchUpdateFunction(0, () => {
-                                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                        Row.create();
-                                        Row.debugLine("entry/src/main/ets/pages/Calendar.ets(214:21)", "entry");
-                                        Row.margin({ top: 2 });
-                                    }, Row);
-                                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                        If.create();
-                                        if (day.hasTasks) {
-                                            this.ifElseBranchUpdateFunction(0, () => {
-                                                this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                                    Circle.create();
-                                                    Circle.debugLine("entry/src/main/ets/pages/Calendar.ets(216:25)", "entry");
-                                                    Circle.width(4);
-                                                    Circle.height(4);
-                                                    Circle.fill('#EF4444');
-                                                    Circle.margin({ right: 2 });
-                                                }, Circle);
-                                            });
-                                        }
-                                        else {
-                                            this.ifElseBranchUpdateFunction(1, () => {
-                                            });
-                                        }
-                                    }, If);
-                                    If.pop();
-                                    this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                        If.create();
-                                        if (day.hasEvents) {
-                                            this.ifElseBranchUpdateFunction(0, () => {
-                                                this.observeComponentCreation2((elmtId, isInitialRender) => {
-                                                    Circle.create();
-                                                    Circle.debugLine("entry/src/main/ets/pages/Calendar.ets(223:25)", "entry");
-                                                    Circle.width(4);
-                                                    Circle.height(4);
-                                                    Circle.fill('#10B981');
-                                                }, Circle);
-                                            });
-                                        }
-                                        else {
-                                            this.ifElseBranchUpdateFunction(1, () => {
-                                            });
-                                        }
-                                    }, If);
-                                    If.pop();
-                                    Row.pop();
-                                });
-                            }
-                            else {
-                                this.ifElseBranchUpdateFunction(1, () => {
-                                });
-                            }
-                        }, If);
-                        If.pop();
                         Column.pop();
-                        Stack.pop();
                     };
                     this.forEachUpdateFunction(elmtId, week, forEachItemGenFunction);
                 }, ForEach);
                 ForEach.pop();
                 Row.pop();
             };
-            this.forEachUpdateFunction(elmtId, this.getWeeks(), forEachItemGenFunction);
+            this.forEachUpdateFunction(elmtId, this.generateCalendarDays(), forEachItemGenFunction);
         }, ForEach);
+        // 日期网格
         ForEach.pop();
         // 日历网格
         Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 选中日期详情
+            // 事件列表
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(250:7)", "entry");
-            // 选中日期详情
+            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(235:7)", "entry");
+            // 事件列表
             Column.width('100%');
-            // 选中日期详情
-            Column.layoutWeight(1);
+            // 事件列表
+            Column.padding({ left: 20, right: 20 });
+            // 事件列表
+            Column.scale({ x: this.state.animationState.buttonScale, y: this.state.animationState.buttonScale });
+            // 事件列表
+            Column.opacity(this.state.animationState.buttonOpacity);
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create(`${this.selectedDate.getMonth() + 1}月${this.selectedDate.getDate()}日`);
-            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(251:9)", "entry");
+            Text.create('今日事件');
+            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(236:9)", "entry");
             Text.fontSize(18);
             Text.fontWeight(FontWeight.Bold);
-            Text.fontColor('#1F2937');
+            Text.fontColor('#2C3E50');
             Text.margin({ bottom: 12 });
         }, Text);
         Text.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 任务列表
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(258:9)", "entry");
-            // 任务列表
-            Column.width('100%');
-            // 任务列表
-            Column.padding({ left: 16, right: 16, top: 12 });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(259:11)", "entry");
-            Row.width('100%');
-            Row.justifyContent(FlexAlign.SpaceBetween);
-            Row.alignItems(VerticalAlign.Center);
-            Row.margin({ bottom: 8 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('任务');
-            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(260:13)", "entry");
-            Text.fontSize(16);
-            Text.fontWeight(FontWeight.Medium);
-            Text.fontColor('#1F2937');
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Button.createWithLabel('添加');
-            Button.debugLine("entry/src/main/ets/pages/Calendar.ets(265:13)", "entry");
-            Button.fontSize(12);
-            Button.fontColor('#FFFFFF');
-            Button.backgroundColor('#10B981');
-            Button.borderRadius(8);
-            Button.padding({ left: 8, right: 8, top: 4, bottom: 4 });
-            Button.onClick(() => this.showAddTask = true);
-        }, Button);
-        Button.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            List.create({ space: 8 });
-            List.debugLine("entry/src/main/ets/pages/Calendar.ets(278:11)", "entry");
-            List.height(120);
-        }, List);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            ForEach.create();
-            const forEachItemGenFunction = _item => {
-                const task = _item;
-                {
-                    const itemCreation = (elmtId, isInitialRender) => {
-                        ViewStackProcessor.StartGetAccessRecordingFor(elmtId);
-                        itemCreation2(elmtId, isInitialRender);
-                        if (!isInitialRender) {
-                            ListItem.pop();
-                        }
-                        ViewStackProcessor.StopGetAccessRecording();
-                    };
-                    const itemCreation2 = (elmtId, isInitialRender) => {
-                        ListItem.create(deepRenderFunction, true);
-                        ListItem.debugLine("entry/src/main/ets/pages/Calendar.ets(280:15)", "entry");
-                    };
-                    const deepRenderFunction = (elmtId, isInitialRender) => {
-                        itemCreation(elmtId, isInitialRender);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Row.create();
-                            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(281:17)", "entry");
-                            Row.width('100%');
-                            Row.alignItems(VerticalAlign.Center);
-                        }, Row);
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Checkbox.create();
-                            Checkbox.debugLine("entry/src/main/ets/pages/Calendar.ets(282:19)", "entry");
-                            Checkbox.select(task.completed);
-                            Checkbox.width(20);
-                            Checkbox.height(20);
-                            Checkbox.selectedColor('#10B981');
-                            Checkbox.onChange((value: boolean) => {
-                                const index = this.tasks.findIndex(t => t.id === task.id);
-                                if (index !== -1) {
-                                    this.tasks[index].completed = value;
-                                }
-                            });
-                        }, Checkbox);
-                        Checkbox.pop();
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Text.create(task.title);
-                            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(294:19)", "entry");
-                            Text.fontSize(14);
-                            Text.fontColor(task.completed ? '#9CA3AF' : '#1F2937');
-                            Text.decoration({ type: task.completed ? TextDecorationType.LineThrough : TextDecorationType.None });
-                            Text.layoutWeight(1);
-                            Text.margin({ left: 8 });
-                        }, Text);
-                        Text.pop();
-                        this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Button.createWithLabel('删除');
-                            Button.debugLine("entry/src/main/ets/pages/Calendar.ets(301:19)", "entry");
-                            Button.fontSize(10);
-                            Button.fontColor('#FFFFFF');
-                            Button.backgroundColor('#EF4444');
-                            Button.borderRadius(6);
-                            Button.padding({ left: 6, right: 6, top: 2, bottom: 2 });
-                            Button.onClick(() => this.deleteTask(task.id));
-                        }, Button);
-                        Button.pop();
-                        Row.pop();
-                        ListItem.pop();
-                    };
-                    this.observeComponentCreation2(itemCreation2, ListItem);
-                    ListItem.pop();
-                }
-            };
-            this.forEachUpdateFunction(elmtId, this.getDayTasks(), forEachItemGenFunction);
-        }, ForEach);
-        ForEach.pop();
-        List.pop();
-        // 任务列表
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            // 事件列表
-            Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(320:9)", "entry");
-            // 事件列表
-            Column.width('100%');
-            // 事件列表
-            Column.padding({ left: 16, right: 16, top: 12 });
-        }, Column);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Row.create();
-            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(321:11)", "entry");
-            Row.width('100%');
-            Row.justifyContent(FlexAlign.SpaceBetween);
-            Row.alignItems(VerticalAlign.Center);
-            Row.margin({ bottom: 8 });
-        }, Row);
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Text.create('事件');
-            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(322:13)", "entry");
-            Text.fontSize(16);
-            Text.fontWeight(FontWeight.Medium);
-            Text.fontColor('#1F2937');
-        }, Text);
-        Text.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Button.createWithLabel('添加');
-            Button.debugLine("entry/src/main/ets/pages/Calendar.ets(327:13)", "entry");
-            Button.fontSize(12);
-            Button.fontColor('#FFFFFF');
-            Button.backgroundColor('#10B981');
-            Button.borderRadius(8);
-            Button.padding({ left: 8, right: 8, top: 4, bottom: 4 });
-            Button.onClick(() => this.showAddEvent = true);
-        }, Button);
-        Button.pop();
-        Row.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            List.create({ space: 8 });
-            List.debugLine("entry/src/main/ets/pages/Calendar.ets(340:11)", "entry");
-            List.height(120);
+            List.create();
+            List.debugLine("entry/src/main/ets/pages/Calendar.ets(242:9)", "entry");
+            List.layoutWeight(1);
         }, List);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             ForEach.create();
@@ -672,43 +487,48 @@ class CalendarPage extends ViewPU {
                     };
                     const itemCreation2 = (elmtId, isInitialRender) => {
                         ListItem.create(deepRenderFunction, true);
-                        ListItem.debugLine("entry/src/main/ets/pages/Calendar.ets(342:15)", "entry");
+                        ListItem.debugLine("entry/src/main/ets/pages/Calendar.ets(244:13)", "entry");
                     };
                     const deepRenderFunction = (elmtId, isInitialRender) => {
                         itemCreation(elmtId, isInitialRender);
                         this.observeComponentCreation2((elmtId, isInitialRender) => {
                             Row.create();
-                            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(343:17)", "entry");
+                            Row.debugLine("entry/src/main/ets/pages/Calendar.ets(245:15)", "entry");
                             Row.width('100%');
-                            Row.alignItems(VerticalAlign.Center);
+                            Row.padding(16);
+                            Row.backgroundColor('#FFFFFF');
+                            Row.borderRadius(12);
+                            Row.margin({ bottom: 8 });
                         }, Row);
                         this.observeComponentCreation2((elmtId, isInitialRender) => {
+                            Column.create();
+                            Column.debugLine("entry/src/main/ets/pages/Calendar.ets(246:17)", "entry");
+                            Column.alignItems(HorizontalAlign.Start);
+                            Column.layoutWeight(1);
+                        }, Column);
+                        this.observeComponentCreation2((elmtId, isInitialRender) => {
                             Text.create(event.title);
-                            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(344:19)", "entry");
-                            Text.fontSize(14);
-                            Text.fontColor('#1F2937');
-                            Text.layoutWeight(1);
+                            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(247:19)", "entry");
+                            Text.fontSize(16);
+                            Text.fontColor('#2C3E50');
+                            Text.margin({ bottom: 4 });
                         }, Text);
                         Text.pop();
                         this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Text.create(event.time);
-                            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(349:19)", "entry");
+                            Text.create(this.formatDate(event.date));
+                            Text.debugLine("entry/src/main/ets/pages/Calendar.ets(252:19)", "entry");
                             Text.fontSize(12);
-                            Text.fontColor('#6B7280');
-                            Text.margin({ right: 8 });
+                            Text.fontColor('#7F8C8D');
                         }, Text);
                         Text.pop();
+                        Column.pop();
                         this.observeComponentCreation2((elmtId, isInitialRender) => {
-                            Button.createWithLabel('删除');
-                            Button.debugLine("entry/src/main/ets/pages/Calendar.ets(354:19)", "entry");
-                            Button.fontSize(10);
-                            Button.fontColor('#FFFFFF');
-                            Button.backgroundColor('#EF4444');
-                            Button.borderRadius(6);
-                            Button.padding({ left: 6, right: 6, top: 2, bottom: 2 });
-                            Button.onClick(() => this.deleteEvent(event.id));
-                        }, Button);
-                        Button.pop();
+                            Circle.create();
+                            Circle.debugLine("entry/src/main/ets/pages/Calendar.ets(259:17)", "entry");
+                            Circle.width(12);
+                            Circle.height(12);
+                            Circle.fill(event.completed ? '#4CAF50' : '#FF6B6B');
+                        }, Circle);
                         Row.pop();
                         ListItem.pop();
                     };
@@ -716,15 +536,70 @@ class CalendarPage extends ViewPU {
                     ListItem.pop();
                 }
             };
-            this.forEachUpdateFunction(elmtId, this.getDayEvents(), forEachItemGenFunction);
+            this.forEachUpdateFunction(elmtId, this.getEventsForDate(this.state.selectedDate), forEachItemGenFunction);
         }, ForEach);
         ForEach.pop();
         List.pop();
         // 事件列表
         Column.pop();
-        // 选中日期详情
         Column.pop();
-        Column.pop();
+    }
+    private formatMonth(date: Date): string {
+        const months = ['一月', '二月', '三月', '四月', '五月', '六月',
+            '七月', '八月', '九月', '十月', '十一月', '十二月'];
+        return `${date.getFullYear()}年 ${months[date.getMonth()]}`;
+    }
+    private formatDate(date: Date): string {
+        return `${date.getMonth() + 1}月${date.getDate()}日`;
+    }
+    private isToday(date: Date): boolean {
+        const today = new Date();
+        return date.toDateString() === today.toDateString();
+    }
+    private getDateColor(date: Date): string | Color {
+        const today = new Date();
+        if (date.getMonth() !== this.state.currentMonth.getMonth()) {
+            return '#BDC3C7';
+        }
+        if (this.isToday(date)) {
+            return Color.White;
+        }
+        return '#2C3E50';
+    }
+    private generateCalendarDays(): Date[][] {
+        const year = this.state.currentMonth.getFullYear();
+        const month = this.state.currentMonth.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const startDate = new Date(firstDay);
+        startDate.setDate(startDate.getDate() - firstDay.getDay());
+        const weeks: Date[][] = [];
+        let currentDate = new Date(startDate);
+        for (let week = 0; week < 6; week++) {
+            const weekDays: Date[] = [];
+            for (let day = 0; day < 7; day++) {
+                weekDays.push(new Date(currentDate));
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            weeks.push(weekDays);
+        }
+        return weeks;
+    }
+    private previousMonth() {
+        const newMonth = new Date(this.state.currentMonth);
+        newMonth.setMonth(newMonth.getMonth() - 1);
+        this.state.currentMonth = newMonth;
+    }
+    private nextMonth() {
+        const newMonth = new Date(this.state.currentMonth);
+        newMonth.setMonth(newMonth.getMonth() + 1);
+        this.state.currentMonth = newMonth;
+    }
+    private selectDate(date: Date) {
+        this.state.selectedDate = date;
+    }
+    private getEventsForDate(date: Date): CalendarEvent[] {
+        return this.state.events.filter(event => event.date.toDateString() === date.toDateString());
     }
     rerender() {
         this.updateDirtyElements();

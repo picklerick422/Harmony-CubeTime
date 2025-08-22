@@ -1,4 +1,5 @@
-import { navigationManager, TransitionType } from '../utils/NavigationManager';
+import { router } from '@kit.ArkUI'
+import { NavigationManager, NavigationHelper, PageAnimationState } from '../utils/NavigationManager'
 
 class OptionItem {
   value: string;
@@ -51,6 +52,14 @@ struct SettingsPage {
   @State cardOpacity: number = 0
   @State itemScale: number = 0.8
   @State itemOpacity: number = 0
+  
+  // 每个设置项的独立动画状态
+  @State itemScales: number[] = [0.8, 0.8, 0.8, 0.8, 0.8, 0.8]
+  @State itemOpacities: number[] = [0, 0, 0, 0, 0, 0]
+  @State aboutScale: number = 0.9
+  @State aboutOpacity: number = 0
+  @State bottomNavScale: number = 0.9
+  @State bottomNavOpacity: number = 0
 
   @State settingsItems: SettingsItem[] = [
     new SettingsItem(
@@ -127,47 +136,58 @@ struct SettingsPage {
     }
   }
 
-  // 页面切换动画 - 底部导航条保持不动
-  private animateTransition(callback: () => void): void {
-    animateTo({ 
-      duration: 400, 
-      curve: Curve.Friction,
-      onFinish: callback
-    }, () => {
-      // 导航条保持不动，只隐藏其他元素
-      this.titleOpacity = 0
-      this.titleScale = 0.3
-      this.itemOpacity = 0
-      this.itemScale = 0.3
-      this.cardOpacity = 0
-      this.cardScale = 0.3
-      // 导航条保持可见和原始大小
-      this.navOpacity = 1
-      this.navScale = 1
-    })
-  }
 
-  // 页面入场动画 - 只在页面加载时触发
+
+  // 页面入场动画 - 每个元素依次出现
   private animateIn(): void {
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
+    // 标题动画 - 第1个出现
+    animateToImmediately({ duration: 400, curve: Curve.EaseOut }, () => {
       this.titleScale = 1
       this.titleOpacity = 1
     })
     
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
-      this.cardScale = 1
-      this.cardOpacity = 1
+    // 设置项动画 - 依次出现，每个间隔100ms
+    this.settingsItems.forEach((_, index) => {
+      animateToImmediately({ 
+        duration: 400, 
+        curve: Curve.EaseOut, 
+        delay: 100 + index * 100 
+      }, () => {
+        this.itemScales[index] = 1
+        this.itemOpacities[index] = 1
+      })
     })
     
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 300 }, () => {
-      this.itemScale = 1
-      this.itemOpacity = 1
+    // 关于应用卡片 - 倒数第2个出现
+    animateToImmediately({ 
+      duration: 400, 
+      curve: Curve.EaseOut, 
+      delay: 100 + this.settingsItems.length * 100 + 100
+    }, () => {
+      this.aboutScale = 1
+      this.aboutOpacity = 1
+    })
+    
+    // 底部导航 - 最后一个出现
+    animateToImmediately({ 
+      duration: 400, 
+      curve: Curve.EaseOut, 
+      delay: 100 + this.settingsItems.length * 100 + 200
+    }, () => {
+      this.bottomNavScale = 1
+      this.bottomNavOpacity = 1
     })
   }
 
   aboutToAppear(): void {
     // 首次进入时直接执行动画，不重置状态
     this.animateIn();
+    // 注册系统返回事件监听
+    this.registerBackPressListener();
+  }
+
+  private animateTransition(duration: number = 250): void {
+    this.animateOut()
   }
 
   onPageShow(): void {
@@ -176,20 +196,78 @@ struct SettingsPage {
     this.animateIn();
   }
 
+  onBackPress(): boolean | void {
+    // 系统返回时执行退出动画
+    this.animateOut();
+    return true; // 阻止默认返回行为，由动画完成后处理
+  }
+
+  private animateOut(targetUrl?: string): void {
+    // 反向依次消失动画
+    
+    // 底部导航先消失
+    animateToImmediately({ duration: 200, curve: Curve.Friction }, () => {
+      this.bottomNavOpacity = 0;
+      this.bottomNavScale = 0.7;
+    });
+    
+    // 关于应用卡片消失
+    animateToImmediately({ duration: 200, curve: Curve.Friction, delay: 50 }, () => {
+      this.aboutOpacity = 0;
+      this.aboutScale = 0.7;
+    });
+    
+    // 设置项依次消失（反向顺序）
+    this.settingsItems.forEach((_, index) => {
+      animateToImmediately({ 
+        duration: 200, 
+        curve: Curve.Friction, 
+        delay: 100 + (this.settingsItems.length - 1 - index) * 50 
+      }, () => {
+        this.itemOpacities[index] = 0;
+        this.itemScales[index] = 0.7;
+      });
+    });
+    
+    // 标题最后消失
+    animateToImmediately({ 
+      duration: 200, 
+      curve: Curve.Friction,
+      delay: 200 + this.settingsItems.length * 50,
+      onFinish: () => {
+        if (targetUrl) {
+          router.replaceUrl({
+            url: targetUrl
+          });
+        } else {
+          router.back();
+        }
+      }
+    }, () => {
+      this.titleOpacity = 0;
+      this.titleScale = 0.7;
+    });
+  }
+
+  private registerBackPressListener(): void {
+    // 注册系统返回事件
+    // HarmonyOS会自动调用onBackPress方法
+  }
+
   private resetVisibility(): void {
-    // 强制重置所有动画状态为可见
-    this.titleScale = 1
-    this.titleOpacity = 1
-    this.cardScale = 1
-    this.cardOpacity = 1
-    this.itemScale = 1
-    this.itemOpacity = 1
-    this.buttonScale = 1
-    this.buttonOpacity = 1
-    this.timerScale = 1
-    this.timerOpacity = 1
-    this.navScale = 1
-    this.navOpacity = 1
+    // 重置为初始隐藏状态，用于入场动画
+    this.titleScale = 0.8
+    this.titleOpacity = 0
+    this.cardScale = 0.8
+    this.cardOpacity = 0
+    this.aboutScale = 0.9
+    this.aboutOpacity = 0
+    this.bottomNavScale = 0.9
+    this.bottomNavOpacity = 0
+    
+    // 重置每个设置项的状态
+    this.itemScales = new Array(this.settingsItems.length).fill(0.8)
+    this.itemOpacities = new Array(this.settingsItems.length).fill(0)
   }
 
   // 生成打乱步骤
@@ -211,41 +289,38 @@ struct SettingsPage {
 
   build() {
     Column() {
-      // 顶部标题
-      Row() {
-        Text('设置')
-          .fontSize(24)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1F2937')
-          .layoutWeight(1)
-          .scale({ x: this.titleScale, y: this.titleScale })
-          .opacity(this.titleOpacity)
+      // 顶部标题栏 - 与状态栏融合
+      Column() {
+        Row() {
+          Text('设置')
+            .fontSize(24)
+            .fontWeight(FontWeight.Bold)
+            .fontColor(Color.White)
+            .layoutWeight(1)
+            .scale({ x: this.titleScale, y: this.titleScale })
+            .opacity(this.titleOpacity)
 
-        Image($r('app.media.ic_back'))
-          .width(24)
-          .height(24)
-          .fillColor('#6B7280')
-          .onClick(() => {
-            // 使用自定义返回动画
-            animateTo({ duration: 300, curve: Curve.Friction }, () => {
-              this.titleOpacity = 0;
-              this.titleScale = 0.3;
-              this.cardOpacity = 0;
-              this.cardScale = 0.3;
-              this.itemOpacity = 0;
-              this.itemScale = 0.3;
-            });
-            setTimeout(() => {
-              navigationManager.navigateBack();
-            }, 300);
-          })
+          Image($r('app.media.ic_back'))
+            .width(24)
+            .height(24)
+            .fillColor(Color.White)
+            .onClick(() => {
+              this.animateOut();
+            })
+        }
+        .width('100%')
+        .height(56)
+        .padding({ left: 16, right: 16 })
+        .justifyContent(FlexAlign.SpaceBetween)
+        .alignItems(VerticalAlign.Center)
       }
       .width('100%')
-      .padding(16)
+      .backgroundColor('#6366F1')
+      .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
 
-      // 设置列表
+      // 设置列表 - 添加弹性滑动
       List({ space: 12 }) {
-        ForEach(this.settingsItems, (item: SettingsItem) => {
+        ForEach(this.settingsItems, (item: SettingsItem, index: number) => {
           ListItem() {
             Column() {
               Row() {
@@ -283,8 +358,8 @@ struct SettingsPage {
             .padding(16)
             .backgroundColor('#FFFFFF')
             .borderRadius(12)
-            .scale({ x: this.itemScale, y: this.itemScale })
-            .opacity(this.itemOpacity)
+            .scale({ x: this.itemScales[index], y: this.itemScales[index] })
+            .opacity(this.itemOpacities[index])
           }
         })
       }
@@ -305,7 +380,7 @@ struct SettingsPage {
               .fontSize(14)
               .fontColor('#1F2937')
               .layoutWeight(1)
-            Text('1.0.0')
+            Text('v1.0.0')
               .fontSize(14)
               .fontColor('#6B7280')
           }
@@ -316,7 +391,7 @@ struct SettingsPage {
               .fontSize(14)
               .fontColor('#1F2937')
               .layoutWeight(1)
-            Text('番茄工作法团队')
+            Text('GIthub: picklerick422')
               .fontSize(14)
               .fontColor('#6B7280')
           }
@@ -327,7 +402,7 @@ struct SettingsPage {
               .fontSize(14)
               .fontColor('#1F2937')
               .layoutWeight(1)
-            Text('support@pomodoro.com')
+            Text('971711470@qq.com')
               .fontSize(14)
               .fontColor('#6B7280')
           }
@@ -337,11 +412,13 @@ struct SettingsPage {
         .padding(16)
         .backgroundColor('#FFFFFF')
         .borderRadius(12)
-        .scale({ x: this.cardScale, y: this.cardScale })
-        .opacity(this.cardOpacity)
+        .scale({ x: this.aboutScale, y: this.aboutScale })
+        .opacity(this.aboutOpacity)
       }
       .width('100%')
       .padding({ left: 16, right: 16, bottom: 16 })
+      //.backgroundColor('#FFFFFF')
+
 
       // 底部导航
       Row() {
@@ -350,10 +427,14 @@ struct SettingsPage {
             .width(24)
             .height(24)
             .fillColor('#10B981')
+            .scale({ x: this.bottomNavScale, y: this.bottomNavScale })
+            .opacity(this.bottomNavOpacity)
           Text('设置')
             .fontSize(12)
             .fontColor('#10B981')
             .margin({ top: 4 })
+            .scale({ x: this.bottomNavScale, y: this.bottomNavScale })
+            .opacity(this.bottomNavOpacity)
         }
         .width('20%')
         .alignItems(HorizontalAlign.Center)
@@ -363,26 +444,20 @@ struct SettingsPage {
             .width(24)
             .height(24)
             .fillColor('#6B7280')
+            .scale({ x: this.bottomNavScale, y: this.bottomNavScale })
+            .opacity(this.bottomNavOpacity)
           Text('番茄时钟')
             .fontSize(12)
             .fontColor('#6B7280')
             .margin({ top: 4 })
+            .scale({ x: this.bottomNavScale, y: this.bottomNavScale })
+            .opacity(this.bottomNavOpacity)
         }
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          // 使用自定义动画序列
-          animateTo({ duration: 300, curve: Curve.Friction }, () => {
-            this.titleOpacity = 0;
-            this.titleScale = 0.3;
-            this.cardOpacity = 0;
-            this.cardScale = 0.3;
-            this.itemOpacity = 0;
-            this.itemScale = 0.3;
-          });
-          setTimeout(() => {
-            navigationManager.navigateTo('Pomodoro');
-          }, 300);
+          // 快速退出动画 - 所有元素依次消失，跳转到番茄时钟
+          this.animateOut('pages/Pomodoro');
         })
 
         Column() {
@@ -390,26 +465,20 @@ struct SettingsPage {
             .width(24)
             .height(24)
             .fillColor('#6B7280')
+            .scale({ x: this.bottomNavScale, y: this.bottomNavScale })
+            .opacity(this.bottomNavOpacity)
           Text('待办')
             .fontSize(12)
             .fontColor('#6B7280')
             .margin({ top: 4 })
+            .scale({ x: this.bottomNavScale, y: this.bottomNavScale })
+            .opacity(this.bottomNavOpacity)
         }
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          // 使用自定义动画序列
-          animateTo({ duration: 300, curve: Curve.Friction }, () => {
-            this.titleOpacity = 0;
-            this.titleScale = 0.3;
-            this.cardOpacity = 0;
-            this.cardScale = 0.3;
-            this.itemOpacity = 0;
-            this.itemScale = 0.3;
-          });
-          setTimeout(() => {
-            navigationManager.navigateTo('Tasks');
-          }, 300);
+          // 快速退出动画 - 所有元素依次消失，跳转到待办
+          this.animateOut('pages/Tasks');
         })
 
         Column() {
@@ -417,26 +486,20 @@ struct SettingsPage {
             .width(24)
             .height(24)
             .fillColor('#6B7280')
+            .scale({ x: this.bottomNavScale, y: this.bottomNavScale })
+            .opacity(this.bottomNavOpacity)
           Text('日历')
             .fontSize(12)
             .fontColor('#6B7280')
             .margin({ top: 4 })
+            .scale({ x: this.bottomNavScale, y: this.bottomNavScale })
+            .opacity(this.bottomNavOpacity)
         }
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          // 使用自定义动画序列
-          animateTo({ duration: 300, curve: Curve.Friction }, () => {
-            this.titleOpacity = 0;
-            this.titleScale = 0.3;
-            this.cardOpacity = 0;
-            this.cardScale = 0.3;
-            this.itemOpacity = 0;
-            this.itemScale = 0.3;
-          });
-          setTimeout(() => {
-            navigationManager.navigateTo('Calendar');
-          }, 300);
+          // 快速退出动画 - 所有元素依次消失，跳转到日历
+          this.animateOut('pages/Calendar');
         })
 
         Column() {
@@ -453,18 +516,8 @@ struct SettingsPage {
         .width('20%')
         .alignItems(HorizontalAlign.Center)
         .onClick(() => {
-          // 使用自定义返回动画
-          animateTo({ duration: 300, curve: Curve.Friction }, () => {
-            this.titleOpacity = 0;
-            this.titleScale = 0.3;
-            this.cardOpacity = 0;
-            this.cardScale = 0.3;
-            this.itemOpacity = 0;
-            this.itemScale = 0.3;
-          });
-          setTimeout(() => {
-            navigationManager.navigateBack();
-          }, 300);
+          // 快速返回动画 - 使用统一的animateOut方法
+          this.animateOut();
         })
       }
       .width('100%')
@@ -478,5 +531,272 @@ struct SettingsPage {
     .width('100%')
     .height('100%')
     .backgroundColor('#F9FAFB')
+  }
+}
+
+interface SettingsState {
+  notificationsEnabled: boolean
+  soundEnabled: boolean
+  vibrationEnabled: boolean
+  workDuration: number
+  breakDuration: number
+  navigationManager?: NavigationManager
+  animationState: PageAnimationState
+}
+
+@Component
+struct Settings {
+  @State state: SettingsState = {
+    notificationsEnabled: true,
+    soundEnabled: true,
+    vibrationEnabled: true,
+    workDuration: 25,
+    breakDuration: 5,
+    animationState: {
+      contentScale: 0.9,
+      contentOpacity: 0,
+      titleTranslateY: -20,
+      titleOpacity: 0,
+      buttonScale: 0.8,
+      buttonOpacity: 0,
+      listOpacity: 0,
+      calendarOpacity: 0,
+      sectionOpacity: 0
+    }
+  }
+
+  aboutToAppear() {
+    const navigationManager = NavigationManager.getInstance()
+    this.state.navigationManager = navigationManager
+    this.state.animationState = navigationManager.getInitialState()
+    
+    // 页面进入动画
+    setTimeout(() => {
+      navigationManager.animateIn()
+    }, 100)
+  }
+
+  build() {
+    Column() {
+      // 标题区域
+      Row() {
+        Text('设置')
+          .fontSize(28)
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#2C3E50')
+          .scale({ x: this.state.animationState.titleOpacity, y: this.state.animationState.titleOpacity })
+          .opacity(this.state.animationState.titleOpacity)
+          .translate({ y: this.state.animationState.titleTranslateY })
+
+        Blank()
+
+        Image($r('app.media.ic_back'))
+          .width(24)
+          .height(24)
+          .onClick(() => {
+            NavigationHelper.navigateBack(this.state.navigationManager)
+          })
+      }
+      .width('100%')
+      .padding({ left: 20, right: 20, top: 60, bottom: 20 })
+
+      // 设置内容区域
+      Scroll() {
+        Column() {
+          // 通知设置
+          Column() {
+            Text('通知设置')
+              .fontSize(18)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#2C3E50')
+              .margin({ bottom: 16 })
+
+            Row() {
+              Text('启用通知')
+                .fontSize(16)
+                .fontColor('#2C3E50')
+                .layoutWeight(1)
+
+              Toggle({ type: ToggleType.Switch, isOn: this.state.notificationsEnabled })
+                .onChange((value: boolean) => {
+                  this.state.notificationsEnabled = value
+                })
+            }
+            .width('100%')
+            .padding({ bottom: 12 })
+
+            Row() {
+              Text('声音提醒')
+                .fontSize(16)
+                .fontColor('#2C3E50')
+                .layoutWeight(1)
+
+              Toggle({ type: ToggleType.Switch, isOn: this.state.soundEnabled })
+                .onChange((value: boolean) => {
+                  this.state.soundEnabled = value
+                })
+            }
+            .width('100%')
+            .padding({ bottom: 12 })
+
+            Row() {
+              Text('振动提醒')
+                .fontSize(16)
+                .fontColor('#2C3E50')
+                .layoutWeight(1)
+
+              Toggle({ type: ToggleType.Switch, isOn: this.state.vibrationEnabled })
+                .onChange((value: boolean) => {
+                  this.state.vibrationEnabled = value
+                })
+            }
+            .width('100%')
+          }
+          .width('100%')
+          .padding(20)
+          .backgroundColor('#FFFFFF')
+          .borderRadius(16)
+          .margin({ left: 20, right: 20, bottom: 16 })
+          .scale({ x: this.state.animationState.sectionScale, y: this.state.animationState.sectionScale })
+          .opacity(this.state.animationState.sectionOpacity)
+
+          // 时间设置
+          Column() {
+            Text('时间设置')
+              .fontSize(18)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#2C3E50')
+              .margin({ bottom: 16 })
+
+            Row() {
+              Text('工作时间（分钟）')
+                .fontSize(16)
+                .fontColor('#2C3E50')
+                .layoutWeight(1)
+
+              Text(this.state.workDuration.toString())
+                .fontSize(16)
+                .fontColor('#7F8C8D')
+            }
+            .width('100%')
+            .padding({ bottom: 12 })
+
+            Row() {
+              Text('休息时间（分钟）')
+                .fontSize(16)
+                .fontColor('#2C3E50')
+                .layoutWeight(1)
+
+              Text(this.state.breakDuration.toString())
+                .fontSize(16)
+                .fontColor('#7F8C8D')
+            }
+            .width('100%')
+            .padding({ bottom: 12 })
+
+            Slider({
+              value: this.state.workDuration,
+              min: 15,
+              max: 60,
+              step: 5
+            })
+              .width('100%')
+              .onChange((value: number) => {
+                this.state.workDuration = value
+              })
+
+            Slider({
+              value: this.state.breakDuration,
+              min: 5,
+              max: 30,
+              step: 5
+            })
+              .width('100%')
+              .onChange((value: number) => {
+                this.state.breakDuration = value
+              })
+          }
+          .width('100%')
+          .padding(20)
+          .backgroundColor('#FFFFFF')
+          .borderRadius(16)
+          .margin({ left: 20, right: 20, bottom: 16 })
+          .scale({ x: this.state.animationState.sectionScale, y: this.state.animationState.sectionScale })
+          .opacity(this.state.animationState.sectionOpacity)
+
+          // 关于应用
+          Column() {
+            Text('关于应用')
+              .fontSize(18)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#2C3E50')
+              .margin({ bottom: 16 })
+
+            Row() {
+              Text('版本')
+                .fontSize(16)
+                .fontColor('#2C3E50')
+                .layoutWeight(1)
+
+              Text('1.0.0')
+                .fontSize(16)
+                .fontColor('#7F8C8D')
+            }
+            .width('100%')
+            .padding({ bottom: 12 })
+
+            Row() {
+              Text('开发者')
+                .fontSize(16)
+                .fontColor('#2C3E50')
+                .layoutWeight(1)
+
+              Text('鸿蒙团队')
+                .fontSize(16)
+                .fontColor('#7F8C8D')
+            }
+            .width('100%')
+            .padding({ bottom: 12 })
+
+            Button('重置所有设置')
+              .width('100%')
+              .height(48)
+              .backgroundColor('#E74C3C')
+              .fontColor('#FFFFFF')
+              .fontSize(16)
+              .fontWeight(FontWeight.Medium)
+              .borderRadius(24)
+              .onClick(() => {
+                this.resetSettings()
+              })
+              .scale({ x: this.state.animationState.buttonScale, y: this.state.animationState.buttonScale })
+              .opacity(this.state.animationState.buttonOpacity)
+          }
+          .width('100%')
+          .padding(20)
+          .backgroundColor('#FFFFFF')
+          .borderRadius(16)
+          .margin({ left: 20, right: 20 })
+          .scale({ x: this.state.animationState.sectionScale, y: this.state.animationState.sectionScale })
+          .opacity(this.state.animationState.sectionOpacity)
+        }
+        .width('100%')
+        .padding({ bottom: 20 })
+      }
+      .layoutWeight(1)
+    }
+    .width('100%')
+    .height('100%')
+    .backgroundColor('#F5F7FA')
+    .scale({ x: this.state.animationState.contentScale, y: this.state.animationState.contentScale })
+    .opacity(this.state.animationState.contentOpacity)
+  }
+
+  private resetSettings() {
+    this.state.notificationsEnabled = true
+    this.state.soundEnabled = true
+    this.state.vibrationEnabled = true
+    this.state.workDuration = 25
+    this.state.breakDuration = 5
   }
 }

@@ -1,7 +1,7 @@
 import TimeManagementService, { StatisticsData } from '../services/TimeManagementService'
 import DataStorage from '../utils/DataStorage'
 import { TimerDisplay } from '../components/TimerDisplay'
-import { navigationManager, TransitionType } from '../utils/NavigationManager'
+import { NavigationManager } from '../utils/NavigationManager'
 
 @Entry
 @Component
@@ -47,7 +47,7 @@ struct Dashboard {
   // 页面入场动画 - 更快更有弹性
   private animateIn() {
     // 标题动画 - 弹性进入
-    animateTo({ 
+    animateToImmediately({ 
       duration: 350, 
       curve: Curve.Friction
     }, () => {
@@ -56,7 +56,7 @@ struct Dashboard {
     })
     
     // 卡片动画 - 轻微延迟的弹性效果
-    animateTo({ 
+    animateToImmediately({ 
       duration: 400, 
       curve: Curve.Friction,
       delay: 80
@@ -66,7 +66,7 @@ struct Dashboard {
     })
     
     // 项目动画 - 更有弹性的效果
-    animateTo({ 
+    animateToImmediately({ 
       duration: 450, 
       curve: Curve.Friction,
       delay: 150
@@ -76,7 +76,7 @@ struct Dashboard {
     })
     
     // 按钮动画 - 弹性效果
-    animateTo({ 
+    animateToImmediately({ 
       duration: 500, 
       curve: Curve.Friction,
       delay: 220
@@ -110,7 +110,7 @@ struct Dashboard {
                 .fillColor(Color.White)
                 .onClick(() => {
                   // 使用自定义返回动画
-                  animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                  animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
                     this.titleOpacity = 0;
                     this.titleScale = 0.3;
                     this.cardOpacity = 0;
@@ -121,7 +121,7 @@ struct Dashboard {
                     this.buttonScale = 0.3;
                   });
                   setTimeout(() => {
-                    navigationManager.navigateBack();
+                    NavigationManager.getInstance().navigateBack();
                   }, 300);
                 })
               
@@ -252,7 +252,7 @@ struct Dashboard {
               .layoutWeight(1)
               .onClick(() => {
                   // 使用自定义动画序列
-                  animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                  animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
                     this.titleOpacity = 0;
                     this.titleScale = 0.3;
                     this.cardOpacity = 0;
@@ -263,7 +263,7 @@ struct Dashboard {
                     this.buttonScale = 0.3;
                   });
                   setTimeout(() => {
-                    navigationManager.navigateTo('pages/Tasks');
+                    NavigationManager.getInstance().navigateTo('Tasks');
                   }, 300);
                 })
               .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
@@ -271,20 +271,20 @@ struct Dashboard {
             Button('Calendar')
               .layoutWeight(1)
               .onClick(() => {
-                  // 使用自定义动画序列
-                  animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                  // 立即执行退出动画并导航
+                  animateToImmediately({ duration: 200, curve: Curve.Friction }, () => {
                     this.titleOpacity = 0;
-                    this.titleScale = 0.3;
+                    this.titleScale = 0;
                     this.cardOpacity = 0;
-                    this.cardScale = 0.3;
+                    this.cardScale = 0;
                     this.itemOpacity = 0;
-                    this.itemScale = 0.3;
+                    this.itemScale = 0;
                     this.buttonOpacity = 0;
-                    this.buttonScale = 0.3;
+                    this.buttonScale = 0;
                   });
                   setTimeout(() => {
-                    navigationManager.navigateTo('pages/Calendar');
-                  }, 300);
+                    NavigationManager.getInstance().navigateTo('Calendar');
+                  }, 200);
                 })
               .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
 
@@ -292,7 +292,7 @@ struct Dashboard {
               .layoutWeight(1)
               .onClick(() => {
                   // 使用自定义动画序列
-                  animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                  animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
                     this.titleOpacity = 0;
                     this.titleScale = 0.3;
                     this.cardOpacity = 0;
@@ -303,7 +303,7 @@ struct Dashboard {
                     this.buttonScale = 0.3;
                   });
                   setTimeout(() => {
-                    navigationManager.navigateTo('pages/Settings');
+                    NavigationManager.getInstance().navigateTo('Settings');
                   }, 300);
                 })
               .scale({ x: this.buttonScale, y: this.buttonScale }).opacity(this.buttonOpacity)
@@ -355,28 +355,62 @@ struct Dashboard {
     this.navScale = 1;
   }
 
-  // 页面切换动画 - 底部导航条保持不动
-  private animateTransition(callback: () => void): void {
-    animateTo({ 
-      duration: 400, 
+  // 页面切换动画 - 从小放大的缩放效果
+  private animateTransition(callback: () => void) {
+    animateToImmediately({ 
+      duration: 250, 
       curve: Curve.Friction,
       onFinish: callback
     }, () => {
-      // 导航条保持不动，只隐藏其他元素
+      // 页面缩小消失效果
       this.titleOpacity = 0;
       this.titleScale = 0.3;
-      this.buttonOpacity = 0;
-      this.buttonScale = 0.3;
       this.cardOpacity = 0;
       this.cardScale = 0.3;
       this.itemOpacity = 0;
       this.itemScale = 0.3;
-      this.timerOpacity = 0;
-      this.timerScale = 0.3;
-      // 导航条保持可见和原始大小
-      this.navOpacity = 1;
-      this.navScale = 1;
-    });
+      this.buttonOpacity = 0;
+      this.buttonScale = 0.3;
+    })
+  }
+
+  // 卡片点击动画
+  private animateCardClick(index: number) {
+    animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+      this.cardScale = 0.95
+    })
+    
+    setTimeout(() => {
+      animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+        this.cardScale = 1
+      })
+    }, 150)
+  }
+
+  // 项目点击动画
+  private animateItemClick() {
+    animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+      this.itemScale = 0.95
+    })
+    
+    setTimeout(() => {
+      animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+        this.itemScale = 1
+      })
+    }, 150)
+  }
+
+  // 按钮点击动画
+  private animateButtonClick() {
+    animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+      this.buttonScale = 0.95
+    })
+    
+    setTimeout(() => {
+      animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+        this.buttonScale = 1
+      })
+    }, 150)
   }
 
 }

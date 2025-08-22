@@ -182,12 +182,12 @@ export class Cube3DView extends ViewPU {
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Stack.create();
-            Stack.debugLine("entry/src/main/ets/components/Cube3DView.ets(79:5)", "entry");
+            Stack.debugLine("entry/src/main/ets/components/Cube3DView.ets(77:5)", "entry");
         }, Stack);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 3D魔方容器 - 使用简单的3D效果
             Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(81:7)", "entry");
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(79:7)", "entry");
             // 3D魔方容器 - 使用简单的3D效果
             Column.width(300);
             // 3D魔方容器 - 使用简单的3D效果
@@ -207,7 +207,7 @@ export class Cube3DView extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 使用多个旋转的矩形模拟3D魔方
             Stack.create();
-            Stack.debugLine("entry/src/main/ets/components/Cube3DView.ets(83:9)", "entry");
+            Stack.debugLine("entry/src/main/ets/components/Cube3DView.ets(81:9)", "entry");
             // 使用多个旋转的矩形模拟3D魔方
             Stack.width(200);
             // 使用多个旋转的矩形模拟3D魔方
@@ -218,7 +218,7 @@ export class Cube3DView extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 前面 - 白色
             Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(85:11)", "entry");
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(83:11)", "entry");
             // 前面 - 白色
             Column.rotate({
                 x: 0, y: 1, z: 0,
@@ -242,8 +242,28 @@ export class Cube3DView extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(86:13)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(84:13)", "entry");
         }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(85:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.white);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(86:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.white);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
             Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(87:15)", "entry");
@@ -254,31 +274,31 @@ export class Cube3DView extends ViewPU {
             Column.borderRadius(2);
         }, Column);
         Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(88:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.white);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(89:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.white);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(91:13)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(89:13)", "entry");
         }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(90:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.white);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(91:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.white);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
             Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(92:15)", "entry");
@@ -289,54 +309,34 @@ export class Cube3DView extends ViewPU {
             Column.borderRadius(2);
         }, Column);
         Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(93:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.white);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(94:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.white);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(96:13)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(94:13)", "entry");
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(95:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.white);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(96:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.white);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
             Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(97:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.white);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(98:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.white);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(99:15)", "entry");
             Column.width(this.cubeSize / 3);
             Column.height(this.cubeSize / 3);
             Column.backgroundColor(this.colors.white);
@@ -350,7 +350,7 @@ export class Cube3DView extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 右面 - 红色
             Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(118:11)", "entry");
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(116:11)", "entry");
             // 右面 - 红色
             Column.rotate({
                 x: 0, y: 1, z: 0,
@@ -374,8 +374,28 @@ export class Cube3DView extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(119:13)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(117:13)", "entry");
         }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(118:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.red);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(119:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.red);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
             Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(120:15)", "entry");
@@ -386,31 +406,31 @@ export class Cube3DView extends ViewPU {
             Column.borderRadius(2);
         }, Column);
         Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(121:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.red);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(122:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.red);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(124:13)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(122:13)", "entry");
         }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(123:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.red);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(124:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.red);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
             Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(125:15)", "entry");
@@ -421,54 +441,34 @@ export class Cube3DView extends ViewPU {
             Column.borderRadius(2);
         }, Column);
         Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(126:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.red);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(127:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.red);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(129:13)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(127:13)", "entry");
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(128:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.red);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(129:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.red);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
             Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(130:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.red);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(131:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.red);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(132:15)", "entry");
             Column.width(this.cubeSize / 3);
             Column.height(this.cubeSize / 3);
             Column.backgroundColor(this.colors.red);
@@ -482,7 +482,7 @@ export class Cube3DView extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 上面 - 蓝色
             Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(151:11)", "entry");
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(149:11)", "entry");
             // 上面 - 蓝色
             Column.rotate({
                 x: 1, y: 0, z: 0,
@@ -506,8 +506,28 @@ export class Cube3DView extends ViewPU {
         }, Column);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(152:13)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(150:13)", "entry");
         }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(151:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.blue);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(152:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.blue);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
             Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(153:15)", "entry");
@@ -518,31 +538,31 @@ export class Cube3DView extends ViewPU {
             Column.borderRadius(2);
         }, Column);
         Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(154:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.blue);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(155:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.blue);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(157:13)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(155:13)", "entry");
         }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(156:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.blue);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(157:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.blue);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
             Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(158:15)", "entry");
@@ -553,54 +573,34 @@ export class Cube3DView extends ViewPU {
             Column.borderRadius(2);
         }, Column);
         Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(159:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.blue);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(160:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.blue);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
         Row.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(162:13)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(160:13)", "entry");
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(161:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.blue);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(162:15)", "entry");
+            Column.width(this.cubeSize / 3);
+            Column.height(this.cubeSize / 3);
+            Column.backgroundColor(this.colors.blue);
+            Column.border({ width: 1, color: '#333' });
+            Column.borderRadius(2);
+        }, Column);
+        Column.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
             Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(163:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.blue);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(164:15)", "entry");
-            Column.width(this.cubeSize / 3);
-            Column.height(this.cubeSize / 3);
-            Column.backgroundColor(this.colors.blue);
-            Column.border({ width: 1, color: '#333' });
-            Column.borderRadius(2);
-        }, Column);
-        Column.pop();
-        this.observeComponentCreation2((elmtId, isInitialRender) => {
-            Column.create();
-            Column.debugLine("entry/src/main/ets/components/Cube3DView.ets(165:15)", "entry");
             Column.width(this.cubeSize / 3);
             Column.height(this.cubeSize / 3);
             Column.backgroundColor(this.colors.blue);
@@ -618,7 +618,7 @@ export class Cube3DView extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 控制按钮
             Row.create();
-            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(199:7)", "entry");
+            Row.debugLine("entry/src/main/ets/components/Cube3DView.ets(197:7)", "entry");
             // 控制按钮
             Row.padding(16);
             // 控制按钮
@@ -628,7 +628,7 @@ export class Cube3DView extends ViewPU {
         }, Row);
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Button.createWithLabel('旋转');
-            Button.debugLine("entry/src/main/ets/components/Cube3DView.ets(200:9)", "entry");
+            Button.debugLine("entry/src/main/ets/components/Cube3DView.ets(198:9)", "entry");
             Button.onClick(() => {
                 this.autoRotate = !this.autoRotate;
                 if (this.autoRotate) {
@@ -641,7 +641,7 @@ export class Cube3DView extends ViewPU {
         Button.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Button.createWithLabel('重置');
-            Button.debugLine("entry/src/main/ets/components/Cube3DView.ets(210:9)", "entry");
+            Button.debugLine("entry/src/main/ets/components/Cube3DView.ets(208:9)", "entry");
             Button.onClick(() => {
                 this.rotationX = 0;
                 this.rotationY = 0;
@@ -653,7 +653,7 @@ export class Cube3DView extends ViewPU {
         Button.pop();
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Button.createWithLabel('标签');
-            Button.debugLine("entry/src/main/ets/components/Cube3DView.ets(219:9)", "entry");
+            Button.debugLine("entry/src/main/ets/components/Cube3DView.ets(217:9)", "entry");
             Button.onClick(() => {
                 this.showLabels = !this.showLabels;
             });

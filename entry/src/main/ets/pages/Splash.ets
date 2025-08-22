@@ -1,4 +1,4 @@
-import { navigationManager, TransitionType } from '../utils/NavigationManager'
+import { NavigationManager, PageAnimationState } from '../utils/NavigationManager'
 
 @Entry
 @Component
@@ -8,11 +8,11 @@ struct SplashPage {
   aboutToAppear() {
     // 3秒后跳转到首页，使用淡入淡出效果
     this.timer = setTimeout(() => {
-      animateTo({
+      animateToImmediately({
         duration: 500,
         curve: Curve.EaseInOut,
         onFinish: () => {
-          navigationManager.replaceTo('Index', TransitionType.FADE)
+          NavigationManager.getInstance().replaceTo('Index')
         }
       }, () => {
         // 淡出动画

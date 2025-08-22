@@ -4,7 +4,7 @@ if (!("finalizeConstruction" in ViewPU.prototype)) {
 interface SplashPage_Params {
     timer?: number;
 }
-import router from "@ohos:router";
+import { NavigationManager, TransitionType } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 class SplashPage extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
@@ -30,9 +30,17 @@ class SplashPage extends ViewPU {
     }
     private timer: number;
     aboutToAppear() {
-        // 3秒后跳转到首页
+        // 3秒后跳转到首页，使用淡入淡出效果
         this.timer = setTimeout(() => {
-            router.replaceUrl({ url: 'pages/Index' });
+            Context.animateToImmediately({
+                duration: 500,
+                curve: Curve.EaseInOut,
+                onFinish: () => {
+                    NavigationManager.getInstance().replaceTo('Index', TransitionType.FADE);
+                }
+            }, () => {
+                // 淡出动画
+            });
         }, 3000);
     }
     aboutToDisappear() {
@@ -43,7 +51,7 @@ class SplashPage extends ViewPU {
     initialRender() {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             Column.create();
-            Column.debugLine("entry/src/main/ets/pages/Splash.ets(22:5)", "entry");
+            Column.debugLine("entry/src/main/ets/pages/Splash.ets(30:5)", "entry");
             Column.width('100%');
             Column.height('100%');
             Column.backgroundColor('#FFFFFF');
@@ -52,7 +60,7 @@ class SplashPage extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 应用图标
             Image.create({ "id": 16777248, "type": 20000, params: [], "bundleName": "com.example.cubetime", "moduleName": "entry" });
-            Image.debugLine("entry/src/main/ets/pages/Splash.ets(24:7)", "entry");
+            Image.debugLine("entry/src/main/ets/pages/Splash.ets(32:7)", "entry");
             // 应用图标
             Image.width(100);
             // 应用图标
@@ -70,7 +78,7 @@ class SplashPage extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 应用名称
             Text.create('CubeTime');
-            Text.debugLine("entry/src/main/ets/pages/Splash.ets(36:7)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Splash.ets(44:7)", "entry");
             // 应用名称
             Text.fontSize(32);
             // 应用名称
@@ -85,7 +93,7 @@ class SplashPage extends ViewPU {
         this.observeComponentCreation2((elmtId, isInitialRender) => {
             // 副标题
             Text.create('智能时间管理');
-            Text.debugLine("entry/src/main/ets/pages/Splash.ets(43:7)", "entry");
+            Text.debugLine("entry/src/main/ets/pages/Splash.ets(51:7)", "entry");
             // 副标题
             Text.fontSize(16);
             // 副标题

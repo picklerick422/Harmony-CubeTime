@@ -1,127 +1,204 @@
-import { navigationManager, TransitionType } from '../utils/NavigationManager';
+import router from '@ohos.router'
+import { NavigationManager, NavigationHelper, PageAnimationState } from '../utils/NavigationManager'
 
 interface Task {
   id: string
   title: string
   completed: boolean
+  createdAt: Date
+}
+
+interface TasksState {
+  tasks: Task[]
+  newTaskTitle: string
+  showCompleted: boolean
+  navigationManager?: NavigationManager
+  animationState: PageAnimationState
 }
 
 @Entry
 @Component
 struct Tasks {
-  @State tasks: Array<Task> = [
-    { id: '1', title: '完成项目报告', completed: false },
-    { id: '2', title: '学习鸿蒙开发', completed: true },
-    { id: '3', title: '锻炼身体', completed: false }
-  ]
-  @State titleScale: number = 0.8
-  @State titleOpacity: number = 0
-  @State cardScale: number = 0.9
-  @State cardOpacity: number = 0
+  @State state: TasksState = {
+    tasks: [
+      { id: '1', title: '完成项目报告', completed: false, createdAt: new Date() },
+      { id: '2', title: '学习ArkTS开发', completed: true, createdAt: new Date() },
+      { id: '3', title: '整理工作笔记', completed: false, createdAt: new Date() }
+    ],
+    newTaskTitle: '',
+    showCompleted: true,
+    animationState: {
+      contentScale: 0.9,
+      contentOpacity: 0,
+      titleTranslateY: -20,
+      titleOpacity: 0,
+      buttonScale: 0.8,
+      buttonOpacity: 0,
+      listOpacity: 0,
+      calendarOpacity: 0,
+      sectionOpacity: 0
+    }
+  }
 
   aboutToAppear() {
-    this.resetVisibility()
-    this.animateIn()
-  }
-
-  onPageShow() {
-    // 页面重新显示时重置可见性和动画
-    this.resetVisibility()
-    this.animateIn()
-  }
-
-  private animateIn() {
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 100 }, () => {
-      this.titleScale = 1
-      this.titleOpacity = 1
-    })
+    const navigationManager = NavigationManager.getInstance()
+    this.state.navigationManager = navigationManager
+    this.state.animationState = navigationManager.getInitialState()
     
-    animateTo({ duration: 600, curve: Curve.EaseOut, delay: 200 }, () => {
-      this.cardScale = 1
-      this.cardOpacity = 1
-    })
-  }
-
-  // 页面切换动画 - 从小放大的缩放效果
-  private animateTransition(callback: () => void) {
-    animateTo({ 
-      duration: 400, 
-      curve: Curve.Friction,
-      onFinish: callback
-    }, () => {
-      // 页面缩小消失效果
-      this.titleOpacity = 0
-      this.titleScale = 0.3
-      this.cardOpacity = 0
-      this.cardScale = 0.3
-    })
-  }
-
-  private resetVisibility() {
-    this.titleScale = 1
-    this.titleOpacity = 1
-    this.cardScale = 1
-    this.cardOpacity = 1
+    // 页面进入动画
+    setTimeout(() => {
+      navigationManager.animateIn()
+    }, 100)
   }
 
   build() {
     Column() {
-      // 顶部标题栏
+      // 标题区域
       Row() {
+        Text('任务管理')
+          .fontSize(28)
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#2C3E50')
+          .scale({ x: this.state.animationState.titleOpacity, y: this.state.animationState.titleOpacity })
+          .opacity(this.state.animationState.titleOpacity)
+          .translate({ y: this.state.animationState.titleTranslateY })
+
+        Blank()
+
         Image($r('app.media.ic_back'))
           .width(24)
           .height(24)
-          .fillColor('#6B7280')
           .onClick(() => {
-            // 使用自定义返回动画
-            animateTo({ duration: 300, curve: Curve.Friction }, () => {
-              this.titleOpacity = 0;
-              this.titleScale = 0.3;
-              this.cardOpacity = 0;
-              this.cardScale = 0.3;
-            });
-            setTimeout(() => {
-              navigationManager.navigateBack();
-            }, 300);
+            NavigationHelper.navigateBack(this.state.navigationManager)
           })
-        
-        Text('待办事项')
-          .fontSize(24)
-          .fontWeight(FontWeight.Bold)
-          .layoutWeight(1)
-          .textAlign(TextAlign.Center)
-          .scale({ x: this.titleScale, y: this.titleScale })
-          .opacity(this.titleOpacity)
       }
       .width('100%')
-      .padding(16)
+      .padding({ left: 20, right: 20, top: 60, bottom: 20 })
 
-      List({ space: 8 }) {
-        ForEach(this.tasks, (item: Task) => {
+      // 添加任务区域
+      Row() {
+        TextInput({ placeholder: '添加新任务...', text: this.state.newTaskTitle })
+          .width('70%')
+          .height(48)
+          .backgroundColor('#FFFFFF')
+          .borderRadius(24)
+          .padding({ left: 16, right: 16 })
+          .onChange((value: string) => {
+            this.state.newTaskTitle = value
+          })
+
+        Button('添加')
+          .width('25%')
+          .height(48)
+          .backgroundColor('#4CAF50')
+          .fontColor('#FFFFFF')
+          .fontSize(16)
+          .fontWeight(FontWeight.Medium)
+          .borderRadius(24)
+          .margin({ left: 8 })
+          .onClick(() => {
+            this.addTask()
+          })
+          .scale({ x: this.state.animationState.buttonScale, y: this.state.animationState.buttonScale })
+          .opacity(this.state.animationState.buttonOpacity)
+      }
+      .width('100%')
+      .padding({ left: 20, right: 20, bottom: 20 })
+
+      // 任务列表
+      List() {
+        ForEach(this.filteredTasks, (task: Task) => {
           ListItem() {
             Row() {
-              Text(item.title)
+              Checkbox()
+                  .select(task.completed)
+                  .onChange((value: boolean) => {
+                    this.toggleTask(task.id)
+                  })
+              .margin({ right: 12 })
+
+              Text(task.title)
                 .fontSize(16)
+                .fontColor(task.completed ? '#95A5A6' : '#2C3E50')
+                .decoration({ type: task.completed ? TextDecorationType.LineThrough : TextDecorationType.None })
                 .layoutWeight(1)
-              
-              Text(item.completed ? '已完成' : '未完成')
-                .fontSize(14)
-                .fontColor(item.completed ? '#10B981' : '#EF4444')
+
+              Image($r('app.media.ic_back'))
+                .width(20)
+                .height(20)
+                .fillColor('#E74C3C')
+                .onClick(() => {
+                  this.deleteTask(task.id)
+                })
             }
             .width('100%')
             .padding(16)
             .backgroundColor('#FFFFFF')
             .borderRadius(12)
-            .scale({ x: this.cardScale, y: this.cardScale })
-            .opacity(this.cardOpacity)
+            .margin({ bottom: 8 })
           }
-        })
+        }, (task: Task) => task.id)
       }
+      .width('100%')
       .layoutWeight(1)
-      .padding(16)
+      .padding({ left: 20, right: 20 })
+      .scale({ x: this.state.animationState.listScale, y: this.state.animationState.listScale })
+      .opacity(this.state.animationState.listOpacity)
+
+      // 底部控制区域
+      Row() {
+        Toggle({ type: ToggleType.Switch, isOn: this.state.showCompleted })
+          .onChange((value: boolean) => {
+            this.state.showCompleted = value
+          })
+
+        Text('显示已完成任务')
+          .fontSize(14)
+          .fontColor('#7F8C8D')
+          .margin({ left: 8 })
+      }
+      .width('100%')
+      .padding({ left: 20, right: 20, bottom: 20 })
+      .justifyContent(FlexAlign.Center)
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#F2F2F7')
+    .backgroundColor('#F5F7FA')
+    .scale({ x: this.state.animationState.contentScale, y: this.state.animationState.contentScale })
+    .opacity(this.state.animationState.contentOpacity)
+  }
+
+  get filteredTasks(): Task[] {
+    if (this.state.showCompleted) {
+      return this.state.tasks
+    }
+    return this.state.tasks.filter(task => !task.completed)
+  }
+
+  private addTask() {
+    if (this.state.newTaskTitle.trim()) {
+      const newTask: Task = {
+        id: Date.now().toString(),
+        title: this.state.newTaskTitle.trim(),
+        completed: false,
+        createdAt: new Date()
+      }
+      this.state.tasks.push(newTask)
+      this.state.newTaskTitle = ''
+    }
+  }
+
+  private toggleTask(taskId: string) {
+    const task = this.state.tasks.find(t => t.id === taskId)
+    if (task) {
+      task.completed = !task.completed
+    }
+  }
+
+  private deleteTask(taskId: string) {
+    const index = this.state.tasks.findIndex(t => t.id === taskId)
+    if (index !== -1) {
+      this.state.tasks.splice(index, 1)
+    }
   }
 }

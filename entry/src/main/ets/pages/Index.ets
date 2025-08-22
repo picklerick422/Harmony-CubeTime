@@ -1,7 +1,5 @@
-import CubeStateManager from '../services/CubeStateManager';
-import TimeManagementService from '../services/TimeManagementService';
-import { navigationManager, TransitionType } from '../utils/NavigationManager';
-import { TimerDisplay } from '../components/TimerDisplay'
+import { NavigationManager, PageAnimationState } from '../utils/NavigationManager'
+import { router } from '@kit.ArkUI'
 
 interface CubeState {
   isSolved: boolean;
@@ -10,6 +8,11 @@ interface CubeState {
   sessionCount: number;
   bestTime: string;
   totalPracticeTime: string;
+}
+
+interface IndexState {
+  navigationManager?: NavigationManager
+  animationState: PageAnimationState
 }
 
 @Entry
@@ -59,14 +62,14 @@ struct Index {
   private animateIn() {
     // 快速但有层次的动画，总时长400ms
     // 标题 - 立即出现（200ms）
-    animateTo({ duration: 200, curve: Curve.Friction }, () => {
+    animateToImmediately({ duration: 200, curve: Curve.Friction }, () => {
       this.titleOpacity = 1
       this.titleScale = 1
     })
 
     // 主要内容 - 轻微延迟（250ms）
     setTimeout(() => {
-      animateTo({ duration: 200, curve: Curve.Friction }, () => {
+      animateToImmediately({ duration: 200, curve: Curve.Friction }, () => {
         this.cardOpacity = 1
         this.cardScale = 1
         this.timerOpacity = 1
@@ -76,7 +79,7 @@ struct Index {
 
     // 操作按钮 - 最后出现（200ms）
     setTimeout(() => {
-      animateTo({ duration: 200, curve: Curve.Friction }, () => {
+      animateToImmediately({ duration: 200, curve: Curve.Friction }, () => {
         this.buttonOpacity = 1
         this.buttonScale = 1
         this.navOpacity = 1
@@ -154,32 +157,14 @@ struct Index {
 
   // 使用自定义动画序列的页面切换
   private navigateTo(page: string) {
-    navigationManager.navigateToWithCustomAnimation(page, () => {
-      // 当前页面缩小动画
-      animateTo({ duration: 300, curve: Curve.Friction }, () => {
-        this.titleOpacity = 0;
-        this.titleScale = 0.3;
-        this.cardOpacity = 0;
-        this.cardScale = 0.3;
-        this.timerOpacity = 0;
-        this.timerScale = 0.3;
-        this.buttonOpacity = 0;
-        this.buttonScale = 0.3;
-        this.iconOpacity = 0;
-        this.iconScale = 0.3;
-        // 导航条保持不动
-        this.navOpacity = 1;
-        this.navScale = 1;
-      });}, () => {
-        // 动画完成后的回调
-        console.log('页面切换动画完成');
-      }
-    );
+    this.animateTransition(() => {
+      NavigationManager.getInstance().navigateTo(page);
+    });
   }
 
   // 页面切换动画 - 底部导航条保持不动
   private animateTransition(callback: () => void) {
-    animateTo({ 
+    animateToImmediately({ 
       duration: 300, 
       curve: Curve.Friction,
       onFinish: callback
@@ -223,12 +208,13 @@ struct Index {
       // 统一紫色背景标题栏，融入状态栏
       Column() {
         Row() {
-          Text('CubeTime')
-            .fontSize(24)
+          Text('  CubeTime')
+            .width('25%')
+            .fontSize(32)
             .fontWeight(FontWeight.Bold)
             .fontColor('#FFFFFF')
             .layoutWeight(1)
-            .textAlign(TextAlign.Center)
+            .textAlign(TextAlign.Start)
             .scale({ x: this.titleScale, y: this.titleScale })
             .opacity(this.titleOpacity)
             .animation({
@@ -237,9 +223,27 @@ struct Index {
             })
         }
         .width('100%')
-        .height(56)
+        .height(38)
         .justifyContent(FlexAlign.Center)
-        .alignItems(VerticalAlign.Center)
+        .alignItems(VerticalAlign.Top)
+        Row() {
+          Text('      一个智能时间管理app')
+            .width('20%')
+            .fontSize(10)
+            .fontWeight(FontWeight.Normal)
+            .fontColor('#FFFFFF')
+            .layoutWeight(1)
+            .textAlign(TextAlign.Start)
+            .scale({ x: this.titleScale, y: this.titleScale })
+            .opacity(0.6)
+            .animation({
+              duration: 500,
+              curve: Curve.Friction
+            })
+        }
+        .justifyContent(FlexAlign.Center)
+        .alignItems(VerticalAlign.Top)
+        .height(17)
       }
       .width('100%')
       .backgroundColor('#6366F1')
@@ -410,6 +414,14 @@ struct Index {
               delay: 400
             })
               .onClick(() => {
+                animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                  this.buttonScale = 0.95
+                })
+                setTimeout(() => {
+                  animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                    this.buttonScale = 1
+                  })
+                }, 150)
                 this.resetTimer()
               })
 
@@ -428,6 +440,14 @@ struct Index {
                   delay: 400
                 })
                 .onClick(() => {
+                  animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                    this.buttonScale = 0.95
+                  })
+                  setTimeout(() => {
+                    animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                      this.buttonScale = 1
+                    })
+                  }, 150)
                   this.startTimer()
                 })
             } else {
@@ -445,6 +465,14 @@ struct Index {
                   delay: 400
                 })
                 .onClick(() => {
+                  animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                    this.buttonScale = 0.95
+                  })
+                  setTimeout(() => {
+                    animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                      this.buttonScale = 1
+                    })
+                  }, 150)
                   this.stopTimer()
                 })
             }
@@ -506,7 +534,7 @@ struct Index {
             .fillColor('#6B7280')
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-              duration: 800,
+              duration: 500,
               curve: Curve.EaseOut,
               delay: 500
             })
@@ -516,7 +544,7 @@ struct Index {
             .margin({ top: 4 })
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-              duration: 800,
+              duration: 500,
               curve: Curve.EaseOut,
               delay: 500
             })
@@ -541,7 +569,7 @@ struct Index {
             .fillColor('#6B7280')
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-              duration: 800,
+              duration: 500,
               curve: Curve.EaseOut,
               delay: 500
             })
@@ -551,7 +579,7 @@ struct Index {
             .margin({ top: 4 })
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-              duration: 800,
+              duration: 500,
               curve: Curve.EaseOut,
               delay: 500
             })
@@ -586,7 +614,7 @@ struct Index {
             .margin({ top: 4 })
             .scale({ x: this.navScale, y: this.navScale })
             .animation({
-              duration: 800,
+              duration: 500,
               curve: Curve.EaseOut,
               delay: 500
             })

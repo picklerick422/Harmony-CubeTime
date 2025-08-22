@@ -27,7 +27,7 @@ interface Dashboard_Params {
 import TimeManagementService from "@bundle:com.example.cubetime/entry/ets/services/TimeManagementService";
 import type { StatisticsData } from "@bundle:com.example.cubetime/entry/ets/services/TimeManagementService";
 import { TimerDisplay } from "@bundle:com.example.cubetime/entry/ets/components/TimerDisplay";
-import { navigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
+import { NavigationManager } from "@bundle:com.example.cubetime/entry/ets/utils/NavigationManager";
 class Dashboard extends ViewPU {
     constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
         super(parent, __localStorage, elmtId, extraInfo);
@@ -297,7 +297,7 @@ class Dashboard extends ViewPU {
     // 页面入场动画 - 更快更有弹性
     private animateIn() {
         // 标题动画 - 弹性进入
-        Context.animateTo({
+        Context.animateToImmediately({
             duration: 350,
             curve: Curve.Friction
         }, () => {
@@ -305,7 +305,7 @@ class Dashboard extends ViewPU {
             this.titleOpacity = 1;
         });
         // 卡片动画 - 轻微延迟的弹性效果
-        Context.animateTo({
+        Context.animateToImmediately({
             duration: 400,
             curve: Curve.Friction,
             delay: 80
@@ -314,7 +314,7 @@ class Dashboard extends ViewPU {
             this.cardOpacity = 1;
         });
         // 项目动画 - 更有弹性的效果
-        Context.animateTo({
+        Context.animateToImmediately({
             duration: 450,
             curve: Curve.Friction,
             delay: 150
@@ -323,7 +323,7 @@ class Dashboard extends ViewPU {
             this.itemOpacity = 1;
         });
         // 按钮动画 - 弹性效果
-        Context.animateTo({
+        Context.animateToImmediately({
             duration: 500,
             curve: Curve.Friction,
             delay: 220
@@ -375,7 +375,7 @@ class Dashboard extends ViewPU {
             Image.fillColor(Color.White);
             Image.onClick(() => {
                 // 使用自定义返回动画
-                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
                     this.titleOpacity = 0;
                     this.titleScale = 0.3;
                     this.cardOpacity = 0;
@@ -386,7 +386,7 @@ class Dashboard extends ViewPU {
                     this.buttonScale = 0.3;
                 });
                 setTimeout(() => {
-                    navigationManager.navigateBack();
+                    NavigationManager.getInstance().navigateBack();
                 }, 300);
             });
         }, Image);
@@ -616,7 +616,7 @@ class Dashboard extends ViewPU {
             Button.layoutWeight(1);
             Button.onClick(() => {
                 // 使用自定义动画序列
-                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
                     this.titleOpacity = 0;
                     this.titleScale = 0.3;
                     this.cardOpacity = 0;
@@ -627,7 +627,7 @@ class Dashboard extends ViewPU {
                     this.buttonScale = 0.3;
                 });
                 setTimeout(() => {
-                    navigationManager.navigateTo('pages/Tasks');
+                    NavigationManager.getInstance().navigateTo('Tasks');
                 }, 300);
             });
             Button.scale({ x: this.buttonScale, y: this.buttonScale });
@@ -638,20 +638,20 @@ class Dashboard extends ViewPU {
             Button.createWithLabel('Calendar');
             Button.layoutWeight(1);
             Button.onClick(() => {
-                // 使用自定义动画序列
-                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                // 立即执行退出动画并导航
+                Context.animateToImmediately({ duration: 200, curve: Curve.Friction }, () => {
                     this.titleOpacity = 0;
-                    this.titleScale = 0.3;
+                    this.titleScale = 0;
                     this.cardOpacity = 0;
-                    this.cardScale = 0.3;
+                    this.cardScale = 0;
                     this.itemOpacity = 0;
-                    this.itemScale = 0.3;
+                    this.itemScale = 0;
                     this.buttonOpacity = 0;
-                    this.buttonScale = 0.3;
+                    this.buttonScale = 0;
                 });
                 setTimeout(() => {
-                    navigationManager.navigateTo('pages/Calendar');
-                }, 300);
+                    NavigationManager.getInstance().navigateTo('Calendar');
+                }, 200);
             });
             Button.scale({ x: this.buttonScale, y: this.buttonScale });
             Button.opacity(this.buttonOpacity);
@@ -662,7 +662,7 @@ class Dashboard extends ViewPU {
             Button.layoutWeight(1);
             Button.onClick(() => {
                 // 使用自定义动画序列
-                Context.animateTo({ duration: 300, curve: Curve.Friction }, () => {
+                Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
                     this.titleOpacity = 0;
                     this.titleScale = 0.3;
                     this.cardOpacity = 0;
@@ -673,7 +673,7 @@ class Dashboard extends ViewPU {
                     this.buttonScale = 0.3;
                 });
                 setTimeout(() => {
-                    navigationManager.navigateTo('pages/Settings');
+                    NavigationManager.getInstance().navigateTo('Settings');
                 }, 300);
             });
             Button.scale({ x: this.buttonScale, y: this.buttonScale });
@@ -716,28 +716,56 @@ class Dashboard extends ViewPU {
         this.navOpacity = 1;
         this.navScale = 1;
     }
-    // 页面切换动画 - 底部导航条保持不动
-    private animateTransition(callback: () => void): void {
-        Context.animateTo({
-            duration: 400,
+    // 页面切换动画 - 从小放大的缩放效果
+    private animateTransition(callback: () => void) {
+        Context.animateToImmediately({
+            duration: 250,
             curve: Curve.Friction,
             onFinish: callback
         }, () => {
-            // 导航条保持不动，只隐藏其他元素
+            // 页面缩小消失效果
             this.titleOpacity = 0;
             this.titleScale = 0.3;
-            this.buttonOpacity = 0;
-            this.buttonScale = 0.3;
             this.cardOpacity = 0;
             this.cardScale = 0.3;
             this.itemOpacity = 0;
             this.itemScale = 0.3;
-            this.timerOpacity = 0;
-            this.timerScale = 0.3;
-            // 导航条保持可见和原始大小
-            this.navOpacity = 1;
-            this.navScale = 1;
+            this.buttonOpacity = 0;
+            this.buttonScale = 0.3;
         });
+    }
+    // 卡片点击动画
+    private animateCardClick(index: number) {
+        Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+            this.cardScale = 0.95;
+        });
+        setTimeout(() => {
+            Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                this.cardScale = 1;
+            });
+        }, 150);
+    }
+    // 项目点击动画
+    private animateItemClick() {
+        Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+            this.itemScale = 0.95;
+        });
+        setTimeout(() => {
+            Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                this.itemScale = 1;
+            });
+        }, 150);
+    }
+    // 按钮点击动画
+    private animateButtonClick() {
+        Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+            this.buttonScale = 0.95;
+        });
+        setTimeout(() => {
+            Context.animateToImmediately({ duration: 300, curve: Curve.Friction }, () => {
+                this.buttonScale = 1;
+            });
+        }, 150);
     }
     rerender() {
         this.updateDirtyElements();

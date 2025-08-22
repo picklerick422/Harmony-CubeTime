@@ -1,101 +1,226 @@
-import router from '@ohos.router';
+import router from '@ohos.router'
+import { BusinessError } from '@kit.BasicServicesKit'
 
-// 页面切换动画类型
-export enum TransitionType {
-  SLIDE_RIGHT = 'slide_right',
-  SLIDE_LEFT = 'slide_left',
-  SLIDE_UP = 'slide_up',
-  SLIDE_DOWN = 'slide_down',
-  FADE = 'fade',
-  ZOOM = 'zoom',
-  FLIP = 'flip',
-  CUSTOM = 'custom' // 自定义动画类型
+interface AnimationConfig {
+  duration: number
+  curve: Curve
+  delay: number
 }
 
-// 页面切换管理器 - 支持自定义动画序列
+export interface PageAnimationState {
+  calendarOpacity: number | Resource
+  contentScale: number
+  contentOpacity: number
+  titleTranslateY: number
+  titleOpacity: number
+  buttonScale: number
+  buttonOpacity: number
+  listOpacity?: number
+  listScale?: number
+  calendarScale?: number
+  sectionOpacity?: number
+  sectionScale?: number
+  timerScale?: number
+  timerOpacity?: number
+}
+
+interface PageAnimationConfig {
+  content: AnimationConfig
+  title: AnimationConfig
+  buttons: AnimationConfig
+}
+
 export class NavigationManager {
-  private static instance: NavigationManager;
-  
-  // 当前页面动画状态
-  private currentTransition: TransitionType = TransitionType.SLIDE_RIGHT;
-  
-  // 单例模式
-  public static getInstance(): NavigationManager {
+  private static instance: NavigationManager
+  private currentState: PageAnimationState
+  private animationConfig: PageAnimationConfig
+
+  constructor() {
+    this.currentState = {
+      contentScale: 0.9,
+      contentOpacity: 0,
+      titleTranslateY: -20,
+      titleOpacity: 0,
+      buttonScale: 0.8,
+      buttonOpacity: 0,
+      calendarOpacity: 0
+    }
+
+    this.animationConfig = {
+      content: { duration: 600, curve: Curve.EaseOut, delay: 0 },
+      title: { duration: 500, curve: Curve.EaseOut, delay: 100 },
+      buttons: { duration: 400, curve: Curve.EaseOut, delay: 200 }
+    }
+  }
+
+  static getInstance(): NavigationManager {
     if (!NavigationManager.instance) {
-      NavigationManager.instance = new NavigationManager();
+      NavigationManager.instance = new NavigationManager()
     }
-    return NavigationManager.instance;
+    return NavigationManager.instance
   }
 
-  // 设置全局默认动画
-  public setDefaultTransition(type: TransitionType): void {
-    this.currentTransition = type;
-  }
-
-  // 使用自定义动画序列的页面跳转
-  public navigateToWithCustomAnimation(
-    page: string, 
-    currentPageAnimation: () => void,
-    onAnimationComplete: () => void
-  ): void {
-    try {
-      // 执行当前页面的缩小动画
-      currentPageAnimation();
-      
-      // 等待动画完成后跳转
-      setTimeout(() => {
-        router.pushUrl({
-          url: `pages/${page}`,
-          params: { useCustomAnimation: true }
-        });
-        onAnimationComplete();
-      }, 300); // 等待缩小动画完成
-    } catch (error) {
-      console.error('自定义导航失败:', error);
+  getInitialState(): PageAnimationState {
+    return {
+      contentScale: this.currentState.contentScale,
+      contentOpacity: this.currentState.contentOpacity,
+      titleTranslateY: this.currentState.titleTranslateY,
+      titleOpacity: this.currentState.titleOpacity,
+      buttonScale: this.currentState.buttonScale,
+      buttonOpacity: this.currentState.buttonOpacity,
+      calendarOpacity: 0
     }
   }
 
-  // 简单的页面跳转，使用系统默认动画
-  public navigateTo(page: string, transitionType?: TransitionType): void {
-    try {
+  animateIn(callback?: () => void): void {
+    const animateContent = () => {
+      animateToImmediately({
+        duration: this.animationConfig.content.duration,
+        curve: this.animationConfig.content.curve,
+        delay: this.animationConfig.content.delay,
+        onFinish: () => {
+          if (callback) callback()
+        }
+      }, () => {
+        this.currentState.contentScale = 1
+        this.currentState.contentOpacity = 1
+      })
+    }
+
+    const animateTitle = () => {
+      animateToImmediately({
+        duration: this.animationConfig.title.duration,
+        curve: this.animationConfig.title.curve,
+        delay: this.animationConfig.title.delay
+      }, () => {
+        this.currentState.titleTranslateY = 0
+        this.currentState.titleOpacity = 1
+      })
+    }
+
+    const animateButtons = () => {
+      animateToImmediately({
+        duration: this.animationConfig.buttons.duration,
+        curve: this.animationConfig.buttons.curve,
+        delay: this.animationConfig.buttons.delay
+      }, () => {
+        this.currentState.buttonScale = 1
+        this.currentState.buttonOpacity = 1
+      })
+    }
+
+    // 启动所有动画
+    animateContent()
+    animateTitle()
+    animateButtons()
+  }
+
+  animateOut(targetPage: string, callback?: () => void): void {
+    console.info(`NavigationManager: Starting animateOut for ${targetPage}`)
+    // 同步执行所有退出动画，使用最长动画的时长
+    animateToImmediately({
+      duration: 300,
+      curve: Curve.EaseIn,
+      onFinish: () => {
+        console.info(`NavigationManager: animateOut completed for ${targetPage}`)
+        if (callback) {
+          callback()
+        }
+      }
+    }, () => {
+      this.currentState.contentScale = 0.95
+      this.currentState.contentOpacity = 0
+      this.currentState.titleTranslateY = -20
+      this.currentState.titleOpacity = 0
+      this.currentState.buttonScale = 0.8
+      this.currentState.buttonOpacity = 0
+      this.currentState.calendarOpacity = 0
+    })
+  }
+
+  // 重置动画状态
+  resetAnimation(): void {
+    this.currentState = {
+      contentScale: 0.9,
+      contentOpacity: 0,
+      titleTranslateY: -20,
+      titleOpacity: 0,
+      buttonScale: 0.8,
+      buttonOpacity: 0,
+      calendarOpacity: 0
+    }
+  }
+
+  // 自定义动画配置
+  setCustomConfig(config: Partial<PageAnimationConfig>): void {
+    this.animationConfig.content = config.content || this.animationConfig.content
+    this.animationConfig.title = config.title || this.animationConfig.title
+    this.animationConfig.buttons = config.buttons || this.animationConfig.buttons
+  }
+
+  // 导航到指定页面方法
+  navigateTo(page: string): void {
+    console.info(`NavigationManager: Starting navigation to ${page}`)
+    this.animateOut(page, () => {
+      console.info(`NavigationManager: Animation completed, navigating to ${page}`)
       router.pushUrl({
         url: `pages/${page}`
-      });
-    } catch (error) {
-      console.error('导航失败:', error);
-    }
+      }).then(() => {
+        console.info(`NavigationManager: Successfully navigated to ${page}`)
+      }).catch((err: BusinessError) => {
+        console.error(`NavigationManager navigateTo failed: ${JSON.stringify(err)}`)
+      })
+    })
   }
 
-  // 简单的页面返回
-  public navigateBack(transitionType?: TransitionType): void {
-    try {
-      router.back();
-    } catch (error) {
-      console.error('返回失败:', error);
-    }
-  }
-
-  // 替换当前页面
-  public replaceTo(page: string, transitionType?: TransitionType): void {
-    try {
+  // 替换页面方法
+  replaceTo(page: string): void {
+    this.animateOut(page, () => {
       router.replaceUrl({
         url: `pages/${page}`
-      });
-    } catch (error) {
-      console.error('替换页面失败:', error);
-    }
+      }).then(() => {
+        console.info(`NavigationManager: Successfully replaced to ${page}`)
+      }).catch((err: BusinessError) => {
+        console.error(`NavigationManager replaceTo failed: ${JSON.stringify(err)}`)
+      })
+    })
   }
 
-  // 获取当前页面路径
-  public getCurrentPage(): string {
-    try {
-      return router.getState()?.path || '';
-    } catch (error) {
-      console.error('获取当前页面失败:', error);
-      return '';
-    }
+  // 返回上一页方法
+  navigateBack(): void {
+    this.animateOut('', () => {
+      router.back()
+    })
   }
 }
 
-// 导出单例实例
-export const navigationManager = NavigationManager.getInstance();
+// 全局导航工具
+export class NavigationHelper {
+  static navigateTo(page: string, navigationManager?: NavigationManager): void {
+    if (navigationManager) {
+      navigationManager.animateOut(page)
+    } else {
+      setTimeout(() => {
+        router.pushUrl({
+          url: `pages/${page}`
+        }).then(() => {
+          console.info(`NavigationHelper: Successfully navigated to ${page}`)
+        }).catch((err: BusinessError) => {
+          console.error(`NavigationHelper navigateTo failed: ${JSON.stringify(err)}`)
+        })
+      }, 300)
+    }
+  }
+
+  static navigateBack(navigationManager?: NavigationManager): void {
+    if (navigationManager) {
+      navigationManager.animateOut('', () => {
+        router.back()
+      })
+    } else {
+      setTimeout(() => {
+        router.back()
+      }, 300)
+    }
+  }
+}
